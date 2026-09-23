@@ -77,36 +77,58 @@ Optimiza la secuencia de actividades de la cadena logística de reabastecimiento
 ### 4. GUÍA DE PUESTA EN MARCHA (DESPLIEGUE)
 
 1. **Requisitos de Entorno**:
-   - PHP 8.0 o superior (con extensiones `pdo_mysql`, `pdo_sqlite`, `mbstring`, `openssl`).
-   - Servidor MySQL o MariaDB (o SQLite).
+   - PHP 8.0 o superior (con extensiones `pdo_sqlite`, `mbstring`, `openssl`, `tokenizer`, `xml`).
    - Composer.
+   - (Opcional) XAMPP u otro servidor, solo si se desea usar MySQL en lugar de SQLite.
 
 2. **Ubicación del Proyecto**:
    ```
    cd "c:\Users\jesus\OneDrive\Escritorio\Proyecto de IDO\hospital-triage"
    ```
 
-3. **Configuración de Variables de Entorno (`.env`)**:
-   Asegurar que `.env` apunte a la base de datos (por ejemplo `hospital_triage` o `refugios_inventario` en MySQL):
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=hospital_triage
-   DB_USERNAME=root
-   DB_PASSWORD=
+3. **Instalar dependencias** (solo la primera vez o tras clonar el repositorio):
+   ```bash
+   composer install
    ```
 
-4. **Ejecutar Migraciones y Poblado de Datos (Seeders)**:
+4. **Configuración de Variables de Entorno (`.env`)**:
+   Si el archivo `.env` no existe, copiar el de ejemplo:
+   ```bash
+   copy .env.example .env
+   ```
+   El proyecto usa **SQLite** (no requiere instalar servidor de base de datos):
+   ```env
+   DB_CONNECTION=sqlite
+   DB_DATABASE=database/database.sqlite
+   ```
+   Crear el archivo de base de datos si no existe:
+   ```bash
+   type nul > database\database.sqlite
+   ```
+   Generar la llave de cifrado de la aplicación:
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Ejecutar Migraciones y Poblado de Datos (Seeders)**:
    ```bash
    php artisan migrate:fresh --seed
    ```
+   > ⚠️ `migrate:fresh` **borra y regenera** toda la base de datos. Ejecutarlo solo la primera vez o cuando se quieran restaurar los datos de demostración.
 
-5. **Iniciar Servidor Local**:
+6. **Obtener los códigos 2FA de los usuarios demo** (requisito para iniciar sesión):
+   ```bash
+   php tests/test_check_users.php
+   ```
+   Imprime el secreto de cada usuario. Ingresarlo en la app **Google Authenticator** del celular (escaneando el QR o escribiendo la clave manualmente).
+
+7. **Iniciar Servidor Local**:
    ```bash
    php artisan serve
    ```
    Abrir en el navegador: `http://localhost:8000`
+
+   > Al iniciar sesión además se solicita el **código de 6 dígitos** que muestra Google Authenticator.
 
 ---
 
@@ -114,7 +136,7 @@ Optimiza la secuencia de actividades de la cadena logística de reabastecimiento
 
 | Rol Operativo | Correo Electrónico | Contraseña | Alcance de Funciones |
 |---|---|---|---|
-| **Admin General de Logística** | `admin@refugios.gt` | `Admin1234!` | Acceso total, rebalanceo inter-refugios, simulación I.O. y reportes |
-| **Coordinador de Albergue** | `coordinador@refugios.gt` | `Coordinador1234!` | Censo de población, solicitud de suministros y consumos en sitio |
-| **Encargada de Almacén** | `almacen@refugios.gt` | `Almacen1234!` | Recepción de donaciones, control de lotes y despacho en convoy |
-| **Auditora Humanitaria** | `auditor@refugios.gt` | `Auditor1234!` | Consulta de libros Kardex, bitácora de auditoría y reportes PDF |
+| **Admin General de Logística** | `admin@refugios.ve` | `Admin1234!` | Acceso total, rebalanceo inter-refugios, simulación I.O. y reportes |
+| **Coordinador de Albergue** | `coordinador@refugios.ve` | `Coordinador1234!` | Censo de población, solicitud de suministros y consumos en sitio |
+| **Encargada de Almacén** | `almacen@refugios.ve` | `Almacen1234!` | Recepción de donaciones, control de lotes y despacho en convoy |
+| **Auditora Humanitaria** | `auditor@refugios.ve` | `Auditor1234!` | Consulta de libros Kardex, bitácora de auditoría y reportes PDF |
