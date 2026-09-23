@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreShelterRequest;
+use App\Http\Requests\UpdateShelterRequest;
 use App\Models\Shelter;
 use App\Models\Supply;
 use App\Models\ShelterInventory;
@@ -37,26 +39,9 @@ class ShelterController extends Controller
         return view('shelters.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreShelterRequest $request)
     {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:20|unique:shelters,codigo',
-            'nombre' => 'required|string|max:255',
-            'departamento' => 'required|string|max:100',
-            'municipio' => 'required|string|max:100',
-            'direccion' => 'required|string|max:255',
-            'coordenadas' => 'nullable|string|max:100',
-            'capacidad_maxima' => 'required|integer|min:1',
-            'poblacion_adultos' => 'nullable|integer|min:0',
-            'poblacion_ninos' => 'nullable|integer|min:0',
-            'poblacion_adultos_mayores' => 'nullable|integer|min:0',
-            'poblacion_atencion_medica' => 'nullable|integer|min:0',
-            'responsable_nombre' => 'required|string|max:255',
-            'responsable_telefono' => 'required|string|max:50',
-            'responsable_email' => 'nullable|email|max:100',
-            'estado' => 'required|in:activo,alerta_capacidad,evacuacion,cerrado',
-            'observaciones' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $adultos = $validated['poblacion_adultos'] ?? 0;
         $ninos = $validated['poblacion_ninos'] ?? 0;
@@ -113,26 +98,9 @@ class ShelterController extends Controller
         return view('shelters.edit', compact('shelter'));
     }
 
-    public function update(Request $request, Shelter $shelter)
+    public function update(UpdateShelterRequest $request, Shelter $shelter)
     {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:20|unique:shelters,codigo,' . $shelter->id,
-            'nombre' => 'required|string|max:255',
-            'departamento' => 'required|string|max:100',
-            'municipio' => 'required|string|max:100',
-            'direccion' => 'required|string|max:255',
-            'coordenadas' => 'nullable|string|max:100',
-            'capacidad_maxima' => 'required|integer|min:1',
-            'poblacion_adultos' => 'required|integer|min:0',
-            'poblacion_ninos' => 'required|integer|min:0',
-            'poblacion_adultos_mayores' => 'required|integer|min:0',
-            'poblacion_atencion_medica' => 'required|integer|min:0',
-            'responsable_nombre' => 'required|string|max:255',
-            'responsable_telefono' => 'required|string|max:50',
-            'responsable_email' => 'nullable|email|max:100',
-            'estado' => 'required|in:activo,alerta_capacidad,evacuacion,cerrado',
-            'observaciones' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
 
         $validated['poblacion_total'] = $validated['poblacion_adultos'] + $validated['poblacion_ninos'] + $validated['poblacion_adultos_mayores'];
 
@@ -151,9 +119,9 @@ class ShelterController extends Controller
         $antes = $shelter->toArray();
         $shelter->delete();
 
-        AuditService::log('refugios', 'eliminado', "Refugio eliminado: {$nombre}", null, $antes, []);
+        AuditService::log('refugios', 'eliminado', "Refugio dado de baja (borrado lógico): {$nombre}", null, $antes, []);
 
         return redirect()->route('shelters.index')
-            ->with('success', "Refugio '{$nombre}' eliminado del sistema.");
+            ->with('success', "Refugio '{$nombre}' dado de baja (registro conservado para trazabilidad).");
     }
 }

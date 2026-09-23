@@ -130,7 +130,13 @@ class OtpAuthController extends Controller
     }
 
     /**
-     * Regenera la clave secreta de Google Authenticator para el usuario (si extravió su dispositivo).
+     * Regenera la clave secreta de Google Authenticator para el usuario.
+     *
+     * Requiere que la sesión ya haya superado la verificación 2FA (otp_verificado):
+     * sin ese requisito, un atacante con solo la contraseña podría resetear el
+     * secreto e inscribir su propia app, anulando el segundo factor.
+     * El caso "dispositivo extraviado" debe resolverse con el administrador
+     * desde Carnets (regeneración presencial verificada), no por este endpoint.
      */
     public function regenerateSecret(Request $request)
     {
@@ -140,6 +146,26 @@ class OtpAuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+
+        if (!session('otp_verificado', false)) {
+            AuditService::log(
+                'Seguridad',
+                'google2fa_secret_regeneration_denied',
+                'Intento de regenerar secreto 2FA sin sesión 2FA verificada para ' . $user->name
+            );
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Debe completar la verificación 2FA antes de regenerar la clave. Si perdió su dispositivo, solicítele al administrador la regeneración desde Carnets.',
+                ], 403);
+            }
+
+            return back()->withErrors([
+                'code' => 'Debe completar la verificación 2FA antes de regenerar la clave.',
+            ]);
+        }
+
         $user->google2fa_secret = GoogleAuthenticatorService::generateSecret();
         $user->save();
 
@@ -159,7 +185,6 @@ class OtpAuthController extends Controller
                 'message' => $msg,
                 'secret' => $user->google2fa_secret,
                 'qr_svg' => $user->getGoogle2faQrSvg(220),
-                'current_code' => $user->getCurrentGoogle2faCode(),
             ]);
         }
 

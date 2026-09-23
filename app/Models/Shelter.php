@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shelter extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'shelters';
 
@@ -38,6 +39,7 @@ class Shelter extends Model
         'poblacion_ninos' => 'integer',
         'poblacion_adultos_mayores' => 'integer',
         'poblacion_atencion_medica' => 'integer',
+        'deleted_at' => 'datetime',
     ];
 
     public function inventories()

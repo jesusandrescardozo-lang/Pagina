@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSupplyRequest;
+use App\Http\Requests\UpdateSupplyRequest;
 use App\Models\Supply;
 use App\Models\Shelter;
 use App\Models\ShelterInventory;
@@ -57,27 +59,9 @@ class SupplyController extends Controller
         return view('supplies.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreSupplyRequest $request)
     {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:30|unique:supplies,codigo',
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
-            'categoria' => 'required|in:alimento,medico',
-            'subcategoria' => 'required|string|max:100',
-            'unidad_medida' => 'required|string|max:30',
-            'clasificacion_abc' => 'required|in:A,B,C',
-            'es_perecedero' => 'nullable|boolean',
-            'dias_vida_util_promedio' => 'nullable|integer|min:1',
-            'costo_unitario' => 'required|numeric|min:0.01',
-            'costo_pedido' => 'required|numeric|min:0.01',
-            'costo_mantenimiento_anual' => 'required|numeric|min:0.01',
-            'tiempo_entrega_dias' => 'required|numeric|min:0.1',
-            'consumo_diario_referencia' => 'required|numeric|min:0.001',
-            'stock_seguridad_sugerido' => 'required|numeric|min:0',
-            'costo_escasez_newsvendor' => 'nullable|numeric|min:0.01',
-            'costo_desecho_newsvendor' => 'nullable|numeric|min:0.01',
-        ]);
+        $validated = $request->validated();
 
         $validated['es_perecedero'] = $request->has('es_perecedero');
 
@@ -145,27 +129,9 @@ class SupplyController extends Controller
         return view('supplies.edit', compact('supply'));
     }
 
-    public function update(Request $request, Supply $supply)
+    public function update(UpdateSupplyRequest $request, Supply $supply)
     {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:30|unique:supplies,codigo,' . $supply->id,
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
-            'categoria' => 'required|in:alimento,medico',
-            'subcategoria' => 'required|string|max:100',
-            'unidad_medida' => 'required|string|max:30',
-            'clasificacion_abc' => 'required|in:A,B,C',
-            'es_perecedero' => 'nullable|boolean',
-            'dias_vida_util_promedio' => 'nullable|integer|min:1',
-            'costo_unitario' => 'required|numeric|min:0.01',
-            'costo_pedido' => 'required|numeric|min:0.01',
-            'costo_mantenimiento_anual' => 'required|numeric|min:0.01',
-            'tiempo_entrega_dias' => 'required|numeric|min:0.1',
-            'consumo_diario_referencia' => 'required|numeric|min:0.001',
-            'stock_seguridad_sugerido' => 'required|numeric|min:0',
-            'costo_escasez_newsvendor' => 'nullable|numeric|min:0.01',
-            'costo_desecho_newsvendor' => 'nullable|numeric|min:0.01',
-        ]);
+        $validated = $request->validated();
 
         $validated['es_perecedero'] = $request->has('es_perecedero');
 
@@ -184,10 +150,10 @@ class SupplyController extends Controller
         $antes = $supply->toArray();
         $supply->delete();
 
-        AuditService::log('insumos', 'eliminado', "Insumo eliminado: {$nombre}", null, $antes, []);
+        AuditService::log('insumos', 'eliminado', "Insumo dado de baja (borrado lógico): {$nombre}", null, $antes, []);
 
         return redirect()->route('supplies.index')
-            ->with('success', "Insumo '{$nombre}' eliminado del catálogo.");
+            ->with('success', "Insumo '{$nombre}' dado de baja (registro conservado para trazabilidad).");
     }
 
     /**

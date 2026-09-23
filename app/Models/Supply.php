@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supply extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'supplies';
 
@@ -42,6 +43,7 @@ class Supply extends Model
         'stock_seguridad_sugerido' => 'float',
         'costo_escasez_newsvendor' => 'float',
         'costo_desecho_newsvendor' => 'float',
+        'deleted_at' => 'datetime',
     ];
 
     public function inventories()
