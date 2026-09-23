@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Providers;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+    }
+
+    public function boot(): void
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Matriz única de permisos (Capability => Roles autorizados)
+        |--------------------------------------------------------------------------
+        | Esta es la ÚNICA fuente de verdad de los roles. Las rutas usan
+        | `can:<capacidad>` y los métodos User::canX() delegan en estos Gates.
+        */
+        $permisos = [
+            // Escritura de refugios (Admin, Coordinador de Refugio, Auditor)
+            'manage-shelters'   => ['admin', 'coordinador_refugio', 'auditor'],
+            // Escritura del catálogo de insumos (Admin, Almacenista)
+            'manage-supplies'   => ['admin', 'almacenista'],
+            // Escritura del Kardex de movimientos (Admin, Almacenista)
+            'manage-kardex'     => ['admin', 'almacenista'],
+            // Escritura de transferencias (Admin, Almacenista, Coordinador)
+            'manage-transfers'  => ['admin', 'almacenista', 'coordinador_refugio'],
+            // Escritura de proyectos CPM (Solo Admin)
+            'manage-cpm'        => ['admin'],
+            // Consulta de la bitácora de auditoría (Admin, Auditor)
+            'view-audit'        => ['admin', 'auditor'],
+            // Gestión de carnets/credenciales (Solo Admin)
+            'manage-carnets'    => ['admin'],
+            // Accesos de solo lectura usados por las vistas (menús/botones)
+            'access-supplies'   => ['admin', 'almacenista', 'coordinador_refugio', 'auditor'],
+            'access-movements'  => ['admin', 'almacenista', 'auditor'],
+            'access-io-models'  => ['admin', 'almacenista'],
+            'access-reports'    => ['admin', 'almacenista', 'coordinador_refugio', 'auditor'],
+        ];
+
+        foreach ($permisos as $capacidad => $roles) {
+            Gate::define($capacidad, fn (User $user) => in_array($user->rol, $roles, true));
+        }
+    }
+}

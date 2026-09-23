@@ -1,0 +1,44 @@
+# Dependencias
+/vendor/
+/node_modules/
+/.pnp
+.pnp.js
+
+# Laravel
+/storage/*.key
+/storage/*.log
+/storage/app/public/
+/storage/framework/cache/data/
+/storage/framework/sessions/*.php
+/storage/framework/views/*.php
+/storage/framework/testing/
+/bootstrap/cache/*.php
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
+/public/hot
+/public/storage
+
+# Base de datos local
+/database/*.sqlite
+/database/*.sqlite-journal
+/database/*.db
+
+# Logs
+/storage/logs/*.log
+/storage/logs/*.json
+
+# Archivo de entorno (NUNCA subir credenciales ni APP_KEY)
+.env
+.env.backup
+.env.production
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# IDE / Sistema
+/.idea
+/.vscode
+*.swp
+.DS_Store
+Thumbs.db
