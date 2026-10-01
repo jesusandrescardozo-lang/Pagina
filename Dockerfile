@@ -51,7 +51,7 @@ RUN test -f public/index.php \
     && test -f public/.htaccess \
     && test -f docker-start.sh \
     && echo "=== Diagnostico Apache ===" \
-    && grep -n "DocumentRoot\|<Directory\|RewriteEngine" /etc/apache2/sites-available/000-default.conf \
+    && grep -n "DocumentRoot /var/www/html/public" /etc/apache2/sites-available/000-default.conf \
     && apache2ctl -M 2>/dev/null | grep "rewrite_module" \
     && apache2ctl -M 2>/dev/null | grep "php_module" \
     && echo "=== public/ ===" \
