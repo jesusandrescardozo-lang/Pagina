@@ -22,7 +22,11 @@ RUN a2enmod rewrite \
 
 # Codigo + dependencias (vendor/, .git y .env quedan fuera por .dockerignore)
 COPY . .
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
+# storage/ no esta rastreada en git (solo contiene artefactos ignorados),
+# asi que se crea la estructura completa aqui, con permisos para Apache.
+RUN mkdir -p storage/app storage/framework/cache/data storage/framework/sessions \
+        storage/framework/views storage/framework/testing storage/logs \
+    && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
     && touch database/database.sqlite \
     && chown -R www-data:www-data storage bootstrap/cache database \
     && chmod +x docker-start.sh
