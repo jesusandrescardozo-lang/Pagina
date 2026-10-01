@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #a78bfa; font-size: 0.72rem; border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-diagram-project me-1"></i> Grafos y Redes de Optimización
             </span>
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.1); color: #f5ede0; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.25); border-radius: 9999px; padding: 3px 10px;">
                 {{ $projects->count() }} Proyectos Registrados
             </span>
         </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="d-flex align-items-center gap-2 flex-wrap">
-        <a href="{{ route('cpm.create') }}" class="btn-accent" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">
+        <a href="{{ route('cpm.create') }}" class="btn-accent">
             <i class="fa-solid fa-plus"></i> Nuevo Proyecto CPM
         </a>
     </div>
@@ -32,10 +32,10 @@
 <div class="row g-4">
     @forelse($projects as $p)
     <div class="col-lg-6">
-        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #8b5cf6;">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid var(--accent);">
             <div>
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="bg-glass bg-purple" style="font-size: 0.72rem; font-weight: 700;">
+                    <span class="bg-glass bg-amber" style="font-size: 0.72rem; font-weight: 700;">
                         {{ strtoupper(str_replace('_', ' ', $p->tipo)) }}
                     </span>
                     <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; font-size: 0.74rem;">
@@ -49,8 +49,8 @@
                 </p>
 
                 <!-- Visual Grafo Preview Badge -->
-                <div class="p-3 rounded-3 mb-3 d-flex align-items-center gap-3" style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.2);">
-                    <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(139, 92, 246, 0.2); display: flex; align-items: center; justify-content: center; color: #a78bfa; font-size: 1.25rem;">
+                <div class="p-3 rounded-3 mb-3 d-flex align-items-center gap-3" style="background: rgba(230, 168, 108, 0.08); border: 1px solid rgba(230, 168, 108, 0.25);">
+                    <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(230, 168, 108, 0.2); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.25rem;">
                         <i class="fa-solid fa-network-wired"></i>
                     </div>
                     <div>
@@ -64,7 +64,7 @@
                 <span class="text-muted small" style="font-size: 0.74rem;">
                     <i class="fa-regular fa-calendar me-1"></i> Registrado: {{ $p->created_at->format('d/m/Y') }}
                 </span>
-                <a href="{{ route('cpm.show', $p) }}" class="btn-accent" style="background: linear-gradient(135deg, #7c3aed, #a78bfa); padding: 7px 18px; font-size: 0.80rem;">
+                <a href="{{ route('cpm.show', $p) }}" class="btn-accent" style="padding: 7px 18px; font-size: 0.80rem;">
                     <i class="fa-solid fa-diagram-project me-1"></i> Abrir Grafo CPM
                 </a>
             </div>
@@ -73,7 +73,7 @@
     @empty
     <div class="col-12">
         <div class="glass-card p-5 text-center text-muted">
-            <i class="fa-solid fa-diagram-project fs-1 mb-3 text-purple d-block"></i>
+            <i class="fa-solid fa-diagram-project fs-1 mb-3 text-info d-block"></i>
             <h5>No hay proyectos CPM registrados aún</h5>
             <p>Comienza creando el primer plan de ruta crítica para optimizar los tiempos de respuesta.</p>
             <a href="{{ route('cpm.create') }}" class="btn-accent mt-2">

@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.35); color: #38bdf8; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.75rem;">
                 <i class="fa-solid fa-route me-1"></i> LOGÍSTICA DE REBALANCEO
             </span>
             <span class="badge" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size:0.72rem;">
@@ -30,16 +30,16 @@
     <div class="col-lg-9">
         <div class="glass-card p-4 p-md-5">
             <!-- RUTA VISUAL INTER-ALBERGUES -->
-            <div class="p-3 rounded-4 mb-4" style="background: rgba(56, 189, 248, 0.05); border: 1px dashed rgba(56, 189, 248, 0.3);">
+            <div class="p-3 rounded-4 mb-4" style="background: rgba(230, 168, 108, 0.05); border: 1px dashed rgba(230, 168, 108, 0.3);">
                 <div class="d-flex align-items-center justify-content-around text-center flex-wrap gap-3">
                     <div>
                         <span class="text-muted d-block" style="font-size:0.7rem; text-transform:uppercase;">Punto de Origen</span>
                         <strong class="text-white" style="font-size:0.9rem;"><i class="fa-solid fa-warehouse me-1 text-warning"></i> Albergue Emisor</strong>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                        <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #f59e0b, #0ea5e9);"></div>
-                        <span class="badge bg-dark border border-info text-info p-2"><i class="fa-solid fa-truck-fast"></i></span>
-                        <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #0ea5e9, #10b981);"></div>
+                        <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #d89656, #e6a86c);"></div>
+                        <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.4); color: #e6a86c; padding: 6px 8px;"><i class="fa-solid fa-truck-fast"></i></span>
+                        <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #e6a86c, #c88340);"></div>
                     </div>
                     <div>
                         <span class="text-muted d-block" style="font-size:0.7rem; text-transform:uppercase;">Punto de Destino</span>

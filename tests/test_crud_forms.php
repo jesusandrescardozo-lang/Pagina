@@ -26,7 +26,7 @@ echo "===============================================\n";
 echo " TEST: FORMREQUESTS CRUD + SOFT DELETES\n";
 echo "===============================================\n";
 
-/** Petición HTTP como usuario con sesión 2FA verificada; devuelve [status, errors]. */
+/** Petición HTTP como usuario autenticado; devuelve [status, errors]. */
 function httpForm($kernel, User $user, string $uri, string $method = 'GET', array $data = []): array
 {
     $req = Request::create($uri, $method, $data);

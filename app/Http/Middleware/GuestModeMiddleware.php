@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class GuestModeMiddleware
 {
     /**
-     * Permite el acceso a usuarios autenticados con OTP verificado
+     * Permite el acceso a usuarios autenticados
      * O a visitantes con sesión de modo invitado activa (guest_mode = true).
      *
      * Los invitados solo pueden realizar operaciones de lectura (GET/HEAD).
@@ -20,21 +20,9 @@ class GuestModeMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $isAuthenticated = Auth::check() && $request->session()->get('otp_verificado', false);
+        // Autenticación por contraseña única (el paso 2FA/OTP fue retirado del flujo)
+        $isAuthenticated = Auth::check();
         $isGuest        = !Auth::check() && $request->session()->get('guest_mode', false);
-
-        // Autenticado pero SIN verificar OTP: mandarlo a la pantalla de 2FA
-        // (evita el bucle login <-> dashboard)
-        if (Auth::check() && !$request->session()->get('otp_verificado', false)) {
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Acceso denegado: se requiere verificación de 2 factores.',
-                    'redirect' => route('otp.view'),
-                ], 403);
-            }
-            return redirect()->route('otp.view');
-        }
 
         // Si no está autenticado ni es invitado, redirigir al login
         if (!$isAuthenticated && !$isGuest) {

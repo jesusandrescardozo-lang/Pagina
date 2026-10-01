@@ -19,7 +19,7 @@
             <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.72rem; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-truck-ramp-box me-1"></i> Red de Distribución Inter-Refugios
             </span>
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 Optimización Heurística de Cobertura
             </span>
         </div>
@@ -33,9 +33,9 @@
                 <span class="text-warning d-block" style="font-size: 0.68rem; text-transform: uppercase;">En Tránsito</span>
                 <strong class="text-warning fs-6"><i class="fa-solid fa-truck-moving me-1"></i> {{ $enTransito }}</strong>
             </div>
-            <div class="p-2 px-3 rounded-3" style="background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.3); text-align: center;">
-                <span class="text-info d-block" style="font-size: 0.68rem; text-transform: uppercase;">Por Aprobar</span>
-                <strong class="text-info fs-6">{{ $solicitadas }}</strong>
+            <div class="p-2 px-3 rounded-3" style="background: rgba(230,168,108,0.1); border: 1px solid rgba(230,168,108,0.3); text-align: center;">
+                <span class="d-block" style="font-size: 0.68rem; text-transform: uppercase; color: var(--accent-light);">Por Aprobar</span>
+                <strong class="fs-6" style="color: var(--accent-light);">{{ $solicitadas }}</strong>
             </div>
             <div class="p-2 px-3 rounded-3" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); text-align: center;">
                 <span class="text-success d-block" style="font-size: 0.68rem; text-transform: uppercase;">Completadas</span>
@@ -51,7 +51,7 @@
 
 <!-- 2. SUGERENCIAS HEURÍSTICAS DE REBALANCEO DE INVESTIGACIÓN DE OPERACIONES -->
 @if(!empty($sugerencias))
-<div class="glass-card p-4 mb-4" style="border-left: 4px solid #0ea5e9;">
+<div class="glass-card p-4 mb-4" style="border-left: 4px solid var(--accent);">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <div>
             <h5 class="fw-bold text-white mb-1"><i class="fa-solid fa-route text-info me-2"></i> Rutas Recomendadas por el Algoritmo I.O.</h5>
@@ -59,7 +59,7 @@
                 Detecta refugios en riesgo inminente (&lt; 2.5 días) y propone envíos automáticos desde refugios con excedente seguro (&gt; 6 días).
             </p>
         </div>
-        <span class="bg-glass bg-info2">{{ count($sugerencias) }} acciones calculadas</span>
+        <span class="bg-glass bg-amber">{{ count($sugerencias) }} acciones calculadas</span>
     </div>
 
     <div class="row g-3">
@@ -142,7 +142,7 @@
                 @forelse($transfers as $t)
                 <tr>
                     <td>
-                        <code style="color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 6px;">{{ $t->codigo_transferencia }}</code>
+                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $t->codigo_transferencia }}</code>
                     </td>
                     <td>
                         <span class="bg-glass {{ $t->prioridad_badge['class'] }}">

@@ -6,12 +6,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'NutriLnk') }} — @yield('title', 'Gestión Humanitaria')</title>
     
+    <!-- Instant Theme Loader (Zero Flash) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('app-theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        })();
+    </script>
+
     <!-- CSS Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Scripts -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -19,25 +27,83 @@
 
     <style>
         :root {
-            --bg-primary: #07090e;
-            --bg-secondary: #0c101c;
-            --bg-card: rgba(18, 24, 38, 0.7);
-            --bg-card-hover: rgba(26, 34, 52, 0.85);
-            --sidebar-bg: rgba(10, 14, 24, 0.95);
-            --accent: #0ea5e9;
-            --accent-light: #38bdf8;
-            --accent-glow: rgba(14, 165, 233, 0.4);
-            --emerald: #10b981;
-            --emerald-glow: rgba(16, 185, 129, 0.35);
-            --amber: #f59e0b;
+            --bg-primary: #06080d;
+            --bg-secondary: #0a0d18;
+            --bg-card: rgba(14, 18, 30, 0.80);
+            --bg-card-hover: rgba(20, 26, 42, 0.92);
+            --sidebar-bg: rgba(8, 10, 20, 0.97);
+            /* Acento principal: ámbar/dorado igual que el login */
+            --accent: #d89656;
+            --accent-light: #e6a86c;
+            --accent-glow: rgba(216, 150, 86, 0.38);
+            /* Colores secundarios reducidos — solo para semáforos de estado */
+            --ok: #10b981;
+            --ok-glow: rgba(16, 185, 129, 0.3);
+            --warn: #e6a86c;
+            --danger: #f43f5e;
+            --info: #e6a86c;
+            /* Ámbar = acento principal del login */
+            --amber: #e6a86c;
             --rose: #f43f5e;
-            --purple: #8b5cf6;
-            --text-primary: #f8fafc;
-            --text-muted: rgba(226, 232, 240, 0.65);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.16);
-            --border-accent: rgba(56, 189, 248, 0.4);
+            --purple: #d89656;
+            --text-primary: #f5f0e8;
+            --text-muted: rgba(220, 210, 195, 0.65);
+            --border: rgba(230, 168, 108, 0.10);
+            --border-hover: rgba(230, 168, 108, 0.22);
+            --border-accent: rgba(230, 168, 108, 0.40);
             --sidebar-width: 268px;
+        }
+
+        [data-bs-theme="light"] {
+            --bg-primary: #f5f0e8;
+            --bg-secondary: #ede6d8;
+            --bg-card: rgba(255, 252, 245, 0.92);
+            --bg-card-hover: rgba(255, 255, 255, 0.99);
+            --sidebar-bg: rgba(250, 246, 238, 0.97);
+            --accent: #c88340;
+            --accent-light: #d89656;
+            --accent-glow: rgba(200, 131, 64, 0.25);
+            --ok: #059669;
+            --ok-glow: rgba(5, 150, 105, 0.18);
+            --warn: #d97706;
+            --danger: #e11d48;
+            --info: #c88340;
+            --amber: #c88340;
+            --rose: #e11d48;
+            --purple: #c88340;
+            --text-primary: #1a1008;
+            --text-muted: #78614a;
+            --border: rgba(180, 130, 80, 0.12);
+            --border-hover: rgba(180, 130, 80, 0.24);
+            --border-accent: rgba(200, 131, 64, 0.40);
+            --sidebar-width: 268px;
+        }
+
+        /* Unificación global de clases auxiliares con la paleta ámbar */
+        .text-info {
+            color: var(--accent-light) !important;
+        }
+        .border-info {
+            border-color: var(--border-accent) !important;
+        }
+        .bg-info {
+            background-color: var(--accent) !important;
+            color: #fff !important;
+        }
+        .badge.bg-info {
+            background: rgba(230, 168, 108, 0.15) !important;
+            color: var(--accent-light) !important;
+            border: 1px solid rgba(230, 168, 108, 0.35) !important;
+        }
+        .btn-info {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light)) !important;
+            border-color: var(--accent) !important;
+            color: #fff !important;
+        }
+        .alert-info {
+            background: rgba(230, 168, 108, 0.12) !important;
+            border-color: rgba(230, 168, 108, 0.30) !important;
+            color: var(--accent-light) !important;
         }
 
         * {
@@ -48,15 +114,104 @@
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-primary);
             background-image:
-                radial-gradient(ellipse 70% 50% at 15% 0%, rgba(14, 165, 233, 0.14) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 45% at 85% 100%, rgba(16, 185, 129, 0.10) 0%, transparent 60%),
-                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 80%);
+                radial-gradient(ellipse 70% 50% at 15% 0%, rgba(216, 150, 86, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 45% at 85% 100%, rgba(180, 120, 60, 0.07) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(120, 80, 30, 0.04) 0%, transparent 80%);
             background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        [data-bs-theme="light"] body {
+            background-image:
+                radial-gradient(ellipse 70% 50% at 15% 0%, rgba(200, 131, 64, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 45% at 85% 100%, rgba(180, 120, 60, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(120, 80, 30, 0.02) 0%, transparent 80%);
+        }
+
+        /* macOS Window Dots on Sidebar (Inspired by Image 2) */
+        .sidebar-window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px 0;
+        }
+
+        .macos-window-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .macos-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .macos-dot.dot-red { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.4); }
+        .macos-dot.dot-yellow { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.4); }
+        .macos-dot.dot-green { background: #27c93f; box-shadow: 0 0 6px rgba(39, 201, 63, 0.4); }
+
+        .os-badge {
+            font-size: 0.60rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Theme Toggle Button in Topbar */
+        .theme-switch-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 5px 12px 5px 6px;
+            border-radius: 9999px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(12px);
+            user-select: none;
+        }
+
+        [data-bs-theme="light"] .theme-switch-pill {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-switch-pill:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .theme-switch-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e4aa6e, #b06030);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: transform 0.3s ease;
+        }
+
+        [data-bs-theme="light"] .theme-switch-indicator {
+            background: linear-gradient(135deg, #e4aa6e, #c88340);
+            box-shadow: 0 0 10px rgba(200, 131, 64, 0.35);
         }
 
         /* SIDEBAR (Estilo Dock / Glassmorphism) */
@@ -100,13 +255,13 @@
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #10b981 100%);
+            background: linear-gradient(135deg, #d89656 0%, #c07840 50%, #b06030 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.15rem;
             color: #fff;
-            box-shadow: 0 4px 18px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 18px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.25);
             flex-shrink: 0;
         }
 
@@ -114,7 +269,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.05rem;
             font-weight: 700;
-            color: #fff;
+            color: #f5ede0;
             letter-spacing: -0.3px;
             margin: 0;
             line-height: 1.2;
@@ -122,7 +277,7 @@
 
         .sidebar-logo-text small {
             font-size: 0.65rem;
-            color: #38bdf8;
+            color: #e6a86c;
             font-weight: 600;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -163,8 +318,8 @@
 
         .sidebar-search-input:focus {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 0 14px rgba(14, 165, 233, 0.25);
+            border-color: rgba(230, 168, 108, 0.5);
+            box-shadow: 0 0 14px rgba(216, 150, 86, 0.25);
         }
 
         .sidebar-search-input::placeholder {
@@ -192,12 +347,12 @@
             overflow-x: hidden;
             padding: 8px 12px 14px;
             scrollbar-width: thin;
-            scrollbar-color: rgba(56, 189, 248, 0.25) transparent;
+            scrollbar-color: rgba(230, 168, 108, 0.25) transparent;
         }
 
         .sidebar-nav::-webkit-scrollbar { width: 4px; }
         .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.25); border-radius: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(230, 168, 108, 0.25); border-radius: 4px; }
 
         .sidebar-section-group {
             margin-bottom: 12px;
@@ -281,21 +436,21 @@
         }
 
         .sidebar-nav .nav-link:hover .nav-icon {
-            background: rgba(14, 165, 233, 0.2);
-            color: #38bdf8;
+            background: rgba(216, 150, 86, 0.2);
+            color: #e6a86c;
         }
 
         .sidebar-nav .nav-link.active {
-            color: #ffffff;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(16, 185, 129, 0.12) 100%);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.18);
+            color: #f5ede0;
+            background: linear-gradient(135deg, rgba(216, 150, 86, 0.22) 0%, rgba(180, 100, 40, 0.12) 100%);
+            border-color: rgba(230, 168, 108, 0.45);
+            box-shadow: 0 4px 16px rgba(216, 150, 86, 0.18);
             font-weight: 600;
         }
 
         .sidebar-nav .nav-link.active .nav-icon {
-            background: linear-gradient(135deg, #0284c7, #38bdf8);
-            color: #fff;
+            background: linear-gradient(135deg, #d89656, #e6a86c);
+            color: #1a0e04;
             box-shadow: 0 0 12px var(--accent-glow);
         }
 
@@ -329,13 +484,13 @@
             width: 34px;
             height: 34px;
             border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent), var(--emerald));
+            background: linear-gradient(135deg, var(--accent), #b86030);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.88rem;
             font-weight: 700;
-            color: #fff;
+            color: #1a0e04;
             flex-shrink: 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
@@ -436,8 +591,8 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background-color: var(--emerald);
-            box-shadow: 0 0 6px var(--emerald);
+            background-color: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
             animation: pulse-dot 1.5s infinite;
         }
 
@@ -466,8 +621,8 @@
         }
 
         .shelter-select-wrap:focus-within {
-            border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
+            border-color: rgba(230, 168, 108, 0.5);
+            box-shadow: 0 0 12px rgba(216, 150, 86, 0.2);
         }
 
         .shelter-select-wrap select {
@@ -492,9 +647,9 @@
             align-items: center;
             gap: 6px;
             font-size: 0.72rem;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #34d399;
+            background: rgba(216, 150, 86, 0.12);
+            border: 1px solid rgba(230, 168, 108, 0.35);
+            color: #e6a86c;
             padding: 5px 12px;
             border-radius: 9999px;
             font-weight: 600;
@@ -582,8 +737,8 @@
         }
 
         .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 165, 233, 0.12);
+            border-color: rgba(230, 168, 108, 0.22);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 25px rgba(216, 150, 86, 0.10);
         }
 
         /* Section Cockpit Header Component (Used in all submodules) */
@@ -610,7 +765,7 @@
             top: -40px; right: -40px;
             width: 160px; height: 160px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(216, 150, 86, 0.18) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -690,22 +845,23 @@
             letter-spacing: 0.3px;
         }
 
-        .bg-ok { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
-        .bg-warn { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
-        .bg-err { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.35); }
-        .bg-info2 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
-        .bg-purple { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.35); }
+        .bg-ok { background: rgba(16, 185, 129, 0.12); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.28); }
+        .bg-warn { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
+        .bg-err { background: rgba(244, 63, 94, 0.12); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.32); }
+        .bg-info2 { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
+        .bg-amber { background: rgba(230, 168, 108, 0.15); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
+        .bg-purple { background: rgba(216, 150, 86, 0.12); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.28); }
 
         /* BUTTONS */
         .btn-accent {
-            background: linear-gradient(135deg, var(--accent), #0284c7);
+            background: linear-gradient(135deg, #d89656 0%, #c07840 100%);
             border: none;
-            color: #fff;
-            font-weight: 600;
+            color: #1a0e04;
+            font-weight: 700;
             font-size: 0.84rem;
             padding: 9px 18px;
             border-radius: 12px;
-            box-shadow: 0 4px 16px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 16px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.22);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
@@ -718,8 +874,8 @@
 
         .btn-accent:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.35);
-            color: #fff;
+            box-shadow: 0 8px 24px rgba(216, 150, 86, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            color: #0d0600;
         }
 
         .btn-glass {
@@ -762,7 +918,7 @@
 
         .stat-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(14, 165, 233, 0.15);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(216, 150, 86, 0.18);
             border-color: rgba(255, 255, 255, 0.18);
         }
 
@@ -773,11 +929,11 @@
             font-size: 1.2rem; margin-bottom: 12px;
         }
 
-        .stat-card.c-blue   .stat-icon { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
+        .stat-card.c-blue   .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
         .stat-card.c-green  .stat-icon { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .stat-card.c-amber  .stat-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .stat-card.c-amber  .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
         .stat-card.c-red    .stat-icon { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-        .stat-card.c-purple .stat-icon { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .stat-card.c-purple .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
 
         .stat-label {
             font-size: 0.70rem; font-weight: 700; letter-spacing: 0.8px;
@@ -804,8 +960,8 @@
 
         .form-control-glass:focus, .form-select-glass:focus {
             background: rgba(15, 21, 37, 0.9) !important;
-            border-color: rgba(56, 189, 248, 0.6) !important;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+            border-color: rgba(230, 168, 108, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(216, 150, 86, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
             outline: none !important;
             color: #fff !important;
         }
@@ -829,10 +985,283 @@
             transition: width 0.6s ease;
         }
 
-        .bar-accent { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+        .bar-accent { background: linear-gradient(90deg, #d89656, #e6a86c); }
         .bar-success { background: linear-gradient(90deg, #059669, #10b981); }
-        .bar-warning { background: linear-gradient(90deg, #d97706, #f59e0b); }
+        .bar-warning { background: linear-gradient(90deg, #c07840, #d89656); }
         .bar-danger { background: linear-gradient(90deg, #e11d48, #f43f5e); }
+
+        /* LIGHT MODE COMPONENT OVERRIDES (Inspired by Image 2 Frosted Minimalist Aesthetics) */
+        [data-bs-theme="light"] .sidebar {
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+        }
+
+        [data-bs-theme="light"] .sidebar-logo {
+            border-bottom: 1px solid var(--border);
+        }
+
+        [data-bs-theme="light"] .sidebar-logo-text h5 {
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .sidebar-search-input {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #0f172a;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-bs-theme="light"] .sidebar-search-input:focus {
+            background: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(200, 131, 64, 0.18);
+        }
+
+        [data-bs-theme="light"] .sidebar-search-input::placeholder {
+            color: #94a3b8;
+        }
+
+        [data-bs-theme="light"] .sidebar-section-label {
+            color: #64748b;
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link {
+            color: #475569;
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link:hover {
+            color: #0f172a;
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.04);
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link .nav-icon {
+            background: rgba(0, 0, 0, 0.04);
+            color: #64748b;
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link:hover .nav-icon {
+            background: rgba(200, 131, 64, 0.12);
+            color: #c88340;
+        }
+
+        /* Active glowing frosted pill (Image 2 Style) */
+        [data-bs-theme="light"] .sidebar-nav .nav-link.active {
+            color: #c88340;
+            background: #ffffff;
+            border-color: rgba(200, 131, 64, 0.35);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link.active .nav-icon {
+            background: linear-gradient(135deg, #d89656, #e6a86c);
+            color: #1a0e04;
+            box-shadow: 0 2px 8px rgba(200, 131, 64, 0.35);
+        }
+
+        [data-bs-theme="light"] .sidebar-footer {
+            background: rgba(241, 245, 249, 0.95);
+            border-top: 1px solid var(--border);
+        }
+
+        [data-bs-theme="light"] .sidebar-user {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-bs-theme="light"] .user-name {
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .user-role {
+            color: #64748b;
+        }
+
+        /* Topbar Light Mode */
+        [data-bs-theme="light"] .topbar {
+            background: rgba(246, 248, 252, 0.9);
+            border-bottom: 1px solid var(--border);
+        }
+
+        [data-bs-theme="light"] .greeting-text {
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .live-clock-pill {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: #475569;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-bs-theme="light"] .shelter-select-wrap {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-bs-theme="light"] .shelter-select-wrap select {
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .shelter-select-wrap select option,
+        [data-bs-theme="light"] .shelter-select-wrap select optgroup {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .system-status-pill {
+            background: rgba(200, 131, 64, 0.12);
+            border-color: rgba(200, 131, 64, 0.3);
+            color: #c88340;
+        }
+
+        /* Cards & Components Light Mode (Image 2 Neomorphic Soft Depth) */
+        [data-bs-theme="light"] .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-bs-theme="light"] .glass-card:hover {
+            border-color: rgba(200, 131, 64, 0.25);
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08), 0 0 20px rgba(200, 131, 64, 0.10);
+        }
+
+        [data-bs-theme="light"] .cockpit-page-header {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        [data-bs-theme="light"] .cockpit-header-title {
+            color: #0f172a;
+        }
+
+        [data-bs-theme="light"] .cockpit-header-subtitle {
+            color: #64748b;
+        }
+
+        [data-bs-theme="light"] .section-heading {
+            color: #475569;
+        }
+
+        /* Stat Cards Light Mode (Image 2 Clean Style) */
+        [data-bs-theme="light"] .stat-card,
+        [data-bs-theme="light"] .neon-stat-card {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.07) !important;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+        }
+
+        [data-bs-theme="light"] .stat-value,
+        [data-bs-theme="light"] .stat-big-num {
+            color: #0f172a !important;
+        }
+
+        [data-bs-theme="light"] .stat-label,
+        [data-bs-theme="light"] .stat-title {
+            color: #64748b !important;
+        }
+
+        /* Tables Light Mode */
+        [data-bs-theme="light"] .dark-table thead th {
+            background: #f8fafc;
+            color: #475569;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        [data-bs-theme="light"] .dark-table tbody td {
+            color: #0f172a;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-bs-theme="light"] .dark-table tbody tr:hover td {
+            background: rgba(200, 131, 64, 0.04);
+        }
+
+        /* Inputs & Form Controls Light Mode */
+        [data-bs-theme="light"] .form-control-glass,
+        [data-bs-theme="light"] .form-select-glass {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.12) !important;
+            color: #0f172a !important;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        }
+
+        [data-bs-theme="light"] .form-control-glass:focus,
+        [data-bs-theme="light"] .form-select-glass:focus {
+            background: #ffffff !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(200, 131, 64, 0.18) !important;
+            color: #0f172a !important;
+        }
+
+        [data-bs-theme="light"] .form-control-glass::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        [data-bs-theme="light"] .form-label-glass {
+            color: #475569 !important;
+        }
+
+        [data-bs-theme="light"] .btn-glass {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #0f172a;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-bs-theme="light"] .btn-glass:hover {
+            background: #f8fafc;
+            border-color: rgba(200, 131, 64, 0.35);
+            color: #c88340;
+        }
+
+        /* Dashboard Specific Widgets in Light Mode */
+        [data-bs-theme="light"] .cockpit-hero {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05) !important;
+        }
+
+        [data-bs-theme="light"] .digital-clock-display {
+            color: #0f172a !important;
+            text-shadow: none !important;
+        }
+
+        [data-bs-theme="light"] .digital-date-sub {
+            color: #64748b !important;
+        }
+
+        [data-bs-theme="light"] .weather-widget-card {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        [data-bs-theme="light"] .app-tile-btn {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.07) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+        }
+
+        [data-bs-theme="light"] .app-tile-btn:hover {
+            border-color: var(--accent) !important;
+            box-shadow: 0 8px 24px rgba(200, 131, 64, 0.16) !important;
+        }
+
+        [data-bs-theme="light"] .app-tile-label {
+            color: #0f172a !important;
+        }
+
+        [data-bs-theme="light"] .todo-item {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.07) !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+        }
 
         @media (max-width: 992px) {
             .sidebar {
@@ -857,6 +1286,16 @@
 
 <!-- Sidebar Navigation -->
 <nav class="sidebar" id="appSidebar">
+    <!-- macOS Window Control Dots (Image 2 style) -->
+    <div class="sidebar-window-header">
+        <div class="macos-window-dots">
+            <span class="macos-dot dot-red" title="Cerrar"></span>
+            <span class="macos-dot dot-yellow" title="Minimizar"></span>
+            <span class="macos-dot dot-green" title="Maximizar"></span>
+        </div>
+        <span class="os-badge">NUTRILNK OS</span>
+    </div>
+
     <!-- Logo Header -->
     <div class="sidebar-logo">
         <a href="{{ route('dashboard') }}" class="sidebar-logo-brand">
@@ -886,7 +1325,7 @@
         <div class="sidebar-section-group" data-section="control">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-compass text-info"></i> Centro de Control
+                    <i class="fa-solid fa-compass" style="color: #e6a86c;"></i> Centro de Control
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -906,7 +1345,7 @@
         <div class="sidebar-section-group" data-section="humanitaria">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-people-roof text-success"></i> Gestión Humanitaria
+                    <i class="fa-solid fa-people-roof" style="color: #e6a86c;"></i> Gestión Humanitaria
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -937,7 +1376,7 @@
         <div class="sidebar-section-group" data-section="logistica">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-truck-ramp-box text-warning"></i> Logística &amp; Envíos
+                    <i class="fa-solid fa-truck-ramp-box" style="color: #e6a86c;"></i> Logística &amp; Envíos
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -968,7 +1407,7 @@
         <div class="sidebar-section-group" data-section="herramientas">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-brain text-purple"></i> Herramientas I.O. &amp; Control
+                    <i class="fa-solid fa-brain" style="color: #e6a86c;"></i> Herramientas I.O. &amp; Control
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -1033,7 +1472,7 @@
                     <div class="user-role" style="color:rgba(251,191,36,0.75);">Exploración / Solo Lectura</div>
                 </div>
             </div>
-            <a href="{{ route('login') }}" class="btn-logout" style="background:rgba(2,132,199,0.15); border-color:rgba(2,132,199,0.4); color:#38bdf8; text-decoration:none; margin-bottom:6px;">
+            <a href="{{ route('login') }}" class="btn-logout" style="background:rgba(216,150,86,0.15); border-color:rgba(216,150,86,0.35); color:#e6a86c; text-decoration:none; margin-bottom:6px;">
                 <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
             </a>
             <a href="{{ route('guest.exit') }}" class="btn-logout" style="font-size:0.72rem; opacity:0.7; text-decoration:none;">
@@ -1046,7 +1485,7 @@
                     <div class="user-name text-truncate d-flex align-items-center justify-content-between">
                         <span class="text-truncate">{{ auth()->user()->name ?? 'Usuario' }}</span>
                         @if(auth()->check())
-                            <a href="{{ route('carnets.show', auth()->user()) }}" target="_blank" title="Ver mi credencial oficial" style="color:#38bdf8; font-size:0.85rem;" class="ms-1">
+                            <a href="{{ route('carnets.show', auth()->user()) }}" target="_blank" title="Ver mi credencial oficial" style="color:#e6a86c; font-size:0.85rem;" class="ms-1">
                                 <i class="fa-solid fa-id-badge"></i>
                             </a>
                         @endif
@@ -1068,8 +1507,11 @@
 <div class="main-wrapper">
     <!-- Cockpit Topbar -->
     <header class="topbar">
-        <!-- Left: Saludo & Hora en vivo -->
+        <!-- Left: Hamburger Móvil & Saludo & Hora en vivo -->
         <div class="topbar-left">
+            <button type="button" class="btn btn-sm btn-glass d-lg-none me-2" onclick="document.getElementById('appSidebar').classList.toggle('mobile-open')" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <div class="greeting-badge">
                 <span class="fs-4">👋</span>
                 <div>
@@ -1084,14 +1526,22 @@
             </div>
         </div>
 
-        <!-- Right: Shelter Switcher & Status -->
+        <!-- Right: Theme Switcher & Shelter Switcher & Status -->
         <div class="topbar-right">
+            <!-- Theme Toggle Button (Oscuro / Claro) -->
+            <button type="button" class="theme-switch-pill" id="themeSwitchBtn" onclick="toggleTheme()" title="Alternar Modo Oscuro / Modo Claro" aria-label="Cambiar tema de color">
+                <div class="theme-switch-indicator">
+                    <i class="fa-solid fa-moon" id="themeSwitchIcon"></i>
+                </div>
+                <span class="theme-switch-text" id="themeSwitchText">Modo Oscuro</span>
+            </button>
+
             <form action="{{ route('shelter.switch') }}" method="POST" id="topbarShelterForm" class="d-flex align-items-center m-0">
                 @csrf
                 <div class="shelter-select-wrap">
-                    <i class="fa-solid fa-building-shield me-2 text-info" style="font-size: 0.85rem;"></i>
+                    <i class="fa-solid fa-building-shield me-2" style="font-size: 0.85rem; color: #e6a86c;"></i>
                     <select name="shelter_id" onchange="document.getElementById('topbarShelterForm').submit()" title="Seleccionar contexto operativo">
-                        <option value="" style="background: #0f172a; color: #38bdf8;">🌐 Red Centralizada (Todos los Refugios)</option>
+                        <option value="" style="background: #0f172a; color: #e6a86c;">🌐 Red Centralizada (Todos los Refugios)</option>
                         <optgroup label="── Centros / Albergues Humanitarios ──" style="background: #090d16; color: #94a3b8;">
                             @foreach(\App\Models\Shelter::orderBy('codigo')->get() as $navShelter)
                                 <option value="{{ $navShelter->id }}" {{ session('shelter_id') == $navShelter->id ? 'selected' : '' }} style="background: #0f172a; color: #fff;">
@@ -1104,7 +1554,7 @@
             </form>
 
             @if(session('shelter_id'))
-                <a href="{{ route('shelter.switch') }}" class="btn-glass py-1 px-2 text-info" style="font-size: 0.74rem; border-radius: 10px;" title="Restablecer a Red Centralizada">
+                <a href="{{ route('shelter.switch') }}" class="btn-glass py-1 px-2" style="color: #e6a86c; font-size: 0.74rem; border-radius: 10px;" title="Restablecer a Red Centralizada">
                     <i class="fa-solid fa-arrows-rotate me-1"></i> Ver Centralizado
                 </a>
             @endif
@@ -1253,6 +1703,34 @@
             }
         });
     }
+
+    // Theme Switcher Engine (Dark / Light Mode)
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('app-theme', theme);
+
+        const icon = document.getElementById('themeSwitchIcon');
+        const text = document.getElementById('themeSwitchText');
+        if (theme === 'light') {
+            if (icon) icon.className = 'fa-solid fa-sun';
+            if (text) text.textContent = 'Modo Claro';
+        } else {
+            if (icon) icon.className = 'fa-solid fa-moon';
+            if (text) text.textContent = 'Modo Oscuro';
+        }
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+    }
+
+    // Initialize toggle state on document ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('app-theme') || 'dark';
+        applyTheme(savedTheme);
+    });
 </script>
 
 @stack('scripts')

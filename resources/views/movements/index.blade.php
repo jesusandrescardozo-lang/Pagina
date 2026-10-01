@@ -16,7 +16,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-clipboard-check me-1"></i> Auditoría FEFO Activa
             </span>
             <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         @if($mov->batch)
-                            <code style="color: #38bdf8; font-weight: 700;">{{ $mov->batch->numero_lote }}</code>
+                            <code style="color: #e6a86c; font-weight: 700;">{{ $mov->batch->numero_lote }}</code>
                             @if($mov->batch->fecha_vencimiento)
                                 <small class="d-block text-muted">Vence: {{ $mov->batch->fecha_vencimiento->format('d/m/Y') }}</small>
                             @endif

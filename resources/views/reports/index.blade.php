@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-file-shield me-1"></i> Documentación Oficial Certificada
             </span>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 9999px; padding: 3px 10px;">
                 Exportación PDF Directa
             </span>
         </div>
@@ -26,14 +26,14 @@
 <div class="row g-4">
     <!-- Reporte 1: Estado de Inventario y Autonomía -->
     <div class="col-lg-4">
-        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #0ea5e9;">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #d89656;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(14, 165, 233, 0.35); display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8; font-size: 0.68rem;">PDF &bull; Existencias</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Existencias</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Inventario &amp; Cobertura</h5>
                     </div>
                 </div>
@@ -64,14 +64,14 @@
 
     <!-- Reporte 2: Kardex de Movimientos -->
     <div class="col-lg-4">
-        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #10b981;">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #c07840;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); display: flex; align-items: center; justify-content: center; color: #34d399; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
                         <i class="fa-solid fa-clipboard-check"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.68rem;">PDF &bull; Trazabilidad</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Trazabilidad</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Kardex Oficial</h5>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <input type="date" name="fecha_hasta" class="form-control-glass">
                     </div>
                 </div>
-                <button type="submit" class="btn-accent w-100 justify-content-center" style="background: linear-gradient(135deg, #059669, #10b981);">
+                <button type="submit" class="btn-accent w-100 justify-content-center">
                     <i class="fa-solid fa-file-arrow-down me-1"></i> Descargar Kardex (PDF)
                 </button>
             </form>
@@ -112,14 +112,14 @@
 
     <!-- Reporte 3: Informe Técnico de Investigación de Operaciones -->
     <div class="col-lg-4">
-        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #f59e0b;">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #e6a86c;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-size: 0.68rem;">PDF &bull; Técnico I.O.</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Técnico I.O.</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Modelos I.O. &amp; ABC</h5>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
             </div>
 
             <div class="pt-3 border-top border-secondary border-opacity-25 mt-auto">
-                <a href="{{ route('reports.analisis-operaciones') }}" class="btn-accent w-100 justify-content-center" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                <a href="{{ route('reports.analisis-operaciones') }}" class="btn-accent w-100 justify-content-center">
                     <i class="fa-solid fa-file-arrow-down me-1"></i> Descargar Informe I.O. (PDF)
                 </a>
             </div>

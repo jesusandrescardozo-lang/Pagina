@@ -32,8 +32,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'otp.verified' => \App\Http\Middleware\EnsureOtpVerified::class,
-        'qr.verified' => \App\Http\Middleware\EnsureOtpVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest.allowed' => \App\Http\Middleware\GuestModeMiddleware::class,

@@ -16,16 +16,16 @@
     /* Ambient Neon Glow Lines & 3D Accent Layers */
     .cockpit-hero {
         position: relative;
-        background: linear-gradient(145deg, rgba(20, 28, 48, 0.75) 0%, rgba(9, 13, 22, 0.9) 100%);
+        background: linear-gradient(145deg, rgba(20, 24, 38, 0.85) 0%, rgba(8, 10, 16, 0.95) 100%);
         backdrop-filter: blur(28px) saturate(200%);
         -webkit-backdrop-filter: blur(28px) saturate(200%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(230, 168, 108, 0.16);
         border-radius: 26px;
         padding: 28px 32px;
         box-shadow: 
             0 20px 50px rgba(0, 0, 0, 0.7),
-            inset 0 1px 1px rgba(255, 255, 255, 0.2),
-            0 0 30px rgba(14, 165, 233, 0.12);
+            inset 0 1px 1px rgba(255, 255, 255, 0.15),
+            0 0 30px rgba(216, 150, 86, 0.14);
         margin-bottom: 26px;
         overflow: hidden;
     }
@@ -38,7 +38,7 @@
         width: 260px;
         height: 260px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 70%);
+        background: radial-gradient(circle, rgba(216, 150, 86, 0.22) 0%, rgba(180, 100, 40, 0.08) 50%, transparent 70%);
         filter: blur(40px);
         pointer-events: none;
     }
@@ -51,7 +51,7 @@
         letter-spacing: -1.5px;
         color: #ffffff;
         line-height: 1;
-        text-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 10px rgba(14, 165, 233, 0.5);
+        text-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 12px rgba(216, 150, 86, 0.45);
     }
 
     .digital-date-sub {
@@ -64,7 +64,7 @@
     /* Weather & Status Widget (Inspired by Image 4) */
     .weather-widget-card {
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(230, 168, 108, 0.16);
         border-radius: 18px;
         padding: 12px 18px;
         display: flex;
@@ -77,14 +77,14 @@
         width: 44px;
         height: 44px;
         border-radius: 14px;
-        background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(99, 102, 241, 0.2));
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: linear-gradient(135deg, rgba(216, 150, 86, 0.25), rgba(180, 100, 40, 0.18));
+        border: 1px solid rgba(230, 168, 108, 0.35);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #38bdf8;
+        color: #e6a86c;
         font-size: 1.3rem;
-        box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);
+        box-shadow: 0 0 15px rgba(216, 150, 86, 0.25);
     }
 
     /* Futuristic Stat Cards (Inspired by Image 2 & 3) */
@@ -101,8 +101,8 @@
 
     .neon-stat-card:hover {
         transform: translateY(-3px);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 165, 233, 0.15);
+        border-color: rgba(230, 168, 108, 0.28);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(216, 150, 86, 0.15);
     }
 
     .neon-stat-card .top-badge-row {
@@ -139,10 +139,10 @@
         gap: 4px;
     }
 
-    .tag-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
-    .tag-cyan { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.35); }
-    .tag-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.35); }
-    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .tag-emerald { background: rgba(16, 185, 129, 0.12); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.28); }
+    .tag-cyan { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
+    .tag-rose { background: rgba(244, 63, 94, 0.12); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.30); }
+    .tag-amber { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
 
     /* Quick Access App Tiles (Inspired by Image 4) */
     .app-tile-btn {
@@ -161,10 +161,10 @@
     }
 
     .app-tile-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(230, 168, 108, 0.08);
+        border-color: rgba(230, 168, 108, 0.40);
         transform: translateY(-3px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(14, 165, 233, 0.2);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(216, 150, 86, 0.18);
     }
 
     .app-tile-icon {
@@ -184,12 +184,12 @@
         transform: scale(1.1);
     }
 
-    .icon-blue { background: linear-gradient(135deg, #0284c7, #38bdf8); color: #fff; }
-    .icon-amber { background: linear-gradient(135deg, #d97706, #fbbf24); color: #fff; }
-    .icon-emerald { background: linear-gradient(135deg, #059669, #34d399); color: #fff; }
-    .icon-purple { background: linear-gradient(135deg, #7c3aed, #a78bfa); color: #fff; }
-    .icon-rose { background: linear-gradient(135deg, #e11d48, #fb7185); color: #fff; }
-    .icon-slate { background: linear-gradient(135deg, #334155, #64748b); color: #fff; }
+    .icon-blue   { background: linear-gradient(135deg, #d89656, #c07840); color: #1a0e04; }
+    .icon-amber  { background: linear-gradient(135deg, #c07840, #a05828); color: #f5ede0; }
+    .icon-emerald{ background: linear-gradient(135deg, #d89656, #b06030); color: #1a0e04; }
+    .icon-purple { background: linear-gradient(135deg, #b87840, #d09050); color: #1a0e04; }
+    .icon-rose   { background: linear-gradient(135deg, #c06830, #d88050); color: #f5ede0; }
+    .icon-slate  { background: linear-gradient(135deg, #2a1e12, #3e2c1a); color: #e6a86c; border: 1px solid rgba(230,168,108,0.3); }
 
     /* Interactive To-Do Checklist Widget (Inspired by Image 4) */
     .todo-item {
@@ -229,9 +229,9 @@
     }
 
     .todo-item.completed .todo-checkbox {
-        background: var(--emerald);
-        border-color: var(--emerald);
-        color: #fff;
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #1a0e04;
     }
 
     /* Circular Health Gauge (Inspired by Image 2 & 3) */
@@ -258,7 +258,7 @@
         font-weight: 800;
         color: #fff;
         line-height: 1;
-        text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        text-shadow: 0 0 15px rgba(216, 150, 86, 0.4);
     }
 
     .gauge-subtext {
@@ -292,8 +292,8 @@
     }
 
     .flow-node {
-        background: rgba(14, 165, 233, 0.1);
-        border: 1px solid rgba(14, 165, 233, 0.3);
+        background: rgba(216, 150, 86, 0.12);
+        border: 1px solid rgba(230, 168, 108, 0.35);
         padding: 6px 12px;
         border-radius: 10px;
         font-size: 0.82rem;
@@ -302,7 +302,7 @@
     }
 
     .flow-arrow {
-        color: #38bdf8;
+        color: #e6a86c;
         font-size: 0.9rem;
         animation: flowPulse 2s infinite;
     }
@@ -310,6 +310,90 @@
     @keyframes flowPulse {
         0%, 100% { opacity: 0.4; transform: translateX(0); }
         50% { opacity: 1; transform: translateX(4px); }
+    }
+
+    /* LIGHT MODE STYLES FOR DASHBOARD (Inspired by Image 2) */
+    [data-bs-theme="light"] .cockpit-hero {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05) !important;
+    }
+
+    [data-bs-theme="light"] .digital-clock-display {
+        color: #0f172a !important;
+        text-shadow: none !important;
+    }
+
+    [data-bs-theme="light"] .digital-date-sub {
+        color: #64748b !important;
+    }
+
+    [data-bs-theme="light"] .weather-widget-card {
+        background: #f8fafc !important;
+        border-color: rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    [data-bs-theme="light"] .neon-stat-card {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    [data-bs-theme="light"] .neon-stat-card:hover {
+        border-color: rgba(200, 131, 64, 0.35) !important;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
+    }
+
+    [data-bs-theme="light"] .neon-stat-card .stat-big-num {
+        color: #0f172a !important;
+    }
+
+    [data-bs-theme="light"] .neon-stat-card .stat-title {
+        color: #64748b !important;
+    }
+
+    [data-bs-theme="light"] .app-tile-btn {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03) !important;
+    }
+
+    [data-bs-theme="light"] .app-tile-btn:hover {
+        border-color: var(--accent) !important;
+        box-shadow: 0 8px 24px rgba(200, 131, 64, 0.14) !important;
+    }
+
+    [data-bs-theme="light"] .todo-item {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.07) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    [data-bs-theme="light"] .todo-item:hover {
+        background: #f8fafc !important;
+        border-color: rgba(0, 0, 0, 0.12) !important;
+    }
+
+    [data-bs-theme="light"] .telemetry-route-card {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    [data-bs-theme="light"] .flow-node {
+        background: rgba(200, 131, 64, 0.08) !important;
+        border-color: rgba(200, 131, 64, 0.25) !important;
+        color: #c88340 !important;
+    }
+
+    [data-bs-theme="light"] .gauge-percent {
+        color: #0f172a !important;
+        text-shadow: none !important;
+    }
+
+    [data-bs-theme="light"] .gauge-subtext {
+        color: #64748b !important;
     }
 </style>
 
@@ -319,15 +403,15 @@
         <!-- Izquierda: Reloj Gigante y Fecha -->
         <div class="col-lg-5 col-md-6">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                     <i class="fa-solid fa-satellite-dish me-1"></i> Telemetría Activa en Tiempo Real
                 </span>
                 @if($activeShelter)
-                    <span class="badge" style="background: #0284c7; color: #fff; font-size: 0.72rem; border-radius: 9999px; padding: 3px 10px;">
+                    <span class="badge" style="background: rgba(216, 150, 86, 0.25); color: #f5ede0; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.4); border-radius: 9999px; padding: 3px 10px;">
                         [{{ $activeShelter->codigo }}] {{ $activeShelter->nombre }}
                     </span>
                 @else
-                    <span class="badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 9999px; padding: 3px 10px;">
+                    <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                         🌐 Red Metropolitana
                     </span>
                 @endif
@@ -339,9 +423,9 @@
         <!-- Centro: Barra de Búsqueda Rápida Widget (Imagen 4) -->
         <div class="col-lg-4 col-md-6">
             <div class="position-relative">
-                <div class="p-3 rounded-4" style="background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+                <div class="p-3 rounded-4" style="background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(230, 168, 108, 0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
                     <div class="d-flex align-items-center gap-2 mb-1">
-                        <i class="fa-solid fa-magnifying-glass text-info fs-6"></i>
+                        <i class="fa-solid fa-magnifying-glass fs-6" style="color: #e6a86c;"></i>
                         <span class="text-white fw-bold" style="font-size: 0.84rem;">Buscador Rápido</span>
                         <span class="ms-auto" style="font-size: 0.62rem; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 5px; color: rgba(255,255,255,0.5);">Ctrl + K</span>
                     </div>
@@ -365,7 +449,7 @@
                 <div>
                     <div class="fw-bold text-white fs-5" style="line-height: 1.1;">24°C</div>
                     <div class="text-muted small" style="font-size: 0.72rem;">Clima Operativo Estable</div>
-                    <span class="badge mt-1" style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.66rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <span class="badge mt-1" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.66rem; border: 1px solid rgba(216, 150, 86, 0.3);">
                         <i class="fa-solid fa-circle-check me-1"></i> Sin incidencias viales
                     </span>
                 </div>
@@ -400,17 +484,17 @@
         <div class="neon-stat-card h-100">
             <div class="top-badge-row">
                 <span class="stat-title">Grupos Prioritarios</span>
-                <span class="stat-glow-tag" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.35);">
+                <span class="stat-glow-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
                     <i class="fa-solid fa-shield-heart"></i> Atención Especial
                 </span>
             </div>
             <div class="stat-big-num mb-1">{{ number_format($poblacionNinos + $poblacionMayores + $poblacionMedica) }}</div>
             <div class="d-flex justify-content-between text-muted small mb-2" style="font-size: 0.74rem;">
-                <span><i class="fa-solid fa-baby text-info me-1"></i> {{ $poblacionNinos }} niños</span>
-                <span><i class="fa-solid fa-hospital text-danger me-1"></i> {{ $poblacionMedica }} médicos</span>
+                <span><i class="fa-solid fa-baby me-1" style="color: #e6a86c;"></i> {{ $poblacionNinos }} niños</span>
+                <span><i class="fa-solid fa-hospital me-1" style="color: #d89656;"></i> {{ $poblacionMedica }} médicos</span>
             </div>
             <div class="progress-glass">
-                <div class="bar" style="background: linear-gradient(90deg, #7c3aed, #a78bfa); width: 68%;"></div>
+                <div class="bar" style="background: linear-gradient(90deg, #d89656, #e6a86c); width: 68%;"></div>
             </div>
         </div>
     </div>
@@ -460,7 +544,7 @@
 <div class="glass-card p-4 mb-4">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <span class="section-heading mb-0 text-white">
-            <i class="fa-solid fa-grid-2 text-info"></i> Acceso Rápido a Módulos (Quick Access)
+            <i class="fa-solid fa-grid-2" style="color: #e6a86c;"></i> Acceso Rápido a Módulos (Quick Access)
         </span>
         <small class="text-muted" style="font-size: 0.74rem;">Acciones inmediatas con un solo clic</small>
     </div>
@@ -535,9 +619,9 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-circle-notch text-success"></i> Salud Global de Suministros
+                    <i class="fa-solid fa-circle-notch" style="color: #e6a86c;"></i> Salud Global de Suministros
                 </span>
-                <span class="stat-glow-tag tag-emerald">
+                <span class="stat-glow-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
                     <i class="fa-solid fa-bolt"></i> En Línea
                 </span>
             </div>
@@ -556,15 +640,15 @@
             <!-- Mini Barras de Telemetría -->
             <div class="mt-2">
                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.75rem;">
-                    <span class="text-muted"><i class="fa-solid fa-bowl-food text-warning me-1"></i> Cobertura Alimentaria</span>
+                    <span class="text-muted"><i class="fa-solid fa-bowl-food me-1" style="color: #e6a86c;"></i> Cobertura Alimentaria</span>
                     <strong class="text-white">94%</strong>
                 </div>
                 <div class="progress-glass mb-2">
-                    <div class="bar bar-success" style="width: 94%;"></div>
+                    <div class="bar bar-accent" style="width: 94%;"></div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.75rem;">
-                    <span class="text-muted"><i class="fa-solid fa-kit-medical text-danger me-1"></i> Cobertura Farmacéutica</span>
+                    <span class="text-muted"><i class="fa-solid fa-kit-medical me-1" style="color: #c07840;"></i> Cobertura Farmacéutica</span>
                     <strong class="text-white">82%</strong>
                 </div>
                 <div class="progress-glass mb-2">
@@ -572,11 +656,11 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.75rem;">
-                    <span class="text-muted"><i class="fa-solid fa-bed text-info me-1"></i> Capacidad de Hospedaje</span>
+                    <span class="text-muted"><i class="fa-solid fa-bed me-1" style="color: #e6a86c;"></i> Capacidad de Hospedaje</span>
                     <strong class="text-white">{{ $ocupacionPct }}%</strong>
                 </div>
                 <div class="progress-glass">
-                    <div class="bar" style="background: #8b5cf6; width: {{ min($ocupacionPct, 100) }}%;"></div>
+                    <div class="bar" style="background: linear-gradient(90deg, #c07840, #d89656); width: {{ min($ocupacionPct, 100) }}%;"></div>
                 </div>
             </div>
         </div>
@@ -587,9 +671,9 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-list-check text-info"></i> Acciones Operativas Prioritarias
+                    <i class="fa-solid fa-list-check" style="color: #e6a86c;"></i> Acciones Operativas Prioritarias
                 </span>
-                <span class="badge" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8; font-size: 0.72rem; border-radius: 6px;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 6px;">
                     <span id="completedTasksCount">2</span> de 4 Completadas
                 </span>
             </div>
@@ -604,7 +688,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Insumo: Harina PAN &bull; Cobertura menor a 48h</small>
                         </div>
                     </div>
-                    <span class="badge bg-danger ms-2" style="font-size: 0.65rem;">Urgente</span>
+                    <span class="badge ms-2" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); font-size: 0.65rem;">Urgente</span>
                 </div>
 
                 <div class="todo-item completed" onclick="toggleTask(this)">
@@ -615,7 +699,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Despacho de medicamentos recibido conforme</small>
                         </div>
                     </div>
-                    <span class="badge bg-success ms-2" style="font-size: 0.65rem;">Completado</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
                 </div>
 
                 <div class="todo-item" onclick="toggleTask(this)">
@@ -626,7 +710,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Ajuste de raciones alimentarias de leche maternal</small>
                         </div>
                     </div>
-                    <span class="badge bg-warning text-dark ms-2" style="font-size: 0.65rem;">Media</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Media</span>
                 </div>
 
                 <div class="todo-item completed" onclick="toggleTask(this)">
@@ -637,14 +721,14 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Cierre de inventarios por turno de almacén</small>
                         </div>
                     </div>
-                    <span class="badge bg-success ms-2" style="font-size: 0.65rem;">Completado</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
                 </div>
             </div>
 
             <!-- Barra de Progreso de Tareas -->
             <div class="mt-3">
                 <div class="progress-glass">
-                    <div class="bar bar-success" id="todoProgressBar" style="width: 50%;"></div>
+                    <div class="bar bar-accent" id="todoProgressBar" style="width: 50%;"></div>
                 </div>
             </div>
         </div>
@@ -656,8 +740,8 @@
 <div class="glass-card p-4 mb-4">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
-            <span class="section-heading mb-1 text-info">
-                <i class="fa-solid fa-route me-1"></i> Optimización Heurística de Transferencias Inter-Refugios
+            <span class="section-heading mb-1 text-white">
+                <i class="fa-solid fa-route me-1" style="color: #e6a86c;"></i> Optimización Heurística de Transferencias Inter-Refugios
             </span>
             <p class="m-0 text-muted" style="font-size: 0.78rem;">
                 Canaliza automáticamente excedentes desde refugios seguros hacia albergues saturados para evitar desabastecimiento.
@@ -672,11 +756,11 @@
     <div class="telemetry-route-card">
         <div class="telemetry-flow">
             <div class="flow-node">
-                <i class="fa-solid fa-warehouse text-success me-1"></i> {{ $sug['refugio_origen']->nombre }}
+                <i class="fa-solid fa-warehouse me-1" style="color: #e6a86c;"></i> {{ $sug['refugio_origen']->nombre }}
             </div>
             <div class="d-flex align-items-center gap-1">
                 <i class="fa-solid fa-arrow-right flow-arrow"></i>
-                <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.74rem;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.18); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35); font-size: 0.74rem;">
                     {{ $sug['cantidad_sugerida'] }} {{ $sug['unidad_medida'] }} de {{ $sug['supply']->nombre }}
                 </span>
                 <i class="fa-solid fa-arrow-right flow-arrow"></i>
@@ -707,7 +791,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-chart-simple text-info me-1"></i> Capacidad vs Personas Albergadas
+                    <i class="fa-solid fa-chart-simple me-1" style="color: #e6a86c;"></i> Capacidad vs Personas Albergadas
                 </span>
                 <span class="stat-glow-tag tag-cyan">Tiempo Real</span>
             </div>
@@ -722,9 +806,9 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-chart-pie text-purple me-1"></i> Clasificación ABC de Insumos
+                    <i class="fa-solid fa-chart-pie me-1" style="color: #e6a86c;"></i> Clasificación ABC de Insumos
                 </span>
-                <span class="stat-glow-tag tag-rose">Pareto I.O.</span>
+                <span class="stat-glow-tag tag-amber">Pareto I.O.</span>
             </div>
             <div style="height: 270px; position: relative;">
                 <canvas id="chartAbc"></canvas>
@@ -738,7 +822,7 @@
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
             <span class="section-heading mb-1 text-white">
-                <i class="fa-solid fa-building-shield text-info me-1"></i> Red de Refugios Humanitarios Monitoreados
+                <i class="fa-solid fa-building-shield me-1" style="color: #e6a86c;"></i> Red de Refugios Humanitarios Monitoreados
             </span>
             <small class="text-muted">Censo poblacional y nivel de saturación por municipio</small>
         </div>
@@ -764,11 +848,11 @@
             <tbody>
                 @foreach($refugios as $refugio)
                 @php $isActive = $activeShelter && $activeShelter->id == $refugio->id; @endphp
-                <tr style="{{ $isActive ? 'background: rgba(14, 165, 233, 0.1); border-left: 3px solid #38bdf8;' : '' }}">
+                <tr style="{{ $isActive ? 'background: rgba(216, 150, 86, 0.12); border-left: 3px solid #e6a86c;' : '' }}">
                     <td>
-                        <code style="color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 6px;">{{ $refugio->codigo }}</code>
+                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $refugio->codigo }}</code>
                         @if($isActive)
-                            <span class="badge bg-info text-dark ms-1" style="font-size: 0.60rem; font-weight: 800;">ACTIVO</span>
+                            <span class="badge ms-1" style="background: #e6a86c; color: #1a0e04; font-size: 0.60rem; font-weight: 800;">ACTIVO</span>
                         @endif
                     </td>
                     <td>
@@ -793,7 +877,7 @@
                     </td>
                     <td class="text-end">
                         <div class="d-inline-flex gap-2">
-                            <a href="{{ route('dashboard', ['shelter_id' => $refugio->id]) }}" class="{{ $isActive ? 'btn-glass text-info' : 'btn-accent' }}" style="padding: 5px 12px; font-size: 0.75rem;">
+                            <a href="{{ route('dashboard', ['shelter_id' => $refugio->id]) }}" class="{{ $isActive ? 'btn-glass' : 'btn-accent' }}" style="padding: 5px 12px; font-size: 0.75rem; {{ $isActive ? 'color: #e6a86c; border-color: rgba(216,150,86,0.4);' : '' }}">
                                 <i class="fa-solid fa-arrows-to-eye"></i> {{ $isActive ? 'Operando' : 'Operar' }}
                             </a>
                             <a href="{{ route('shelters.show', $refugio) }}" class="btn-glass" style="padding: 5px 12px; font-size: 0.75rem;">
@@ -815,7 +899,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-clock-rotate-left text-info me-1"></i> Movimientos Recientes de Kardex
+                    <i class="fa-solid fa-clock-rotate-left me-1" style="color: #e6a86c;"></i> Movimientos Recientes de Kardex
                 </span>
                 <a href="{{ route('movements.index') }}" class="btn-glass py-1 px-2" style="font-size: 0.74rem;">Ver todos</a>
             </div>
@@ -866,7 +950,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-truck-moving text-warning me-1"></i> Transferencias Activas
+                    <i class="fa-solid fa-truck-moving me-1" style="color: #e6a86c;"></i> Transferencias Activas
                 </span>
                 <a href="{{ route('transfers.index') }}" class="btn-glass py-1 px-2" style="font-size: 0.74rem;">Ver todas</a>
             </div>
@@ -880,7 +964,7 @@
                     {{ $trf->refugioOrigen->nombre }} &rarr; <span class="text-white fw-bold">{{ $trf->refugioDestino->nombre }}</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center" style="font-size: 0.76rem;">
-                    <span class="text-info fw-bold">{{ $trf->cantidad }} {{ $trf->supply->unidad_medida }} de {{ $trf->supply->nombre }}</span>
+                    <span class="fw-bold" style="color: #e6a86c;">{{ $trf->cantidad }} {{ $trf->supply->unidad_medida }} de {{ $trf->supply->nombre }}</span>
                     <span class="bg-glass {{ $trf->prioridad_badge['class'] }}">{{ $trf->prioridad }}</span>
                 </div>
             </div>
@@ -928,7 +1012,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     data: [88.5, 11.5],
                     backgroundColor: [
-                        '#10b981', // Verde esmeralda neón
+                        '#d89656', // Dorado ámbar — paleta unificada
                         'rgba(255, 255, 255, 0.05)'
                     ],
                     borderWidth: 0,
@@ -958,16 +1042,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Población Albergada',
                         data: {!! json_encode($chartRefugiosPoblacion) !!},
-                        backgroundColor: 'rgba(14, 165, 233, 0.85)',
-                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(216, 150, 86, 0.80)',
+                        borderColor: '#e6a86c',
                         borderWidth: 1,
                         borderRadius: 8
                     },
                     {
                         label: 'Capacidad Máxima',
                         data: {!! json_encode($chartRefugiosCapacidad) !!},
-                        backgroundColor: 'rgba(255, 255, 255, 0.07)',
-                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                        borderColor: 'rgba(255, 255, 255, 0.18)',
                         borderWidth: 1,
                         borderRadius: 8
                     }
@@ -977,11 +1061,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { labels: { color: '#f8fafc', font: { family: 'Plus Jakarta Sans', size: 11 } } }
+                    legend: { labels: { color: '#f5ede0', font: { family: 'Plus Jakarta Sans', size: 11 } } }
                 },
                 scales: {
-                    x: { ticks: { color: 'rgba(226, 232, 240, 0.65)', font: { size: 10 } }, grid: { display: false } },
-                    y: { ticks: { color: 'rgba(226, 232, 240, 0.65)' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    x: { ticks: { color: 'rgba(220, 210, 195, 0.65)', font: { size: 10 } }, grid: { display: false } },
+                    y: { ticks: { color: 'rgba(220, 210, 195, 0.65)' }, grid: { color: 'rgba(230,168,108,0.06)' } }
                 }
             }
         });
@@ -1005,9 +1089,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         {{ $abcData['resumen']['C'] ?? 3 }}
                     ],
                     backgroundColor: [
-                        '#f43f5e',
-                        '#f59e0b',
-                        '#0ea5e9'
+                        '#d89656',  // ámbar principal
+                        '#b06030',  // ámbar oscuro
+                        '#2a1a0a'   // ámbar muy oscuro / casi marrón
                     ],
                     borderWidth: 0,
                     hoverOffset: 8
@@ -1019,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#f8fafc', font: { family: 'Plus Jakarta Sans', size: 11 }, boxWidth: 14 }
+                        labels: { color: '#f5ede0', font: { family: 'Plus Jakarta Sans', size: 11 }, boxWidth: 14 }
                     }
                 },
                 cutout: '72%'

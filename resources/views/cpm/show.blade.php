@@ -87,7 +87,7 @@
                     <tbody>
                         @forelse($activities as $act)
                             <tr style="{{ $act->es_critica ? 'background:rgba(244,63,94,0.09);' : '' }}">
-                                <td style="color:#38bdf8; font-family:'JetBrains Mono',monospace; font-weight:700;">{{ $act->codigo }}</td>
+                                <td style="color:var(--accent-light); font-family:'JetBrains Mono',monospace; font-weight:700;">{{ $act->codigo }}</td>
                                 <td><strong class="text-white">{{ $act->nombre }}</strong></td>
                                 <td class="font-monospace">{{ $act->duracion }}</td>
                                 <td style="color:var(--text-muted); font-family:'JetBrains Mono',monospace;">{{ is_array($act->predecesores) ? implode(',', $act->predecesores) : '-' }}</td>
@@ -119,14 +119,14 @@
     <div class="col-lg-6">
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                <div class="section-heading mb-0" style="color:#38bdf8; font-size:0.9rem;">
+                <div class="section-heading mb-0" style="color:var(--accent-light); font-size:0.9rem;">
                     <i class="fa-solid fa-project-diagram me-2"></i> Diagrama Topológico de Red (Vis.js)
                 </div>
                 <div class="d-flex gap-2">
                     <span class="badge" style="background: rgba(244,63,94,0.2); border: 1px solid rgba(244,63,94,0.4); color: #fda4af; font-size:0.7rem;">
                         <i class="fa-solid fa-circle me-1" style="font-size:0.5rem;"></i> Ruta Crítica
                     </span>
-                    <span class="badge" style="background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4); color: #c4b5fd; font-size:0.7rem;">
+                    <span class="badge" style="background: rgba(230,168,108,0.18); border: 1px solid rgba(230,168,108,0.4); color: #e6a86c; font-size:0.7rem;">
                         <i class="fa-solid fa-circle me-1" style="font-size:0.5rem;"></i> Actividad Normal
                     </span>
                 </div>
@@ -164,7 +164,7 @@
                         <div class="d-flex flex-wrap gap-3">
                             @foreach($activities as $act)
                                 <div class="form-check m-0">
-                                    <input class="form-check-input" type="checkbox" name="predecesores[]" value="{{ $act->codigo }}" id="pred_{{ $act->id }}" style="accent-color: #38bdf8;">
+                                    <input class="form-check-input" type="checkbox" name="predecesores[]" value="{{ $act->codigo }}" id="pred_{{ $act->id }}" style="accent-color: var(--accent);">
                                     <label class="form-check-label small text-white" for="pred_{{ $act->id }}">
                                         <strong>{{ $act->codigo }}</strong> ({{ $act->nombre }})
                                     </label>
@@ -199,14 +199,14 @@
                 shape: 'box',
                 margin: 10,
                 color: {
-                    background: isCrit ? '#f43f5e' : '#7c3aed',
-                    border: isCrit ? '#fb7185' : '#a78bfa',
+                    background: isCrit ? '#f43f5e' : '#d89656',
+                    border: isCrit ? '#fb7185' : '#e6a86c',
                     highlight: {
-                        background: isCrit ? '#fb7185' : '#9f5cff',
+                        background: isCrit ? '#fb7185' : '#e6a86c',
                         border: '#ffffff'
                     }
                 },
-                font: { color: '#ffffff', face: 'Inter', size: 14, bold: true }
+                font: { color: '#ffffff', face: 'Outfit, sans-serif', size: 14, bold: true }
             };
         });
 

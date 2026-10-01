@@ -18,7 +18,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-satellite-dish me-1"></i> Red de Protección Civil
             </span>
             <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
@@ -82,7 +82,7 @@
 <div class="row g-4">
     @forelse($shelters as $shelter)
     <div class="col-md-6 col-lg-4">
-        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid {{ $shelter->ocupacion_porcentaje > 90 ? '#f43f5e' : ($shelter->ocupacion_porcentaje > 70 ? '#f59e0b' : '#0ea5e9') }};">
+        <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid {{ $shelter->ocupacion_porcentaje > 90 ? '#f43f5e' : ($shelter->ocupacion_porcentaje > 70 ? '#f59e0b' : '#d89656') }};">
             <div>
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <span class="bg-glass bg-info2"><code>{{ $shelter->codigo }}</code></span>

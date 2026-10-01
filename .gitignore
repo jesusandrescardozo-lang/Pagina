@@ -42,3 +42,7 @@ yarn-error.log
 *.swp
 .DS_Store
 Thumbs.db
+
+# Artefactos de pruebas (cookies temporales de los tests E2E)
+tests/cookie_*.txt
+.phpunit.result.cache

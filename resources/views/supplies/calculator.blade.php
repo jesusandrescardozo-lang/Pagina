@@ -10,7 +10,7 @@
 <div class="cockpit-page-header mb-4">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-            <span class="badge" style="background: rgba(14,165,233,0.2); color: #38bdf8; font-size:0.72rem; border: 1px solid rgba(14,165,233,0.4); border-radius: 9999px; padding:3px 12px;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); color: #e6a86c; font-size:0.72rem; border: 1px solid rgba(230,168,108,0.35); border-radius: 9999px; padding:3px 12px;">
                 <i class="fa-solid fa-brain me-1"></i> Modelos Cuantitativos I.O.
             </span>
             <span class="badge" style="background: rgba(16,185,129,0.2); color: #34d399; font-size:0.72rem; border: 1px solid rgba(16,185,129,0.4); border-radius: 9999px; padding:3px 12px;">
@@ -25,7 +25,7 @@
     </div>
     @if(isset($selectedSupply))
     <div class="text-end">
-        <div class="badge mb-1" style="background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-size:0.75rem; font-family:'JetBrains Mono',monospace;">
+        <div class="badge mb-1" style="background: rgba(230,168,108,0.12); border: 1px solid rgba(230,168,108,0.3); color: #e6a86c; font-size:0.75rem; font-family:'JetBrains Mono',monospace;">
             {{ $selectedSupply->codigo }}
         </div>
         <div class="fw-bold text-white" style="font-size:0.9rem;">{{ $selectedSupply->nombre }}</div>
@@ -68,11 +68,11 @@
                     </h5>
                     <small class="text-muted">Minimización de costo total anual con demanda determinística</small>
                 </div>
-                <span class="badge" style="background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.35); color: #38bdf8; font-size:0.7rem;">EOQ &amp; ROP</span>
+                <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.7rem;">EOQ &amp; ROP</span>
             </div>
 
             <!-- Fórmulas matemáticas -->
-            <div class="p-2 px-3 rounded-3 mb-3" style="background: rgba(56,189,248,0.04); border: 1px solid rgba(56,189,248,0.15); font-size: 0.82rem; font-family:'JetBrains Mono',monospace;">
+            <div class="p-2 px-3 rounded-3 mb-3" style="background: rgba(230,168,108,0.05); border: 1px solid rgba(230,168,108,0.2); font-size: 0.82rem; font-family:'JetBrains Mono',monospace;">
                 <span class="text-info">Q* = √( (2 × D × S) / H )</span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 <span class="text-success">ROP = (d × L) + SS</span>
@@ -342,8 +342,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Costo Total',
                         data: cTotal,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56,189,248,0.08)',
+                        borderColor: '#e6a86c',
+                        backgroundColor: 'rgba(230,168,108,0.10)',
                         borderWidth: 2.5,
                         pointRadius: 0,
                         tension: 0.3,

@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-            <span class="badge" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.35); color: #38bdf8; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
                 <i class="fa-solid fa-barcode me-1"></i>{{ $supply->codigo }}
             </span>
             <span class="badge {{ $supply->categoria_badge['class'] }}" style="font-size:0.75rem;">
@@ -95,14 +95,14 @@
                 <div class="section-heading mb-0 text-info" style="font-size:0.9rem;">
                     <i class="fa-solid fa-square-root-variable me-1"></i> Resultados del Modelo EOQ (Wilson)
                 </div>
-                <span class="badge" style="background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-size:0.72rem;">
+                <span class="badge" style="background: rgba(230,168,108,0.12); border: 1px solid rgba(230,168,108,0.3); color: #e6a86c; font-size:0.72rem;">
                     Demanda Anual D = {{ number_format($demandaAnual, 0) }}
                 </span>
             </div>
 
             <div class="row g-2 mb-3">
                 <div class="col-6">
-                    <div class="p-3 rounded-3" style="background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25);">
+                    <div class="p-3 rounded-3" style="background: rgba(230,168,108,0.08); border: 1px solid rgba(230,168,108,0.25);">
                         <span class="stat-label text-info">Lote Óptimo de Compra (Q*)</span>
                         <div class="fs-3 fw-bold text-white font-monospace">{{ $eoq['q_optimo_entero'] }} <small style="font-size:0.75rem;" class="text-muted">{{ $supply->unidad_medida }}</small></div>
                         <small class="text-muted" style="font-size:0.72rem;">Minimiza el costo total anual</small>
@@ -293,8 +293,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Costo Total Anual',
                         data: cTotal,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56,189,248,0.1)',
+                        borderColor: '#e6a86c',
+                        backgroundColor: 'rgba(230,168,108,0.1)',
                         borderWidth: 3,
                         pointRadius: 0,
                         tension: 0.3,

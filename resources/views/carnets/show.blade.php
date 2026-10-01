@@ -12,8 +12,8 @@
     <style>
         :root {
             --badge-bg: #0f172a;
-            --accent: #0284c7;
-            --accent-gold: #f59e0b;
+            --accent: #d89656;
+            --accent-gold: #e6a86c;
             --venezuela-yellow: #facc15;
             --venezuela-blue: #2563eb;
             --venezuela-red: #dc2626;
@@ -63,7 +63,7 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 35px rgba(2,132,199,0.25);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 35px rgba(216,150,86,0.25);
             border: 2px solid rgba(255,255,255,0.14);
             display: flex;
             flex-direction: column;
@@ -137,14 +137,14 @@
             width: 80px;
             height: 80px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #0284c7, #10b981);
+            background: linear-gradient(135deg, #d89656, #c07840);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             font-weight: 800;
             color: #ffffff;
-            box-shadow: 0 10px 25px rgba(2,132,199,0.4);
+            box-shadow: 0 10px 25px rgba(216,150,86,0.4);
             border: 3px solid rgba(255,255,255,0.2);
         }
         .avatar-check {
@@ -177,9 +177,9 @@
             margin-bottom: 6px;
         }
         .emp-role-tag {
-            background: rgba(2,132,199,0.18);
-            border: 1px solid rgba(56,189,248,0.4);
-            color: #38bdf8;
+            background: rgba(216,150,86,0.18);
+            border: 1px solid rgba(230,168,108,0.4);
+            color: #e6a86c;
             font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.08em;
@@ -239,7 +239,7 @@
         .chip-info-val {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.72rem;
-            color: #38bdf8;
+            color: #e6a86c;
             font-weight: 700;
         }
 
@@ -276,7 +276,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.68rem;
             font-weight: 700;
-            color: #38bdf8;
+            color: #e6a86c;
             letter-spacing: 0.05em;
         }
 
@@ -330,9 +330,6 @@
             </span>
         </div>
         <div class="d-flex gap-2">
-            <button type="button" class="btn btn-sm btn-outline-info px-3 py-2 fw-semibold" style="border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#modalQrGAuth">
-                <i class="fa-brands fa-google me-1"></i> Vincular Google Authenticator
-            </button>
             <button onclick="window.print()" class="btn btn-sm btn-info text-white fw-bold px-3 py-2" style="border-radius: 10px;">
                 <i class="fa-solid fa-print me-1"></i> Imprimir Credencial PVC
             </button>
@@ -372,10 +369,10 @@
                 <div class="chip-security-box">
                     <div class="smart-chip"></div>
                     <div class="chip-info">
-                        <div class="chip-info-label">Acceso 2FA Protegido</div>
-                        <div class="chip-info-val">GOOGLE AUTH &bull; ACTIVO</div>
+                        <div class="chip-info-label">Identidad Institucional</div>
+                        <div class="chip-info-val">CREDENCIAL OFICIAL &bull; ACTIVO</div>
                     </div>
-                    <i class="fa-brands fa-google text-info fs-5"></i>
+                    <i class="fa-solid fa-shield-halved text-info fs-5"></i>
                 </div>
 
                 <!-- Simulación Barcode Oficial -->
@@ -405,15 +402,14 @@
                 </div>
                 <ul class="ps-3 mb-2" style="font-size: 0.65rem;">
                     <li>Credencial personal, oficial e intransferible.</li>
-                    <li>El acceso al sistema está protegido con <strong>Google Authenticator (2FA)</strong>.</li>
-                    <li>En caso de extravío o baja, notifique inmediatamente para revocar el acceso.</li>
+                    <li>El acceso al sistema está regido por protocolos de seguridad de la Red Humanitaria.</li>
+                    <li>En caso de extravío o baja, notifique inmediatamente para revocar la acreditación.</li>
                 </ul>
             </div>
 
-            <div class="p-2 rounded-3 text-center my-2" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-                <div class="text-info fw-bold" style="font-size: 0.62rem;"><i class="fa-brands fa-google me-1"></i> GOOGLE AUTHENTICATOR 2FA</div>
-                <div class="text-white fw-bold font-monospace" style="font-size: 0.72rem; letter-spacing: 1.5px;">{{ $user->getGoogle2faSecret() }}</div>
-                <div class="text-white-50" style="font-size: 0.58rem;">Código criptográfico personal intransferible</div>
+            <div class="p-2 rounded-3 text-center my-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="text-info fw-bold" style="font-size: 0.65rem;"><i class="fa-solid fa-fingerprint me-1"></i> VERIFICACIÓN CRIPTOGRÁFICA OFICIAL</div>
+                <div class="text-white-50" style="font-size: 0.62rem;">Firma digital y registro centralizado en el Centro de Mando</div>
             </div>
 
             <div class="border-top border-secondary pt-2 text-center" style="font-size: 0.6rem; color: #64748b;">
@@ -423,82 +419,6 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- Tarjeta de Vinculación con Google Authenticator (Exclusivo de Credenciales) -->
-    <div class="mt-4 text-center p-4 d-print-none" style="max-width: 670px; width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(16px);">
-        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(66, 133, 244, 0.2); display: flex; align-items: center; justify-content: center; color: #60a5fa; font-size: 1.2rem;">
-                <i class="fa-brands fa-google"></i>
-            </div>
-            <h5 class="fw-bold mb-0 text-white">Vincular con Google Authenticator</h5>
-        </div>
-        <p class="text-white-50 small mb-3">
-            Para autorizar el acceso al sistema, el funcionario debe escanear este código QR en la aplicación <strong>Google Authenticator</strong> de su teléfono móvil:
-        </p>
-        <div class="row align-items-center g-3">
-            <div class="col-md-5 text-center">
-                <div style="background: white; padding: 12px; border-radius: 16px; display: inline-block; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-                    {!! $user->getGoogle2faQrSvg(170) !!}
-                </div>
-            </div>
-            <div class="col-md-7 text-start">
-                <div class="text-muted small mb-1">Clave secreta manual:</div>
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <span style="font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.5); padding: 7px 14px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700; letter-spacing: 2px; font-size: 0.95rem;">
-                        {{ $user->getGoogle2faSecret() }}
-                    </span>
-                    <button type="button" class="btn btn-sm btn-outline-info" onclick="navigator.clipboard.writeText('{{ $user->getGoogle2faSecret() }}'); alert('¡Clave copiada al portapapeles!');" title="Copiar clave">
-                        <i class="fa-regular fa-copy"></i>
-                    </button>
-                </div>
-                <div class="small text-white-50">
-                    <div class="text-info fw-bold mb-1"><i class="fa-solid fa-mobile-screen me-1"></i> Pasos rápidos:</div>
-                    1. Abra <strong>Google Authenticator</strong> en su celular.<br>
-                    2. Toque <strong>"+"</strong> &gt; <strong>"Escanear código QR"</strong>.<br>
-                    3. Al iniciar sesión en el sistema, ingrese los 6 dígitos que genere la app.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para Vincular Google Authenticator en el Celular -->
-    <div class="modal fade" id="modalQrGAuth" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.14); border-radius: 20px; color: #f8fafc;">
-                <div class="modal-header border-secondary">
-                    <div class="d-flex align-items-center gap-2">
-                        <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(66, 133, 244, 0.2); display: flex; align-items: center; justify-content: center; color: #60a5fa;">
-                            <i class="fa-brands fa-google"></i>
-                        </div>
-                        <div>
-                            <h6 class="modal-title fw-bold mb-0">Google Authenticator: {{ $user->name }}</h6>
-                            <div class="text-muted small">{{ $user->email }}</div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <p class="text-white-50 small mb-3">
-                        Escanee este código QR usando la app <strong>Google Authenticator</strong> en su teléfono:
-                    </p>
-                    <div style="background: white; padding: 12px; border-radius: 16px; display: inline-block; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-                        <div style="background: white; padding: 12px; border-radius: 16px; display: inline-block;">
-                            {!! $user->getGoogle2faQrSvg(190) !!}
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-muted small mb-1">Clave secreta manual:</div>
-                        <span style="font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.5); padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700; letter-spacing: 2px;">
-                            {{ $user->getGoogle2faSecret() }}
-                        </span>
-                    </div>
-                </div>
-                <div class="modal-footer border-secondary">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -96,7 +96,11 @@ $req->setUserResolver(fn() => $admin);
 $resp = $kernel->handle($req);
 $html = $resp->getContent();
 check('GET /carnets/{admin} -> 200', $resp->getStatusCode() === 200);
-check('Carnet contiene QR SVG local', str_contains($html, '<svg') && !str_contains($html, 'qrserver.com'));
+// El 2FA fue retirado del flujo: el carnet ya no muestra QR de Google
+// Authenticator ni secretos; conserva el token físico de credencial.
+check('Carnet sin rastros de Google Authenticator/2FA',
+    !str_contains($html, 'Authenticator') && !str_contains($html, 'google2fa'));
+check('Carnet muestra el token de credencial', str_contains($html, $admin->qr_token));
 \Auth::logout();
 $kernel->terminate($req, $resp);
 

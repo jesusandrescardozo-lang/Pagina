@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.35); color: #38bdf8; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.75rem;">
                 <i class="fa-solid fa-boxes-stacked me-1"></i> CATÁLOGO MAESTRO
             </span>
             <span class="badge" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size:0.72rem;">
@@ -78,7 +78,7 @@
                     <div class="col-md-7">
                         <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
                             <div class="form-check m-0">
-                                <input class="form-check-input" type="checkbox" name="es_perecedero" id="es_perecedero" value="1" {{ old('es_perecedero') ? 'checked' : '' }} style="accent-color: #38bdf8;">
+                                <input class="form-check-input" type="checkbox" name="es_perecedero" id="es_perecedero" value="1" {{ old('es_perecedero') ? 'checked' : '' }} style="accent-color: var(--accent);">
                                 <label class="form-check-label text-white fw-bold" for="es_perecedero" style="font-size:0.85rem;">
                                     Insumo Perecedero con control estricto de Caducidad (Regla FEFO)
                                 </label>

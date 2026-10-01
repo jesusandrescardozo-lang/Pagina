@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +8,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('app-theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        })();
+    </script>
+
     <style>
         :root {
-            --accent: #0ea5e9;
-            --accent-glow: rgba(14, 165, 233, 0.45);
-            --accent-purple: #6366f1;
-            --emerald: #10b981;
-            --amber: #f59e0b;
-            --bg-dark: #07090e;
-            --card-glass: rgba(18, 22, 34, 0.65);
-            --border-glass: rgba(255, 255, 255, 0.12);
-            --border-glass-hover: rgba(255, 255, 255, 0.25);
-            --input-bg: rgba(11, 15, 25, 0.7);
+            --bg-body: #08090d;
+            --bg-card: rgba(18, 20, 29, 0.92);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-card-hover: rgba(255, 255, 255, 0.16);
+            --text-title: #ffffff;
+            --text-sub: #94a3b8;
+            --input-bg: rgba(255, 255, 255, 0.035);
+            --input-border: rgba(255, 255, 255, 0.1);
+            --input-focus-border: #e6a86c;
+            --input-focus-glow: rgba(230, 168, 108, 0.22);
+            --btn-gold: linear-gradient(135deg, #e4aa6e 0%, #d89656 100%);
+            --btn-gold-hover: linear-gradient(135deg, #f0ba80 0%, #e09f5f 100%);
+            --btn-gold-shadow: rgba(216, 150, 86, 0.35);
+            --amber-accent: #e6a86c;
+            --split-bg: #090a0f;
+        }
+
+        [data-bs-theme="light"] {
+            --bg-body: #f3f5f9;
+            --bg-card: rgba(255, 255, 255, 0.94);
+            --border-card: rgba(0, 0, 0, 0.08);
+            --border-card-hover: rgba(0, 0, 0, 0.16);
+            --text-title: #0f172a;
+            --text-sub: #64748b;
+            --input-bg: #ffffff;
+            --input-border: rgba(0, 0, 0, 0.12);
+            --input-focus-border: #d89656;
+            --input-focus-glow: rgba(216, 150, 86, 0.18);
+            --btn-gold: linear-gradient(135deg, #df9f5f 0%, #c88340 100%);
+            --btn-gold-hover: linear-gradient(135deg, #e8a96b 0%, #d48e4b 100%);
+            --btn-gold-shadow: rgba(200, 131, 64, 0.3);
+            --amber-accent: #c88340;
+            --split-bg: #eaeff5;
         }
 
         * {
@@ -30,712 +61,738 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-title);
             min-height: 100vh;
-            background-color: var(--bg-dark);
-            color: #f1f5f9;
+            min-height: 100dvh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            align-items: stretch;
+            transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
-            padding: 40px 20px;
         }
 
-        /* Ambient glowing background */
-        .ambient-glow {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
+        /* Split Screen Container */
+        .login-layout {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* LEFT PANEL: LUXURY ARCHITECTURAL SHOWCASE (Inspired by Image 1) */
+        .showcase-panel {
+            flex: 1.1;
+            position: relative;
+            background-color: #0b0c10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 56px;
             overflow: hidden;
         }
 
-        .glow-orb {
+        .showcase-bg-img {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.35;
-            animation: pulse-glow 12s ease-in-out infinite alternate;
-        }
-
-        .glow-1 {
-            width: 520px;
-            height: 520px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.4) 0%, rgba(99, 102, 241, 0.2) 60%, transparent 80%);
-            top: -120px;
-            left: -100px;
-        }
-
-        .glow-2 {
-            width: 480px;
-            height: 480px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(14, 165, 233, 0.15) 60%, transparent 80%);
-            bottom: -100px;
-            right: -100px;
-            animation-duration: 15s;
-        }
-
-        .glow-3 {
-            width: 320px;
-            height: 320px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
-            top: 40%;
-            left: 60%;
-            animation-duration: 10s;
-        }
-
-        /* 3D Dark Glossy Elements floating in background */
-        .scene-decorations {
-            position: fixed;
             inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .shape-3d {
-            position: absolute;
-            border-radius: 50%;
-        }
-
-        /* Glossy Dark Torus (Ring) */
-        .torus-wrap {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 620px;
-            height: 620px;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .glossy-ring {
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            border: 45px solid #0d121d;
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.9),
-                inset 0 4px 12px rgba(255, 255, 255, 0.18),
-                inset 0 -8px 20px rgba(0, 0, 0, 0.8),
-                0 0 40px rgba(14, 165, 233, 0.15);
-            top: 60px;
-            left: -40px;
-            transform: rotate(-25deg) rotateX(35deg);
-            animation: float-ring 14s ease-in-out infinite alternate;
-        }
-
-        .glossy-sphere-1 {
-            width: 140px;
-            height: 140px;
-            right: 40px;
-            top: 80px;
-            background: radial-gradient(circle at 35% 30%, #2a3449 0%, #111624 50%, #05070d 90%);
-            box-shadow: 
-                0 25px 45px rgba(0, 0, 0, 0.8),
-                inset 0 3px 8px rgba(255, 255, 255, 0.25),
-                inset 0 -10px 18px rgba(0, 0, 0, 0.9),
-                0 0 25px rgba(14, 165, 233, 0.12);
-            animation: float-sphere 9s ease-in-out infinite alternate;
-        }
-
-        .glossy-sphere-2 {
-            width: 75px;
-            height: 75px;
-            left: 30px;
-            bottom: 120px;
-            background: radial-gradient(circle at 35% 30%, #333d52 0%, #0f1422 60%, #030408 95%);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.85),
-                inset 0 2px 5px rgba(255, 255, 255, 0.28),
-                inset 0 -6px 12px rgba(0, 0, 0, 0.9);
-            animation: float-sphere 11s ease-in-out infinite alternate-reverse;
-        }
-
-        .mini-sphere {
-            width: 32px;
-            height: 32px;
-            left: 110px;
-            top: 150px;
-            background: radial-gradient(circle at 30% 28%, #475569 0%, #0f172a 70%, #020617 100%);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.7), inset 0 1px 3px rgba(255,255,255,0.3);
-            animation: float-sphere 7s ease-in-out infinite alternate;
-        }
-
-        @keyframes float-ring {
-            0% { transform: rotate(-25deg) rotateX(35deg) translateY(0); }
-            100% { transform: rotate(-22deg) rotateX(30deg) translateY(-18px); }
-        }
-
-        @keyframes float-sphere {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-22px) scale(1.03); }
-        }
-
-        @keyframes pulse-glow {
-            0% { opacity: 0.28; transform: scale(1); }
-            100% { opacity: 0.42; transform: scale(1.08); }
-        }
-
-        /* Glassmorphism Mockup Card Container */
-        .card-container {
-            position: relative;
-            z-index: 10;
             width: 100%;
-            max-width: 480px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.88;
+            filter: contrast(1.08) brightness(0.92);
+            transition: transform 12s ease;
         }
 
-        .glass-card {
+        .showcase-panel:hover .showcase-bg-img {
+            transform: scale(1.03);
+        }
+
+        /* Cinematic Gradient Overlays */
+        .showcase-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(7, 9, 14, 0.72) 0%,
+                rgba(7, 9, 14, 0.2) 40%,
+                rgba(7, 9, 14, 0.4) 65%,
+                rgba(7, 9, 14, 0.95) 100%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .showcase-right-edge-fade {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+            background: linear-gradient(to right, transparent, var(--bg-body));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .showcase-header {
             position: relative;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(14, 165, 233, 0.03) 100%), var(--card-glass);
-            backdrop-filter: blur(36px) saturate(190%);
-            -webkit-backdrop-filter: blur(36px) saturate(190%);
-            border: 1px solid var(--border-glass);
-            border-radius: 28px;
-            padding: 42px 38px;
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.75),
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.22),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.4);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: var(--border-glass-hover);
-            box-shadow: 
-                0 35px 90px rgba(0, 0, 0, 0.8),
-                0 0 50px rgba(14, 165, 233, 0.12),
-                inset 0 1px 2px rgba(255, 255, 255, 0.28);
-        }
-
-        /* Top Bar Indicator (similar to modern mockups) */
-        .card-top-bar {
+            z-index: 3;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
+            gap: 12px;
         }
 
-        .status-pill {
-            display: inline-flex;
+        .showcase-logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
             align-items: center;
-            gap: 7px;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.25);
-            padding: 5px 12px;
-            border-radius: 9999px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: #38bdf8;
-            letter-spacing: 0.4px;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .showcase-logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
             text-transform: uppercase;
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: #38bdf8;
-            box-shadow: 0 0 8px #38bdf8;
-            animation: blink 2s infinite ease-in-out;
+        .showcase-footer {
+            position: relative;
+            z-index: 3;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-
-        .mockup-controls {
+        .welcome-quote-box {
             display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .mockup-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .mockup-dot.active {
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
-        }
-
-        /* Brand & Header */
-        .brand-section {
-            text-align: center;
+            align-items: flex-start;
+            gap: 16px;
             margin-bottom: 30px;
         }
 
-        .logo-box {
-            position: relative;
-            width: 64px;
+        .accent-vertical-bar {
+            width: 3.5px;
             height: 64px;
-            margin: 0 auto 16px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 12px 30px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px rgba(255, 255, 255, 0.35),
-                0 0 25px rgba(14, 165, 233, 0.25);
+            background: linear-gradient(to bottom, #e4aa6e, #d89656);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(228, 170, 110, 0.6);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .welcome-headline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.35rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .welcome-subline {
+            font-size: 0.95rem;
+            color: rgba(226, 232, 240, 0.75);
+            max-width: 440px;
+            line-height: 1.5;
+        }
+
+        .showcase-copyright {
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.3px;
+        }
+
+        /* RIGHT PANEL: FLOATING SLEEK LOGIN CARD (Image 1 Style) */
+        .form-panel {
+            flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1.65rem;
-            color: #fff;
+            padding: 40px 32px;
+            position: relative;
+            background: var(--bg-body);
+            transition: background-color 0.3s ease;
+        }
+
+        /* Header Bar on Form Side (Theme Toggle + Back) */
+        .form-panel-topbar {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--border-card);
+            color: var(--text-title);
+            padding: 7px 14px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--amber-accent);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle-icon {
+            color: var(--amber-accent);
+            font-size: 0.9rem;
             transition: transform 0.3s ease;
         }
 
-        .logo-box i {
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.4));
-        }
-
-        .brand-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.65rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .brand-desc {
-            font-size: 0.82rem;
-            color: rgba(226, 232, 240, 0.6);
-            font-weight: 400;
-            line-height: 1.4;
-        }
-
-        /* Form Labels & Controls */
-        .form-label-custom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.74rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: rgba(226, 232, 240, 0.7);
-            margin-bottom: 8px;
-        }
-
-        .field-wrap {
-            position: relative;
-            margin-bottom: 18px;
-        }
-
-        .field-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(148, 163, 184, 0.5);
-            font-size: 0.95rem;
-            pointer-events: none;
-            transition: color 0.2s ease;
-            z-index: 2;
-        }
-
-        .glass-input {
+        /* The Luxury Login Card */
+        .login-card {
             width: 100%;
-            background: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 13px 44px 13px 46px;
-            color: #f8fafc;
-            font-size: 0.9rem;
-            font-family: inherit;
-            outline: none;
-            transition: all 0.25s ease;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
-        }
-
-        .glass-input::placeholder {
-            color: rgba(148, 163, 184, 0.35);
-        }
-
-        .glass-input:focus {
-            background: rgba(15, 21, 37, 0.85);
-            border-color: rgba(56, 189, 248, 0.6);
+            max-width: 440px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 28px;
+            padding: 38px 34px 32px;
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
             box-shadow: 
-                0 0 0 4px rgba(14, 165, 233, 0.15),
-                inset 0 2px 4px rgba(0, 0, 0, 0.4),
-                0 0 20px rgba(14, 165, 233, 0.2);
-            color: #ffffff;
+                0 25px 60px rgba(0, 0, 0, 0.45),
+                0 1px 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        .field-wrap:focus-within .field-icon {
-            color: #38bdf8;
+        [data-bs-theme="light"] .login-card {
+            box-shadow: 
+                0 20px 50px rgba(15, 23, 42, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
-        /* Password toggle button */
-        .toggle-password {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            color: rgba(148, 163, 184, 0.5);
-            font-size: 0.95rem;
-            cursor: pointer;
-            padding: 4px 6px;
-            z-index: 2;
-            transition: color 0.2s ease;
-        }
-
-        .toggle-password:hover {
-            color: #38bdf8;
-        }
-
-        /* Select styling */
-        .glass-select {
-            appearance: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2338bdf8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 15px 15px;
-            padding-right: 42px;
-        }
-
-        .glass-select option,
-        .glass-select optgroup {
-            background: #0b0f19;
-            color: #f1f5f9;
-        }
-
-        .glass-select optgroup {
-            color: #38bdf8;
-            font-weight: 700;
-        }
-
-        /* Security info pill */
-        .security-badge {
+        /* Card Hexagon Geometric Logo Badge */
+        .card-logo-badge {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(230, 168, 108, 0.15) 0%, rgba(230, 168, 108, 0.03) 70%, transparent 100%);
+            border: 1px solid rgba(230, 168, 108, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            background: rgba(14, 165, 233, 0.08);
-            border: 1px solid rgba(14, 165, 233, 0.18);
-            border-radius: 12px;
-            padding: 9px 14px;
-            margin-bottom: 22px;
-            font-size: 0.75rem;
-            color: #7dd3fc;
-            font-weight: 500;
+            color: var(--amber-accent);
+            font-size: 1.45rem;
+            box-shadow: 0 4px 20px rgba(230, 168, 108, 0.18);
         }
 
-        /* Primary Submit Button */
-        .btn-primary-glass {
+        .login-card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-title);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .login-card-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        /* Form Inputs */
+        .form-group-custom {
+            margin-bottom: 18px;
+        }
+
+        .form-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+        .form-label-custom {
+            font-size: 0.80rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            letter-spacing: 0.2px;
+        }
+
+        .forgot-link {
+            font-size: 0.78rem;
+            color: var(--amber-accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #f5c490;
+            text-decoration: underline;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon-left {
+            position: absolute;
+            left: 16px;
+            color: var(--text-sub);
+            opacity: 0.65;
+            font-size: 0.95rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .sleek-input {
             width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 14px;
+            padding: 12px 16px 12px 46px;
+            color: var(--text-title);
+            font-size: 0.90rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .sleek-input::placeholder {
+            color: var(--text-sub);
+            opacity: 0.5;
+        }
+
+        .sleek-input:focus {
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 3px var(--input-focus-glow);
+            background: var(--bg-card);
+        }
+
+        .input-wrapper:focus-within .input-icon-left {
+            color: var(--amber-accent);
+            opacity: 1;
+        }
+
+        /* Password Eye Toggle */
+        .btn-toggle-eye {
+            position: absolute;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .btn-toggle-eye:hover {
+            color: var(--text-title);
+        }
+
+        /* Select option */
+        .sleek-select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23e6a86c'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px 14px;
+        }
+
+        .sleek-select option, .sleek-select optgroup {
+            background: #0f131d;
+            color: #f1f5f9;
+        }
+
+        [data-bs-theme="light"] .sleek-select option,
+        [data-bs-theme="light"] .sleek-select optgroup {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        /* Demo Quick Account Pills */
+        .demo-accounts-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .demo-accounts-bar::-webkit-scrollbar { display: none; }
+
+        .demo-pill {
+            background: var(--input-bg);
+            border: 1px solid var(--border-card);
+            color: var(--text-sub);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .demo-pill:hover {
+            border-color: var(--amber-accent);
+            color: var(--text-title);
+            background: rgba(230, 168, 108, 0.1);
+        }
+
+        /* Warm Gold/Amber Login Button (Image 1 Style) */
+        .btn-luxury-login {
+            width: 100%;
+            background: var(--btn-gold);
+            color: #1a120b;
             border: none;
             outline: none;
-            padding: 14px 20px;
+            padding: 13px 20px;
             border-radius: 14px;
-            font-size: 0.93rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: #ffffff;
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #0f766e 100%);
-            box-shadow: 
-                0 10px 25px rgba(2, 132, 199, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px var(--btn-gold-shadow);
             transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
+            margin-top: 4px;
         }
 
-        .btn-primary-glass:hover {
+        .btn-luxury-login:hover {
+            background: var(--btn-gold-hover);
             transform: translateY(-2px);
-            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #10b981 100%);
-            box-shadow: 
-                0 14px 35px rgba(2, 132, 199, 0.55),
-                inset 0 1px 2px rgba(255, 255, 255, 0.4);
-            color: #ffffff;
+            box-shadow: 0 12px 30px var(--btn-gold-shadow);
+            color: #0d0804;
         }
 
-        .btn-primary-glass:active {
+        .btn-luxury-login:active {
             transform: translateY(0);
         }
 
         /* Divider */
-        .glass-divider {
+        .or-divider {
             display: flex;
             align-items: center;
             gap: 12px;
             margin: 22px 0 16px;
-            color: rgba(148, 163, 184, 0.4);
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
+            color: var(--text-sub);
+            font-size: 0.74rem;
+            text-transform: lowercase;
+            letter-spacing: 0.3px;
         }
 
-        .glass-divider::before,
-        .glass-divider::after {
+        .or-divider::before,
+        .or-divider::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--border-card);
         }
 
-        /* Guest Button */
-        .btn-guest-glass {
+        /* Guest Entry Button */
+        .btn-guest-action {
             width: 100%;
-            padding: 12px 18px;
+            background: transparent;
+            border: 1px solid var(--border-card);
+            color: var(--text-title);
+            padding: 11px 18px;
             border-radius: 14px;
-            background: rgba(245, 158, 11, 0.06);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            color: #fbbf24;
-            font-size: 0.88rem;
-            font-weight: 700;
+            font-size: 0.86rem;
+            font-weight: 600;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 9px;
-            transition: all 0.25s ease;
-            backdrop-filter: blur(10px);
+            gap: 8px;
+            transition: all 0.2s ease;
         }
 
-        .btn-guest-glass:hover {
-            background: rgba(245, 158, 11, 0.14);
-            border-color: rgba(245, 158, 11, 0.5);
-            color: #fde68a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        .btn-guest-action:hover {
+            border-color: var(--amber-accent);
+            color: var(--amber-accent);
+            background: rgba(230, 168, 108, 0.06);
+            transform: translateY(-1px);
         }
 
-        .guest-tag {
-            font-size: 0.7rem;
-            font-weight: 500;
-            opacity: 0.75;
-            background: rgba(245, 158, 11, 0.15);
-            padding: 2px 7px;
-            border-radius: 6px;
-        }
-
-        /* Alerts */
-        .glass-alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-            border-radius: 12px;
-            padding: 11px 14px;
-            font-size: 0.82rem;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .glass-alert-info {
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.25);
-            color: #38bdf8;
-            border-radius: 12px;
-            padding: 11px 14px;
-            font-size: 0.82rem;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Footer hint */
-        .footer-hint {
+        /* Security Note at Bottom of Card */
+        .card-security-footer {
+            margin-top: 24px;
             text-align: center;
-            font-size: 0.72rem;
-            color: rgba(148, 163, 184, 0.45);
-            margin-top: 18px;
-            margin-bottom: 0;
-            line-height: 1.4;
+            font-size: 0.74rem;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        @media (max-width: 576px) {
-            .glass-card {
-                padding: 30px 22px;
-                border-radius: 22px;
-            }
-            .torus-wrap {
+        .card-security-footer i {
+            color: var(--amber-accent);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .showcase-panel {
                 display: none;
+            }
+            .form-panel {
+                flex: 1;
+                padding: 40px 20px;
+                min-height: 100vh;
+                background: var(--bg-body);
             }
         }
     </style>
 </head>
 <body>
 
-<!-- Ambient Light Blobs -->
-<div class="ambient-glow">
-    <div class="glow-orb glow-1"></div>
-    <div class="glow-orb glow-2"></div>
-    <div class="glow-orb glow-3"></div>
-</div>
+<div class="login-layout">
 
-<!-- 3D Scene Glossy Background Objects (Glassmorphism Mockup Elements) -->
-<div class="scene-decorations">
-    <div class="torus-wrap">
-        <div class="glossy-ring"></div>
+    <!-- LEFT PANEL: ARCHITECTURAL LUXURY (Nexora / NutriLnk Aesthetic) -->
+    <div class="showcase-panel">
+        <img src="/images/login-bg.jpg" alt="Instalaciones Humanitarias" class="showcase-bg-img">
+        <div class="showcase-overlay"></div>
+        <div class="showcase-right-edge-fade"></div>
+
+        <!-- Top Brand Header -->
+        <div class="showcase-header">
+            <div class="showcase-logo-icon">
+                <i class="fa-solid fa-cubes-stacked"></i>
+            </div>
+            <div class="showcase-logo-text">NutriLnk</div>
+        </div>
+
+        <!-- Bottom Welcome Tagline & Copyright -->
+        <div class="showcase-footer">
+            <div class="welcome-quote-box">
+                <div class="accent-vertical-bar"></div>
+                <div>
+                    <h2 class="welcome-headline">Welcome<br>Back</h2>
+                    <p class="welcome-subline">
+                        Plataforma Humanitaria de Gestión y Optimización de Suministros para la Red de Refugios.
+                    </p>
+                </div>
+            </div>
+
+            <div class="showcase-copyright">
+                &copy; {{ date('Y') }} NutriLnk. Todos los derechos reservados.
+            </div>
+        </div>
     </div>
-    <div class="shape-3d glossy-sphere-1"></div>
-    <div class="shape-3d glossy-sphere-2"></div>
-    <div class="shape-3d mini-sphere"></div>
-</div>
 
-<!-- Central Login Card -->
-<div class="card-container">
-    <div class="glass-card">
-        <!-- Top bar with status and mockup dots -->
-        <div class="card-top-bar">
-            <span class="status-pill">
-                <span class="status-dot"></span>
-                Portal Seguro
-            </span>
-            <div class="mockup-controls">
-                <span class="mockup-dot active"></span>
-                <span class="mockup-dot"></span>
-                <span class="mockup-dot"></span>
-            </div>
-        </div>
+    <!-- RIGHT PANEL: SLEEK LUXURY LOGIN CARD -->
+    <div class="form-panel">
 
-        <!-- Brand Identity -->
-        <div class="brand-section">
-            <div class="logo-box">
-                <i class="fa-solid fa-boxes-stacked"></i>
-            </div>
-            <h1 class="brand-title">NutriLnk</h1>
-            <p class="brand-desc">Plataforma Humanitaria de Gestión y Optimización de Insumos</p>
-        </div>
-
-        @if ($errors->any())
-            <div class="glass-alert-error">
-                <i class="fa-solid fa-circle-exclamation fs-6"></i>
-                <span>{{ $errors->first() }}</span>
-            </div>
-        @endif
-
-        @if (session('info'))
-            <div class="glass-alert-info">
-                <i class="fa-solid fa-circle-info fs-6"></i>
-                <span>{{ session('info') }}</span>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login') }}" autocomplete="on">
-            @csrf
-
-            <!-- Email -->
-            <div class="field-wrap">
-                <label class="form-label-custom" for="email">
-                    <span>Correo Institucional</span>
-                </label>
-                <div class="position-relative">
-                    <i class="fa-regular fa-envelope field-icon"></i>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        value="{{ old('email') }}" 
-                        class="glass-input" 
-                        placeholder="usuario@refugios.ve" 
-                        required 
-                        autocomplete="email"
-                        autofocus
-                    >
-                </div>
-            </div>
-
-            <!-- Password -->
-            <div class="field-wrap">
-                <label class="form-label-custom" for="password">
-                    <span>Contraseña</span>
-                </label>
-                <div class="position-relative">
-                    <i class="fa-solid fa-lock field-icon"></i>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="glass-input" 
-                        placeholder="••••••••••••" 
-                        required 
-                        autocomplete="current-password"
-                    >
-                    <button type="button" class="toggle-password" id="togglePasswordBtn" title="Mostrar/ocultar contraseña" aria-label="Mostrar u ocultar contraseña">
-                        <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Shelter Context Selection -->
-            <div class="field-wrap mb-4">
-                <label class="form-label-custom" for="shelter_id">
-                    <span><i class="fa-solid fa-tents text-info me-1"></i> Refugio Asignado</span>
-                    <span style="color: #38bdf8; font-size: 0.65rem; background: rgba(56,189,248,0.1); padding: 1px 6px; border-radius: 4px;">Opcional</span>
-                </label>
-                <div class="position-relative">
-                    <i class="fa-solid fa-building-shield field-icon text-info"></i>
-                    <select name="shelter_id" id="shelter_id" class="glass-input glass-select">
-                        <option value="" selected>🌐 Red Centralizada (Todos los Refugios)</option>
-                        <optgroup label="── Centros y Albergues Humanitarios ──">
-                            @foreach($shelters as $s)
-                                <option value="{{ $s->id }}">
-                                    🏢 [{{ $s->codigo }}] {{ $s->nombre }} — {{ $s->municipio }}
-                                </option>
-                            @endforeach
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-
-            <!-- 2FA indicator badge -->
-            <div class="security-badge">
-                <i class="fa-solid fa-shield-halved text-info"></i>
-                <span>Acceso protegido con Doble Factor (2FA OTP)</span>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn-primary-glass">
-                <span>Ingresar al Sistema</span>
-                <i class="fa-solid fa-arrow-right"></i>
+        <!-- Topbar: Dark / Light Mode Toggle Button -->
+        <div class="form-panel-topbar">
+            <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema de color">
+                <span class="theme-toggle-icon" id="themeIcon"><i class="fa-solid fa-moon"></i></span>
+                <span id="themeText">Modo Oscuro</span>
             </button>
-        </form>
+        </div>
 
-        <!-- Divider -->
-        <div class="glass-divider">o ingresa sin credenciales</div>
+        <!-- Central Floating Card -->
+        <div class="login-card">
 
-        <!-- Guest Entry Button -->
-        <a href="{{ route('guest.enter') }}" class="btn-guest-glass">
-            <i class="fa-solid fa-compass"></i>
-            <span>Explorar como Invitado</span>
-            <span class="guest-tag">Solo lectura</span>
-        </a>
+            <!-- Hexagon Badge Top Icon -->
+            <div class="card-logo-badge">
+                <i class="fa-solid fa-cube"></i>
+            </div>
 
-        <p class="footer-hint">
-            <i class="fa-solid fa-circle-info me-1 text-info"></i>
-            El modo invitado permite interactuar con los módulos y reportes en tiempo real sin modificar datos.
-        </p>
+            <h1 class="login-card-title">Login</h1>
+            <p class="login-card-subtitle">Inicia sesión en tu cuenta para continuar</p>
+
+            @if ($errors->any())
+                <div class="alert alert-danger p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ $errors->first() }}</span>
+                </div>
+            @endif
+
+            @if (session('info'))
+                <div class="alert alert-info p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(230, 168, 108, 0.12); border: 1px solid rgba(230, 168, 108, 0.3); color: #e6a86c;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>{{ session('info') }}</span>
+                </div>
+            @endif
+
+            <!-- Quick Demo Selectors -->
+            <div class="demo-accounts-bar" title="Acceso rápido con un clic para pruebas">
+                <span style="font-size: 0.70rem; color: var(--text-sub); align-self: center; margin-right: 2px;">Rápido:</span>
+                <button type="button" class="demo-pill" onclick="fillCredentials('admin@refugios.ve', 'password')">
+                    👑 Admin
+                </button>
+                <button type="button" class="demo-pill" onclick="fillCredentials('coordinador@refugios.ve', 'password')">
+                    📋 Coordinador
+                </button>
+                <button type="button" class="demo-pill" onclick="fillCredentials('almacen@refugios.ve', 'password')">
+                    📦 Almacenista
+                </button>
+                <button type="button" class="demo-pill" onclick="fillCredentials('auditor@refugios.ve', 'password')">
+                    🛡️ Auditor
+                </button>
+            </div>
+
+            <form method="POST" action="{{ route('login') }}" autocomplete="on" id="loginForm">
+                @csrf
+
+                <!-- Email -->
+                <div class="form-group-custom">
+                    <div class="form-label-row">
+                        <label class="form-label-custom" for="email">Email Address</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon-left"></i>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            value="{{ old('email', 'admin@refugios.ve') }}" 
+                            class="sleek-input" 
+                            placeholder="you@example.com" 
+                            required 
+                            autocomplete="email"
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group-custom">
+                    <div class="form-label-row">
+                        <label class="form-label-custom" for="password">Password</label>
+                        <span class="forgot-link" style="cursor: pointer;" onclick="fillCredentials('admin@refugios.ve', 'password')">
+                            ¿Olvidó contraseña?
+                        </span>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon-left"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            value="password"
+                            class="sleek-input" 
+                            placeholder="••••••••••••" 
+                            required 
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="btn-toggle-eye" id="togglePasswordBtn" title="Mostrar/Ocultar" aria-label="Mostrar u ocultar contraseña">
+                            <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sede / Refugio Asignado -->
+                <div class="form-group-custom mb-4">
+                    <div class="form-label-row">
+                        <label class="form-label-custom" for="shelter_id">Sede / Refugio Asignado</label>
+                        <span style="font-size: 0.68rem; color: var(--amber-accent); opacity: 0.9;">Opcional</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-building-shield input-icon-left"></i>
+                        <select name="shelter_id" id="shelter_id" class="sleek-input sleek-select">
+                            <option value="" selected>🌐 Red Centralizada (Todos los Refugios)</option>
+                            <optgroup label="── Centros Humanitarios ──">
+                                @foreach($shelters as $s)
+                                    <option value="{{ $s->id }}">
+                                        [{{ $s->codigo }}] {{ $s->nombre }} — {{ $s->municipio }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-luxury-login" id="submitBtn">
+                    <span>Login</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="or-divider">or continue with</div>
+
+            <!-- Guest Mode -->
+            <a href="{{ route('guest.enter') }}" class="btn-guest-action">
+                <i class="fa-solid fa-compass me-1"></i>
+                <span>Explorar como Invitado (Modo Lectura)</span>
+            </a>
+
+            <!-- Security footer (Image 1 style) -->
+            <div class="card-security-footer">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Your data is secure with us</span>
+            </div>
+
+        </div>
+
     </div>
+
 </div>
 
 <script>
+    // Theme Switcher Logic
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('app-theme', theme);
+
+        const icon = document.getElementById('themeIcon');
+        const text = document.getElementById('themeText');
+        if (theme === 'light') {
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            if (text) text.textContent = 'Modo Claro';
+        } else {
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            if (text) text.textContent = 'Modo Oscuro';
+        }
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+    }
+
+    // Initialize toggle button state on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('app-theme') || 'dark';
+        applyTheme(savedTheme);
+    });
+
     // Toggle Password Visibility
     const toggleBtn = document.getElementById('togglePasswordBtn');
     const passwordInput = document.getElementById('password');
@@ -747,6 +804,12 @@
             passwordInput.type = isPassword ? 'text' : 'password';
             toggleIcon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
         });
+    }
+
+    // Helper to auto-fill credentials for testing
+    function fillCredentials(email, password) {
+        document.getElementById('email').value = email;
+        document.getElementById('password').value = password;
     }
 </script>
 

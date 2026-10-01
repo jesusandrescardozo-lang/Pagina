@@ -44,16 +44,12 @@ class AuthenticatedSessionController extends Controller
                 session()->forget(['shelter_id', 'shelter_nombre', 'shelter_codigo']);
             }
 
-            // Preparar estado de la verificación 2 factores (2FA TOTP con Google Authenticator)
-            session([
-                'otp_attempts' => 0,
-                'otp_last_attempt_at' => null,
-            ]);
-            session()->forget('otp_verificado');
+            // Inicio de sesión directo sin Google Authenticator ni OTP
+            session(['otp_verificado' => true]);
 
-            AuditService::log('Autenticación', 'login_pass_ok', 'Validación de credenciales correcta para ' . $user->name . '. En espera de verificación de código OTP.');
+            AuditService::log('Autenticación', 'login_ok', 'Inicio de sesión exitoso para ' . $user->name);
 
-            return redirect()->route('otp.view');
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([

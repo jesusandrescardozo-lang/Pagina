@@ -15,7 +15,7 @@
         .badge { padding: 2px 5px; border-radius: 3px; font-size: 8px; font-weight: bold; }
         .badge-a { background: #fee2e2; color: #b91c1c; }
         .badge-b { background: #fef3c7; color: #b45309; }
-        .badge-c { background: #e0f2fe; color: #0369a1; }
+        .badge-c { background: #fdf3e7; color: #9c6023; }
         .formula-box { background: #f8fafc; border: 1px solid #cbd5e1; padding: 6px 10px; margin-bottom: 10px; font-family: monospace; font-size: 10px; }
         .footer { text-align: right; font-size: 9px; color: #888; margin-top: 20px; }
     </style>

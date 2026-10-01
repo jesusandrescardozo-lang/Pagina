@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.35); color: #38bdf8; font-size:0.75rem; font-family:'JetBrains Mono',monospace;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.75rem; font-family:'JetBrains Mono',monospace;">
                 {{ $shelter->codigo }}
             </span>
             <span class="badge {{ $shelter->estado_badge['class'] }}" style="font-size:0.75rem;">

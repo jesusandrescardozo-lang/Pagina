@@ -5,17 +5,17 @@
     <title>Reporte de Inventario de Refugios</title>
     <style>
         body { font-family: sans-serif; font-size: 11px; color: #333; margin: 20px; }
-        .header { border-bottom: 2px solid #0284c7; padding-bottom: 10px; margin-bottom: 15px; }
-        .title { font-size: 18px; font-weight: bold; color: #0284c7; }
+        .header { border-bottom: 2px solid #c88340; padding-bottom: 10px; margin-bottom: 15px; }
+        .title { font-size: 18px; font-weight: bold; color: #c88340; }
         .subtitle { font-size: 11px; color: #666; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
-        th { background-color: #f0f7ff; color: #0369a1; font-weight: bold; font-size: 10px; text-transform: uppercase; }
+        th { background-color: #fdf8f3; color: #9c6023; font-weight: bold; font-size: 10px; text-transform: uppercase; }
         .badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; }
         .badge-critico { background: #fee2e2; color: #b91c1c; }
         .badge-precaucion { background: #fef3c7; color: #b45309; }
         .badge-optimo { background: #dcfce7; color: #15803d; }
-        .shelter-header { background-color: #e0f2fe; padding: 6px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-left: 4px solid #0284c7; }
+        .shelter-header { background-color: #fcf4ec; padding: 6px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-left: 4px solid #c88340; }
         .footer { text-align: right; font-size: 9px; color: #888; margin-top: 20px; }
     </style>
 </head>

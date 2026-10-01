@@ -9,7 +9,6 @@ use App\Http\Controllers\SupplyTransferController;
 use App\Http\Controllers\CpmController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Auth\OtpAuthController;
 use App\Http\Controllers\CarnetController;
 use App\Http\Controllers\GuestController;
 
@@ -32,21 +31,11 @@ Route::get('/', function () {
 Route::get('/guest', [GuestController::class, 'enter'])->name('guest.enter');
 Route::get('/guest/exit', [GuestController::class, 'exit'])->name('guest.exit');
 
-// Rutas de autenticación básica (Laravel Breeze)
-// throttle: limita la fuerza bruta de contraseñas (10 intentos por minuto por IP)
+// Rutas de autenticación básica
 require __DIR__.'/auth.php';
 
-// ---------------------------------------------------------------
-// Verificación 2-Pasos por Código OTP (requiere login con contraseña)
-// ---------------------------------------------------------------
+// Rutas protegidas por autenticación
 Route::middleware(['auth'])->group(function () {
-    Route::get('/auth/otp-verify', [OtpAuthController::class, 'view'])->name('otp.view');
-    Route::post('/auth/otp-verify', [OtpAuthController::class, 'verify'])->name('otp.verify')->middleware('throttle:15,1');
-    Route::post('/auth/otp-regenerate-secret', [OtpAuthController::class, 'regenerateSecret'])->name('otp.regenerate-secret');
-});
-
-// Rutas protegidas por autenticación Y validación de 2 factores OTP
-Route::middleware(['auth', 'otp.verified'])->group(function () {
 
     // ---------------------------------------------------------------
     // 2. Refugios y Población Albergada (Admin, Coordinador, Auditor)

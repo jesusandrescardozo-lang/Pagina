@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-            <span class="badge" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.35); color: #38bdf8; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
                 <i class="fa-solid fa-hashtag me-1"></i>{{ $shelter->codigo }}
             </span>
             <span class="badge {{ $shelter->estado_badge['class'] }}" style="font-size:0.75rem;">
@@ -78,7 +78,7 @@
             <span class="stat-label mb-2"><i class="fa-solid fa-users me-1 text-info"></i> Distribución por Grupo Etario</span>
             <div class="row g-2 text-center mt-1">
                 <div class="col-6">
-                    <div class="p-2 rounded-3" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25);">
+                    <div class="p-2 rounded-3" style="background: rgba(230, 168, 108, 0.08); border: 1px solid rgba(230, 168, 108, 0.25);">
                         <span class="text-muted d-block" style="font-size:0.7rem; text-transform:uppercase;">Adultos</span>
                         <span class="fs-4 fw-bold text-white">{{ $shelter->poblacion_adultos }}</span>
                         <span class="d-block text-muted" style="font-size:0.65rem;">
@@ -87,9 +87,9 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="p-2 rounded-3" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);">
+                    <div class="p-2 rounded-3" style="background: rgba(230, 168, 108, 0.12); border: 1px solid rgba(230, 168, 108, 0.3);">
                         <span class="text-muted d-block" style="font-size:0.7rem; text-transform:uppercase;">Niños / Lactantes</span>
-                        <span class="fs-4 fw-bold text-info">{{ $shelter->poblacion_ninos }}</span>
+                        <span class="fs-4 fw-bold" style="color:var(--accent-light);">{{ $shelter->poblacion_ninos }}</span>
                         <span class="d-block text-muted" style="font-size:0.65rem;">Prioridad Nutricional</span>
                     </div>
                 </div>

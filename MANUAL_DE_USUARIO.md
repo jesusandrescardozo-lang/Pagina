@@ -116,19 +116,13 @@ Optimiza la secuencia de actividades de la cadena logística de reabastecimiento
    ```
    > ⚠️ `migrate:fresh` **borra y regenera** toda la base de datos. Ejecutarlo solo la primera vez o cuando se quieran restaurar los datos de demostración.
 
-6. **Obtener los códigos 2FA de los usuarios demo** (requisito para iniciar sesión):
-   ```bash
-   php tests/test_check_users.php
-   ```
-   Imprime el secreto de cada usuario. Ingresarlo en la app **Google Authenticator** del celular (escaneando el QR o escribiendo la clave manualmente).
-
-7. **Iniciar Servidor Local**:
+6. **Iniciar Servidor Local**:
    ```bash
    php artisan serve
    ```
    Abrir en el navegador: `http://localhost:8000`
 
-   > Al iniciar sesión además se solicita el **código de 6 dígitos** que muestra Google Authenticator.
+   > Acceso directo con correo y contraseña (el paso 2FA/Google Authenticator fue retirado del flujo de inicio de sesión).
 
 ---
 

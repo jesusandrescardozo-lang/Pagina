@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #a78bfa; font-size: 0.72rem; border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-shield-halved me-1"></i> Trazabilidad SHA-256
             </span>
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.10); color: #f5ede0; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.25); border-radius: 9999px; padding: 3px 10px;">
                 {{ $logs->total() }} Eventos Registrados
             </span>
         </div>
@@ -83,7 +83,7 @@
                         <strong class="text-white">{{ $log->user->name ?? 'Sistema / Automático' }}</strong>
                     </td>
                     <td>
-                        <span class="badge" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.3);">
+                        <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.3);">
                             {{ $log->modulo }}
                         </span>
                     </td>
@@ -94,7 +94,7 @@
                         {{ $log->descripcion }}
                     </td>
                     <td class="text-end">
-                        <code style="color: #38bdf8; font-size: 0.76rem;">{{ $log->ip_address ?: '127.0.0.1' }}</code>
+                        <code style="color: #e6a86c; font-size: 0.76rem;">{{ $log->ip_address ?: '127.0.0.1' }}</code>
                     </td>
                 </tr>
                 @empty

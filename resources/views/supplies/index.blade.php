@@ -10,7 +10,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; font-size: 0.72rem; border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-boxes-stacked me-1"></i> Control Central de Suministros
             </span>
             <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
@@ -120,14 +120,14 @@
                 @forelse($supplies as $supply)
                 <tr>
                     <td>
-                        <code style="color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 6px;">{{ $supply->codigo }}</code>
+                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $supply->codigo }}</code>
                     </td>
                     <td>
                         <strong class="text-white d-block">{{ $supply->nombre }}</strong>
                         <small class="text-muted">{{ $supply->subcategoria }} &bull; Presentación: {{ $supply->presentacion }}</small>
                     </td>
                     <td>
-                        <span class="badge" style="background: {{ $supply->categoria == 'alimento' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(14, 165, 233, 0.15)' }}; color: {{ $supply->categoria == 'alimento' ? '#34d399' : '#38bdf8' }}; border: 1px solid {{ $supply->categoria == 'alimento' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(14, 165, 233, 0.3)' }}; font-size: 0.72rem;">
+                        <span class="badge" style="background: {{ $supply->categoria == 'alimento' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(216, 150, 86, 0.15)' }}; color: {{ $supply->categoria == 'alimento' ? '#34d399' : '#e6a86c' }}; border: 1px solid {{ $supply->categoria == 'alimento' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(216, 150, 86, 0.3)' }}; font-size: 0.72rem;">
                             <i class="fa-solid {{ $supply->categoria == 'alimento' ? 'fa-bowl-food' : 'fa-kit-medical' }} me-1"></i>
                             {{ ucfirst($supply->categoria) }}
                         </span>
