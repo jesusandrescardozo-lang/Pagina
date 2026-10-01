@@ -64,6 +64,17 @@ php tests/test_e2e_login_http.php        # E2E login directo por HTTP (requiere 
 - **Seguridad**: bacon/bacon-qr-code (QR local), TOTP RFC 6238
 - **Frontend**: Blade + Tailwind (CDN) + Chart.js / Vis.js
 
+## Despliegue en Render
+
+El repositorio incluye `Dockerfile`, `docker-start.sh` y `.dockerignore` (Render no ofrece PHP nativo, así que usa runtime Docker):
+
+1. En [dashboard.render.com](https://dashboard.render.com) → **New → Web Service** → pestaña *Git Provider* → conecta tu cuenta de GitHub y selecciona este repositorio.
+2. *Language*: **Docker** (Render detecta el `Dockerfile`; no llenes Build/Start Command).
+3. *Branch*: `main` → región **Virginia** → plan **Free**.
+4. En *Advanced* → *Health Check Path*: `/login` → **Create Web Service**.
+
+Al arrancar, `docker-start.sh` genera la `APP_KEY`, ejecuta `php artisan migrate:fresh --force --seed` (datos demo) y arranca Apache escuchando en el puerto de Render. La SQLite es efímera: **cada deploy o reinicio vuelve al estado demo** (si necesitas datos persistentes, hay que añadir un *Persistent Disk* o PostgreSQL de Render).
+
 ## Notas de mantenimiento
 
 - `composer audit`: las 21 advisories restantes pertenecen a Laravel 9 / dompdf 2 / symfony 6.0, ramas **EOL sin parche para PHP 8.0**; se resuelven únicamente con el salto a PHP 8.2+ y Laravel 12.

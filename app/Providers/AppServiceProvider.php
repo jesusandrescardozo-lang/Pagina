@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +15,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Render termina TLS en el balanceador: en produccion forzamos HTTPS
+        // para que redirecciones, formularios y assets salgan siempre seguros.
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         /*
         |--------------------------------------------------------------------------
         | Matriz única de permisos (Capability => Roles autorizados)
