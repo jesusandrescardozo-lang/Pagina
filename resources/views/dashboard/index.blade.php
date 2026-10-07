@@ -13,19 +13,14 @@
 @endphp
 
 <style>
-    /* Ambient Neon Glow Lines & 3D Accent Layers */
+    /* Panel principal — sobrio, sin halos ni capas 3D */
     .cockpit-hero {
         position: relative;
-        background: linear-gradient(145deg, rgba(20, 24, 38, 0.85) 0%, rgba(8, 10, 16, 0.95) 100%);
-        backdrop-filter: blur(28px) saturate(200%);
-        -webkit-backdrop-filter: blur(28px) saturate(200%);
-        border: 1px solid rgba(230, 168, 108, 0.16);
-        border-radius: 26px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
         padding: 28px 32px;
-        box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.7),
-            inset 0 1px 1px rgba(255, 255, 255, 0.15),
-            0 0 30px rgba(216, 150, 86, 0.14);
+        box-shadow: var(--shadow-card);
         margin-bottom: 26px;
         overflow: hidden;
     }
@@ -33,103 +28,100 @@
     .cockpit-hero::before {
         content: '';
         position: absolute;
-        top: -60px;
-        right: -60px;
-        width: 260px;
-        height: 260px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(216, 150, 86, 0.22) 0%, rgba(180, 100, 40, 0.08) 50%, transparent 70%);
-        filter: blur(40px);
+        top: 0;
+        right: 0;
+        width: 320px;
+        height: 4px;
+        background: var(--accent);
+        opacity: 0.55;
         pointer-events: none;
     }
 
-    /* Big Futuristic Digital Clock (Inspired by Image 4) */
+    /* Reloj digital */
     .digital-clock-display {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2.7rem;
         font-weight: 800;
         letter-spacing: -1.5px;
-        color: #ffffff;
+        color: var(--text-primary);
         line-height: 1;
-        text-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 12px rgba(216, 150, 86, 0.45);
     }
 
     .digital-date-sub {
         font-size: 0.84rem;
-        color: rgba(226, 232, 240, 0.65);
+        color: var(--text-muted);
         font-weight: 500;
         margin-top: 5px;
     }
 
-    /* Weather & Status Widget (Inspired by Image 4) */
+    /* Widget de estado / clima */
     .weather-widget-card {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(230, 168, 108, 0.16);
-        border-radius: 18px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         padding: 12px 18px;
         display: flex;
         align-items: center;
         gap: 14px;
-        backdrop-filter: blur(14px);
     }
 
     .weather-icon-circle {
         width: 44px;
         height: 44px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, rgba(216, 150, 86, 0.25), rgba(180, 100, 40, 0.18));
-        border: 1px solid rgba(230, 168, 108, 0.35);
+        border-radius: var(--radius);
+        background: var(--accent-soft);
+        border: 1px solid var(--border-accent);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #e6a86c;
+        color: var(--accent-light);
         font-size: 1.3rem;
-        box-shadow: 0 0 15px rgba(216, 150, 86, 0.25);
     }
 
-    /* Futuristic Stat Cards (Inspired by Image 2 & 3) */
-    .neon-stat-card {
-        background: linear-gradient(145deg, rgba(22, 30, 48, 0.7) 0%, rgba(11, 15, 26, 0.85) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        border-radius: 22px;
+    /* Tarjetas de indicadores */
+    .stat-panel {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
         padding: 22px 24px;
         position: relative;
         overflow: hidden;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        box-shadow: var(--shadow-card);
     }
 
-    .neon-stat-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(230, 168, 108, 0.28);
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(216, 150, 86, 0.15);
+    .stat-panel:hover {
+        transform: translateY(-2px);
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-raised);
     }
 
-    .neon-stat-card .top-badge-row {
+    .stat-panel .top-badge-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 12px;
     }
 
-    .neon-stat-card .stat-title {
+    .stat-panel .stat-title {
         font-size: 0.74rem;
         font-weight: 700;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        color: rgba(226, 232, 240, 0.65);
+        color: var(--text-muted);
     }
 
-    .neon-stat-card .stat-big-num {
+    .stat-panel .stat-big-num {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2.25rem;
         font-weight: 800;
-        color: #ffffff;
+        color: #ffffff; /* número siempre en blanco: el estado se ve en la barra */
         line-height: 1.1;
         letter-spacing: -0.5px;
     }
+    [data-bs-theme="light"] .stat-panel .stat-big-num { color: #101828; }
 
-    .stat-glow-tag {
+    .stat-tag {
         font-size: 0.68rem;
         font-weight: 700;
         padding: 3px 8px;
@@ -139,75 +131,84 @@
         gap: 4px;
     }
 
-    .tag-emerald { background: rgba(16, 185, 129, 0.12); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.28); }
-    .tag-cyan { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
-    .tag-rose { background: rgba(244, 63, 94, 0.12); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.30); }
-    .tag-amber { background: rgba(230, 168, 108, 0.12); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.35); }
+    .tag-emerald { background: rgba(16, 185, 129, 0.13); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.30); }
+    .tag-rose { background: rgba(244, 63, 94, 0.13);  color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.32); }
+    .tag-amber { background: rgba(230, 168, 108, 0.13); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.34); }
 
-    /* Quick Access App Tiles (Inspired by Image 4) */
+    /* Semáforo de tarjetas KPI — solo verde / amarillo / rojo.
+       El color de estado vive en la insignia y en la barra; el número grande va en blanco. */
+    .tag-signal-ok   { background: rgba(34, 197, 94, 0.14);  color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
+    .tag-signal-warn { background: rgba(250, 204, 21, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.38); }
+    .tag-signal-crit { background: rgba(239, 68, 68, 0.15);  color: #f87171; border: 1px solid rgba(239, 68, 68, 0.38); }
+
+    .kpi-ok   { background: #22c55e; }
+    .kpi-warn { background: #facc15; }
+    .kpi-crit { background: #ef4444; }
+
+    /* Accesos rápidos */
     .app-tile-btn {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         padding: 16px 14px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         text-decoration: none;
-        transition: all 0.25s ease;
+        transition: background-color var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
         position: relative;
         overflow: hidden;
+        box-shadow: var(--shadow-card);
     }
 
     .app-tile-btn:hover {
-        background: rgba(230, 168, 108, 0.08);
-        border-color: rgba(230, 168, 108, 0.40);
-        transform: translateY(-3px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(216, 150, 86, 0.18);
+        background: var(--bg-card-hover);
+        border-color: var(--border-accent);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-raised);
     }
 
     .app-tile-icon {
         width: 48px;
         height: 48px;
-        border-radius: 14px;
+        border-radius: var(--radius);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.35rem;
         margin-bottom: 10px;
-        box-shadow: 0 8px 18px rgba(0,0,0,0.4);
-        transition: transform 0.25s ease;
+        transition: transform var(--transition);
     }
 
     .app-tile-btn:hover .app-tile-icon {
-        transform: scale(1.1);
+        transform: scale(1.06);
     }
 
-    .icon-blue   { background: linear-gradient(135deg, #d89656, #c07840); color: #1a0e04; }
-    .icon-amber  { background: linear-gradient(135deg, #c07840, #a05828); color: #f5ede0; }
-    .icon-emerald{ background: linear-gradient(135deg, #d89656, #b06030); color: #1a0e04; }
-    .icon-purple { background: linear-gradient(135deg, #b87840, #d09050); color: #1a0e04; }
-    .icon-rose   { background: linear-gradient(135deg, #c06830, #d88050); color: #f5ede0; }
-    .icon-slate  { background: linear-gradient(135deg, #2a1e12, #3e2c1a); color: #e6a86c; border: 1px solid rgba(230,168,108,0.3); }
+    .icon-blue    { background: var(--accent); color: #1a0e04; }
+    .icon-amber   { background: var(--accent-light); color: #1a0e04; }
+    .icon-emerald { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.30); }
+    .icon-purple  { background: rgba(148, 163, 184, 0.16); color: var(--accent-light); border: 1px solid var(--border); }
+    .icon-rose    { background: rgba(244, 63, 94, 0.14); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.30); }
+    .icon-slate   { background: var(--bg-secondary); color: var(--accent-light); border: 1px solid var(--border-accent); }
 
-    /* Interactive To-Do Checklist Widget (Inspired by Image 4) */
+    /* Lista de tareas */
     .todo-item {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         padding: 12px 14px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 8px;
-        transition: all 0.2s ease;
+        transition: background-color var(--transition), border-color var(--transition);
         cursor: pointer;
     }
 
     .todo-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.14);
+        background: var(--bg-card-hover);
+        border-color: var(--border-hover);
     }
 
     .todo-item.completed {
@@ -225,7 +226,7 @@
         justify-content: center;
         margin-right: 12px;
         flex-shrink: 0;
-        transition: all 0.2s;
+        transition: background-color var(--transition), border-color var(--transition);
     }
 
     .todo-item.completed .todo-checkbox {
@@ -234,7 +235,7 @@
         color: #1a0e04;
     }
 
-    /* Circular Health Gauge (Inspired by Image 2 & 3) */
+    /* Medidor circular de salud de inventario */
     .circular-gauge-container {
         position: relative;
         width: 170px;
@@ -256,25 +257,24 @@
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2.1rem;
         font-weight: 800;
-        color: #fff;
+        color: var(--text-primary);
         line-height: 1;
-        text-shadow: 0 0 15px rgba(216, 150, 86, 0.4);
     }
 
     .gauge-subtext {
         font-size: 0.65rem;
-        color: rgba(226, 232, 240, 0.6);
+        color: var(--text-muted);
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 0.5px;
         margin-top: 4px;
     }
 
-    /* Heuristic telemetry line (Inspired by Image 2) */
+    /* Tarjeta de ruta telemétrica */
     .telemetry-route-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         padding: 14px 18px;
         margin-bottom: 10px;
         display: flex;
@@ -292,108 +292,54 @@
     }
 
     .flow-node {
-        background: rgba(216, 150, 86, 0.12);
-        border: 1px solid rgba(230, 168, 108, 0.35);
+        background: var(--accent-soft);
+        border: 1px solid var(--border-accent);
         padding: 6px 12px;
-        border-radius: 10px;
+        border-radius: var(--radius-sm);
         font-size: 0.82rem;
         font-weight: 600;
-        color: #fff;
+        color: var(--text-primary);
     }
 
     .flow-arrow {
-        color: #e6a86c;
+        color: var(--accent-light);
         font-size: 0.9rem;
-        animation: flowPulse 2s infinite;
+        animation: flowPulse 2.4s ease-in-out infinite;
     }
 
     @keyframes flowPulse {
-        0%, 100% { opacity: 0.4; transform: translateX(0); }
-        50% { opacity: 1; transform: translateX(4px); }
+        0%, 100% { opacity: 0.45; transform: translateX(0); }
+        50% { opacity: 1; transform: translateX(3px); }
     }
 
-    /* LIGHT MODE STYLES FOR DASHBOARD (Inspired by Image 2) */
-    [data-bs-theme="light"] .cockpit-hero {
+    /* ---- Modo claro (dashboard) ---- */
+    [data-bs-theme="light"] .cockpit-hero,
+    [data-bs-theme="light"] .stat-panel,
+    [data-bs-theme="light"] .app-tile-btn,
+    [data-bs-theme="light"] .todo-item,
+    [data-bs-theme="light"] .telemetry-route-card {
         background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05) !important;
-    }
-
-    [data-bs-theme="light"] .digital-clock-display {
-        color: #0f172a !important;
-        text-shadow: none !important;
-    }
-
-    [data-bs-theme="light"] .digital-date-sub {
-        color: #64748b !important;
+        box-shadow: var(--shadow-card) !important;
     }
 
     [data-bs-theme="light"] .weather-widget-card {
-        background: #f8fafc !important;
-        border-color: rgba(0, 0, 0, 0.08) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+        background: #f6f7f9 !important;
+        box-shadow: none !important;
     }
 
-    [data-bs-theme="light"] .neon-stat-card {
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-    }
-
-    [data-bs-theme="light"] .neon-stat-card:hover {
-        border-color: rgba(200, 131, 64, 0.35) !important;
-        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
-    }
-
-    [data-bs-theme="light"] .neon-stat-card .stat-big-num {
-        color: #0f172a !important;
-    }
-
-    [data-bs-theme="light"] .neon-stat-card .stat-title {
-        color: #64748b !important;
-    }
-
-    [data-bs-theme="light"] .app-tile-btn {
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03) !important;
-    }
-
+    [data-bs-theme="light"] .stat-panel:hover,
     [data-bs-theme="light"] .app-tile-btn:hover {
-        border-color: var(--accent) !important;
-        box-shadow: 0 8px 24px rgba(200, 131, 64, 0.14) !important;
+        border-color: var(--border-accent) !important;
     }
 
-    [data-bs-theme="light"] .todo-item {
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.07) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+    [data-bs-theme="light"] .icon-blue,
+    [data-bs-theme="light"] .icon-amber {
+        color: #ffffff !important;
     }
 
-    [data-bs-theme="light"] .todo-item:hover {
-        background: #f8fafc !important;
-        border-color: rgba(0, 0, 0, 0.12) !important;
-    }
-
-    [data-bs-theme="light"] .telemetry-route-card {
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
-    }
-
-    [data-bs-theme="light"] .flow-node {
-        background: rgba(200, 131, 64, 0.08) !important;
-        border-color: rgba(200, 131, 64, 0.25) !important;
-        color: #c88340 !important;
-    }
-
-    [data-bs-theme="light"] .gauge-percent {
-        color: #0f172a !important;
-        text-shadow: none !important;
-    }
-
-    [data-bs-theme="light"] .gauge-subtext {
-        color: #64748b !important;
+    [data-bs-theme="light"] .icon-purple {
+        background: rgba(15, 23, 42, 0.06) !important;
+        color: var(--accent) !important;
     }
 </style>
 
@@ -462,10 +408,10 @@
 <div class="row g-3 mb-4">
     <!-- Card 1: Población -->
     <div class="col-xl-3 col-md-6">
-        <div class="neon-stat-card h-100">
+        <div class="stat-panel h-100">
             <div class="top-badge-row">
                 <span class="stat-title">Población Protegida</span>
-                <span class="stat-glow-tag tag-cyan">
+                <span class="stat-tag {{ $ocupacionPct > 90 ? 'tag-signal-crit' : ($ocupacionPct > 70 ? 'tag-signal-warn' : 'tag-signal-ok') }}">
                     <i class="fa-solid fa-users"></i> {{ $ocupacionPct }}% Ocupado
                 </span>
             </div>
@@ -474,67 +420,67 @@
                 de <strong class="text-white">{{ number_format($capacidadMaxima) }}</strong> cupos totales habilitados
             </div>
             <div class="progress-glass">
-                <div class="bar bar-accent" style="width: {{ min($ocupacionPct, 100) }}%"></div>
+                <div class="bar {{ $ocupacionPct > 90 ? 'kpi-crit' : ($ocupacionPct > 70 ? 'kpi-warn' : 'kpi-ok') }}" style="width: {{ min($ocupacionPct, 100) }}%"></div>
             </div>
         </div>
     </div>
 
     <!-- Card 2: Población Prioritaria -->
     <div class="col-xl-3 col-md-6">
-        <div class="neon-stat-card h-100">
+        <div class="stat-panel h-100">
             <div class="top-badge-row">
                 <span class="stat-title">Grupos Prioritarios</span>
-                <span class="stat-glow-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
+                <span class="stat-tag tag-signal-warn">
                     <i class="fa-solid fa-shield-heart"></i> Atención Especial
                 </span>
             </div>
             <div class="stat-big-num mb-1">{{ number_format($poblacionNinos + $poblacionMayores + $poblacionMedica) }}</div>
             <div class="d-flex justify-content-between text-muted small mb-2" style="font-size: 0.74rem;">
-                <span><i class="fa-solid fa-baby me-1" style="color: #e6a86c;"></i> {{ $poblacionNinos }} niños</span>
-                <span><i class="fa-solid fa-hospital me-1" style="color: #d89656;"></i> {{ $poblacionMedica }} médicos</span>
+                <span><i class="fa-solid fa-baby me-1"></i> {{ $poblacionNinos }} niños</span>
+                <span><i class="fa-solid fa-hospital me-1"></i> {{ $poblacionMedica }} médicos</span>
             </div>
             <div class="progress-glass">
-                <div class="bar" style="background: linear-gradient(90deg, #d89656, #e6a86c); width: 68%;"></div>
+                <div class="bar kpi-warn" style="width: 68%;"></div>
             </div>
         </div>
     </div>
 
     <!-- Card 3: Alimentos en Riesgo Crítico -->
     <div class="col-xl-3 col-md-6">
-        <div class="neon-stat-card h-100">
+        <div class="stat-panel h-100">
             <div class="top-badge-row">
                 <span class="stat-title">Alimentos Críticos (&lt; 2d)</span>
-                <span class="stat-glow-tag {{ $criticosAlimentos > 0 ? 'tag-rose' : 'tag-emerald' }}">
+                <span class="stat-tag {{ $criticosAlimentos > 0 ? 'tag-signal-crit' : 'tag-signal-ok' }}">
                     <i class="fa-solid {{ $criticosAlimentos > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check' }}"></i>
                     {{ $criticosAlimentos > 0 ? 'Déficit' : 'Óptimo' }}
                 </span>
             </div>
-            <div class="stat-big-num mb-1 {{ $criticosAlimentos > 0 ? 'text-danger' : 'text-success' }}">{{ $criticosAlimentos }}</div>
+            <div class="stat-big-num mb-1">{{ $criticosAlimentos }}</div>
             <div class="text-muted small mb-2" style="font-size: 0.76rem;">
                 {{ $criticosAlimentos > 0 ? 'Alimentos con menos de 48h de reserva' : 'Reserva alimentaria garantizada (> 7 días)' }}
             </div>
             <div class="progress-glass">
-                <div class="bar {{ $criticosAlimentos > 0 ? 'bar-danger' : 'bar-success' }}" style="width: {{ $criticosAlimentos > 0 ? '90%' : '15%' }}%"></div>
+                <div class="bar {{ $criticosAlimentos > 0 ? 'kpi-crit' : 'kpi-ok' }}" style="width: {{ $criticosAlimentos > 0 ? '90%' : '15%' }}%"></div>
             </div>
         </div>
     </div>
 
     <!-- Card 4: Insumos Médicos -->
     <div class="col-xl-3 col-md-6">
-        <div class="neon-stat-card h-100">
+        <div class="stat-panel h-100">
             <div class="top-badge-row">
                 <span class="stat-title">Fármacos Críticos (&lt; 2d)</span>
-                <span class="stat-glow-tag {{ $criticosMedicos > 0 ? 'tag-amber' : 'tag-emerald' }}">
+                <span class="stat-tag {{ $criticosMedicos > 0 ? 'tag-signal-warn' : 'tag-signal-ok' }}">
                     <i class="fa-solid {{ $criticosMedicos > 0 ? 'fa-pills' : 'fa-kit-medical' }}"></i>
                     {{ $criticosMedicos > 0 ? 'Atención' : 'Estable' }}
                 </span>
             </div>
-            <div class="stat-big-num mb-1 {{ $criticosMedicos > 0 ? 'text-warning' : 'text-success' }}">{{ $criticosMedicos }}</div>
+            <div class="stat-big-num mb-1">{{ $criticosMedicos }}</div>
             <div class="text-muted small mb-2" style="font-size: 0.76rem;">
                 {{ $criticosMedicos > 0 ? 'Fármacos esenciales en alerta de reposición' : 'Cadena médica y botiquines abastecidos' }}
             </div>
             <div class="progress-glass">
-                <div class="bar {{ $criticosMedicos > 0 ? 'bar-warning' : 'bar-success' }}" style="width: {{ $criticosMedicos > 0 ? '80%' : '15%' }}%"></div>
+                <div class="bar {{ $criticosMedicos > 0 ? 'kpi-warn' : 'kpi-ok' }}" style="width: {{ $criticosMedicos > 0 ? '80%' : '15%' }}%"></div>
             </div>
         </div>
     </div>
@@ -550,7 +496,7 @@
     </div>
 
     <div class="row g-3">
-        <div class="col-xl-2 col-md-4 col-6">
+        <div class="col-xl col-md-4 col-6">
             <a href="{{ route('movements.create') }}" class="app-tile-btn">
                 <div class="app-tile-icon icon-blue">
                     <i class="fa-solid fa-clipboard-check"></i>
@@ -560,7 +506,7 @@
             </a>
         </div>
 
-        <div class="col-xl-2 col-md-4 col-6">
+        <div class="col-xl col-md-4 col-6">
             <a href="{{ route('transfers.create') }}" class="app-tile-btn">
                 <div class="app-tile-icon icon-amber">
                     <i class="fa-solid fa-truck-ramp-box"></i>
@@ -570,7 +516,7 @@
             </a>
         </div>
 
-        <div class="col-xl-2 col-md-4 col-6">
+        <div class="col-xl col-md-4 col-6">
             <a href="{{ route('supplies.index') }}" class="app-tile-btn">
                 <div class="app-tile-icon icon-emerald">
                     <i class="fa-solid fa-boxes-packing"></i>
@@ -580,7 +526,7 @@
             </a>
         </div>
 
-        <div class="col-xl-2 col-md-4 col-6">
+        <div class="col-xl col-md-4 col-6">
             <a href="{{ route('shelters.index') }}" class="app-tile-btn">
                 <div class="app-tile-icon icon-purple">
                     <i class="fa-solid fa-tents"></i>
@@ -590,17 +536,7 @@
             </a>
         </div>
 
-        <div class="col-xl-2 col-md-4 col-6">
-            <a href="{{ route('cpm.index') }}" class="app-tile-btn">
-                <div class="app-tile-icon icon-rose">
-                    <i class="fa-solid fa-diagram-project"></i>
-                </div>
-                <strong class="text-white" style="font-size: 0.82rem;">Ruta CPM</strong>
-                <small class="text-muted" style="font-size: 0.68rem;">Ruta Crítica I.O.</small>
-            </a>
-        </div>
-
-        <div class="col-xl-2 col-md-4 col-6">
+        <div class="col-xl col-md-4 col-6">
             <a href="{{ route('reports.index') }}" class="app-tile-btn">
                 <div class="app-tile-icon icon-slate">
                     <i class="fa-solid fa-file-pdf"></i>
@@ -621,7 +557,7 @@
                 <span class="section-heading mb-0 text-white">
                     <i class="fa-solid fa-circle-notch" style="color: #e6a86c;"></i> Salud Global de Suministros
                 </span>
-                <span class="stat-glow-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
+                <span class="stat-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
                     <i class="fa-solid fa-bolt"></i> En Línea
                 </span>
             </div>
@@ -747,7 +683,7 @@
                 Canaliza automáticamente excedentes desde refugios seguros hacia albergues saturados para evitar desabastecimiento.
             </p>
         </div>
-        <span class="stat-glow-tag tag-cyan">
+        <span class="stat-tag tag-amber">
             <i class="fa-solid fa-brain"></i> {{ count($sugerenciasTransferencia) }} Rutas Calculadas
         </span>
     </div>
@@ -793,7 +729,7 @@
                 <span class="section-heading mb-0 text-white">
                     <i class="fa-solid fa-chart-simple me-1" style="color: #e6a86c;"></i> Capacidad vs Personas Albergadas
                 </span>
-                <span class="stat-glow-tag tag-cyan">Tiempo Real</span>
+                <span class="stat-tag tag-amber">Tiempo Real</span>
             </div>
             <div style="height: 270px;">
                 <canvas id="chartRefugios"></canvas>
@@ -808,7 +744,7 @@
                 <span class="section-heading mb-0 text-white">
                     <i class="fa-solid fa-chart-pie me-1" style="color: #e6a86c;"></i> Clasificación ABC de Insumos
                 </span>
-                <span class="stat-glow-tag tag-amber">Pareto I.O.</span>
+                <span class="stat-tag tag-amber">Pareto I.O.</span>
             </div>
             <div style="height: 270px; position: relative;">
                 <canvas id="chartAbc"></canvas>

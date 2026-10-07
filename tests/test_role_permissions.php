@@ -28,22 +28,20 @@ foreach ($rolesToTest as $email => $roleName) {
     echo "   - Insumos:        " . ($user->canAccessSupplies() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
     echo "   - Kardex:         " . ($user->canAccessMovements() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
     echo "   - Rebalanceo:     " . ($user->canAccessTransfers() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
-    echo "   - Modelos EOQ:    " . ($user->canAccessIoModels() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
-    echo "   - Redes CPM:      " . ($user->canAccessCpm() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
     echo "   - Carnets QR:     " . ($user->canAccessCarnets() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
     echo "   - Auditoría:      " . ($user->canAccessAudit() ? '✅ VISIBLE' : '❌ OCULTO') . "\n";
     echo "   - Reportes:       " . ($user->canAccessReports() ? '✅ VISIBLE' : '❌ OCULTO') . "\n\n";
 }
 
 // Probar Middleware RoleMiddleware directamente
-echo "--- Probando RoleMiddleware con Coordinador intentando entrar a /cpm ---\n";
+echo "--- Probando RoleMiddleware con Coordinador intentando entrar a /audit ---\n";
 $coord = App\Models\User::where('email', 'coordinador@refugios.ve')->first();
 Illuminate\Support\Facades\Auth::login($coord);
 
 $middleware = new App\Http\Middleware\RoleMiddleware();
-$req = Illuminate\Http\Request::create('/cpm', 'GET');
+$req = Illuminate\Http\Request::create('/audit', 'GET');
 $res = $middleware->handle($req, function() {
-    return 'cpm_accedido';
+    return 'auditoria_accedida';
 }, 'admin');
 
 if ($res instanceof \Illuminate\Http\RedirectResponse) {
@@ -52,11 +50,11 @@ if ($res instanceof \Illuminate\Http\RedirectResponse) {
     echo "FALLÓ: Permitió acceso indebido\n";
 }
 
-echo "--- Probando RoleMiddleware con Admin intentando entrar a /cpm ---\n";
+echo "--- Probando RoleMiddleware con Admin intentando entrar a /audit ---\n";
 $admin = App\Models\User::where('email', 'admin@refugios.ve')->first();
 Illuminate\Support\Facades\Auth::login($admin);
 $resAdmin = $middleware->handle($req, function() {
-    return 'cpm_accedido_exitosamente';
+    return 'auditoria_accedida_exitosamente';
 }, 'admin');
 echo "Acceso correcto: " . $resAdmin . "\n";
 

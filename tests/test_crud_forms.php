@@ -62,6 +62,13 @@ function httpForm($kernel, User $user, string $uri, string $method = 'GET', arra
 /** Limpia registros de prueba (por si una corrida anterior quedó a medias). */
 function limpiarPruebas(): void
 {
+    // La bitácora no debe conservar rastros de esta prueba: si no, cada
+    // corrida deja entradas "FormRequest Test" visibles en /audit.
+    \App\Models\AuditLog::where('descripcion', 'like', '%FormRequest Test%')
+        ->orWhere('descripcion', 'like', '%REF-TST%')
+        ->orWhere('descripcion', 'like', '%TST-001%')
+        ->delete();
+
     foreach ([['shelters', 'REF-TST'], ['supplies', 'TST-001']] as [$tabla, $codigo]) {
         $modelo = $tabla === 'shelters' ? Shelter::class : Supply::class;
         $modelo::withTrashed()->where('codigo', $codigo)->get()->each(function ($m) use ($tabla) {
@@ -239,6 +246,10 @@ limpiarPruebas();
 check('Limpieza: sin restos REF-TST/TST-001',
     Shelter::withTrashed()->where('codigo', 'REF-TST')->count() === 0
     && Supply::withTrashed()->where('codigo', 'TST-001')->count() === 0);
+check('Limpieza: bitácora sin rastros de la prueba',
+    \App\Models\AuditLog::where('descripcion', 'like', '%FormRequest Test%')->count() === 0
+    && \App\Models\AuditLog::where('descripcion', 'like', '%REF-TST%')->count() === 0
+    && \App\Models\AuditLog::where('descripcion', 'like', '%TST-001%')->count() === 0);
 
 echo "\n RESULTADO: $pasados/$total PRUEBAS EXITOSAS\n";
 exit($pasados === $total ? 0 : 1);

@@ -144,7 +144,7 @@
                 @if($transfer->estado === 'aprobada' && (auth()->user()->isAdmin() || auth()->user()->isAlmacenista()))
                     <form action="{{ route('transfers.dispatch', $transfer) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn-accent py-1 px-2" style="font-size: 0.74rem; background: linear-gradient(135deg, #d97706, #f59e0b);">
+                        <button type="submit" class="btn-accent py-1 px-2" style="font-size: 0.74rem; background: #d97706;">
                             <i class="fa-solid fa-truck-moving me-1"></i> Despachar
                         </button>
                     </form>
@@ -153,7 +153,7 @@
                 @if($transfer->estado === 'en_transito' && (auth()->user()->isAdmin() || auth()->user()->isAlmacenista() || auth()->user()->isCoordinador()))
                     <form action="{{ route('transfers.receive', $transfer) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn-accent py-1 px-2" style="font-size: 0.74rem; background: linear-gradient(135deg, #059669, #10b981);">
+                        <button type="submit" class="btn-accent py-1 px-2" style="font-size: 0.74rem; background: #059669;">
                             <i class="fa-solid fa-box-open me-1"></i> Confirmar Recepción
                         </button>
                     </form>

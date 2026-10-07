@@ -210,7 +210,6 @@
             background: linear-gradient(135deg, #d97706, #f59e0b);
             border: 1px solid #b45309;
             position: relative;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
             flex-shrink: 0;
         }
         .smart-chip::before {

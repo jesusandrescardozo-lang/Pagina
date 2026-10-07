@@ -6,7 +6,6 @@ use App\Http\Controllers\ShelterController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\InventoryMovementController;
 use App\Http\Controllers\SupplyTransferController;
-use App\Http\Controllers\CpmController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CarnetController;
@@ -85,24 +84,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ---------------------------------------------------------------
-    // 6. Método CPM — escritura (Solo Admin)
-    // ---------------------------------------------------------------
-    Route::middleware(['can:manage-cpm'])->group(function () {
-        Route::resource('cpm', CpmController::class)->except(['index', 'show'])->names([
-            'create'  => 'cpm.create',
-            'store'   => 'cpm.store',
-            'edit'    => 'cpm.edit',
-            'update'  => 'cpm.update',
-            'destroy' => 'cpm.destroy',
-        ]);
-        Route::post('/cpm/{cpm}/calculate', [CpmController::class, 'calculate'])->name('cpm.calculate');
-        Route::post('/cpm/{project}/activities', [CpmController::class, 'storeActivity'])->name('cpm.activities.store');
-        Route::put('/cpm/activities/{activity}', [CpmController::class, 'updateActivity'])->name('cpm.activities.update');
-        Route::delete('/cpm/activities/{activity}', [CpmController::class, 'destroyActivity'])->name('cpm.activities.destroy');
-    });
-
-    // ---------------------------------------------------------------
-    // 7. Auditoría y Trazabilidad — Solo usuarios autenticados (NUNCA invitados)
+    // 6. Auditoría y Trazabilidad — Solo usuarios autenticados (NUNCA invitados)
     // ---------------------------------------------------------------
     Route::middleware(['can:view-audit'])->group(function () {
         Route::get('/audit', [AuditLogController::class, 'index'])->name('audit.index');
@@ -110,7 +92,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ---------------------------------------------------------------
-    // 9. Personal y Credenciales — Solo usuarios autenticados (NUNCA invitados)
+    // 7. Personal y Credenciales — Solo usuarios autenticados (NUNCA invitados)
     // ---------------------------------------------------------------
     Route::get('/carnets/{user}', [CarnetController::class, 'show'])->name('carnets.show');
 
@@ -133,9 +115,6 @@ Route::middleware(['guest.allowed'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Calculadora interactiva y simulador I.O. (Modelos EOQ y Newsvendor)
-    Route::get('/supplies/calculator/io', [SupplyController::class, 'calculator'])->name('supplies.calculator');
-
     // Refugios — solo lectura
     Route::get('/shelters', [ShelterController::class, 'index'])->name('shelters.index');
     Route::get('/shelters/{shelter}', [ShelterController::class, 'show'])->name('shelters.show');
@@ -150,10 +129,6 @@ Route::middleware(['guest.allowed'])->group(function () {
     // Transferencias — solo lectura
     Route::get('/transfers', [SupplyTransferController::class, 'index'])->name('transfers.index');
     Route::get('/transfers/{transfer}', [SupplyTransferController::class, 'show'])->name('transfers.show');
-
-    // CPM — solo lectura
-    Route::get('/cpm', [CpmController::class, 'index'])->name('cpm.index');
-    Route::get('/cpm/{cpm}', [CpmController::class, 'show'])->name('cpm.show');
 
     // Reportes — solo lectura
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

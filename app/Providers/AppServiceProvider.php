@@ -37,8 +37,6 @@ class AppServiceProvider extends ServiceProvider
             'manage-kardex'     => ['admin', 'almacenista'],
             // Escritura de transferencias (Admin, Almacenista, Coordinador)
             'manage-transfers'  => ['admin', 'almacenista', 'coordinador_refugio'],
-            // Escritura de proyectos CPM (Solo Admin)
-            'manage-cpm'        => ['admin'],
             // Consulta de la bitácora de auditoría (Admin, Auditor)
             'view-audit'        => ['admin', 'auditor'],
             // Gestión de carnets/credenciales (Solo Admin)
@@ -46,7 +44,6 @@ class AppServiceProvider extends ServiceProvider
             // Accesos de solo lectura usados por las vistas (menús/botones)
             'access-supplies'   => ['admin', 'almacenista', 'coordinador_refugio', 'auditor'],
             'access-movements'  => ['admin', 'almacenista', 'auditor'],
-            'access-io-models'  => ['admin', 'almacenista'],
             'access-reports'    => ['admin', 'almacenista', 'coordinador_refugio', 'auditor'],
         ];
 

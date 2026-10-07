@@ -41,6 +41,11 @@ cat > /etc/apache2/sites-available/000-default.conf <<'EOF'
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOF
+# El puerto del vhost DEBE ser el mismo que el Listen de Render ($PORT):
+# si Apache escucha en $PORT pero el vhost es *:80, las peticiones no
+# coinciden con ningun vhost y las resuelve el servidor principal
+# (DocumentRoot /var/www/html, sin rewrite) => 404 en /login siempre.
+sed -ri "s/^<VirtualHost \*:[0-9]+>/<VirtualHost *:${PORT:-10000}>/" /etc/apache2/sites-available/000-default.conf
 rm -f /etc/apache2/sites-enabled/*
 a2ensite 000-default
 
@@ -54,6 +59,8 @@ a2ensite 000-default
   apache2ctl -M | grep -E "rewrite_module|php_module"
   echo "[diag] index.php:"
   ls -la /var/www/html/public/index.php
+  echo "[diag] vhost definitivo (puerto + DocumentRoot):"
+  grep -n "VirtualHost\|DocumentRoot" /etc/apache2/sites-available/000-default.conf
 } || true
 
 # 6) Comprobacion de sintaxis obligatoria (aborta el arranque si el vhost esta mal)

@@ -30,9 +30,6 @@
         </p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-        <a href="{{ route('supplies.calculator', ['supply_id' => $supply->id]) }}" class="btn-accent" style="font-size:0.8rem;">
-            <i class="fa-solid fa-calculator me-1"></i> Abrir en Simulador I.O.
-        </a>
         <a href="{{ route('supplies.edit', $supply) }}" class="btn-glass" style="font-size:0.8rem;">
             <i class="fa-solid fa-pen-to-square me-1"></i> Modificar Parámetros
         </a>

@@ -151,16 +151,6 @@ class User extends Authenticatable
         return Gate::forUser($this)->allows('manage-transfers');
     }
 
-    public function canAccessIoModels(): bool
-    {
-        return Gate::forUser($this)->allows('access-io-models');
-    }
-
-    public function canAccessCpm(): bool
-    {
-        return Gate::forUser($this)->allows('manage-cpm');
-    }
-
     public function canAccessCarnets(): bool
     {
         return Gate::forUser($this)->allows('manage-carnets');
@@ -184,10 +174,5 @@ class User extends Authenticatable
     public function auditLogs()
     {
         return $this->hasMany(AuditLog::class, 'user_id');
-    }
-
-    public function cpmProjects()
-    {
-        return $this->hasMany(CpmProject::class, 'user_id');
     }
 }

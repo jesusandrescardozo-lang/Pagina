@@ -27,11 +27,6 @@
             <i class="fa-solid fa-plus"></i> Registrar Nuevo Insumo
         </a>
         @endif
-        @if(auth()->check() && auth()->user()->canAccessIoModels())
-        <a href="{{ route('supplies.calculator') }}" class="btn-glass text-info">
-            <i class="fa-solid fa-calculator"></i> Simulador I.O.
-        </a>
-        @endif
     </div>
 </div>
 

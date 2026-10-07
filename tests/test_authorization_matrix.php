@@ -36,7 +36,6 @@ check('auditor NO puede manage-supplies',      !Gate::forUser($auditor)->allows(
 check('coordinador NO puede manage-supplies',  !Gate::forUser($coordinador)->allows('manage-supplies'));
 check('auditor puede view-audit',              Gate::forUser($auditor)->allows('view-audit'));
 check('almacenista NO puede view-audit',       !Gate::forUser($almacenista)->allows('view-audit'));
-check('solo admin manage-cpm',                 Gate::forUser($admin)->allows('manage-cpm') && !Gate::forUser($coordinador)->allows('manage-cpm'));
 check('solo admin manage-carnets',             Gate::forUser($admin)->allows('manage-carnets') && !Gate::forUser($auditor)->allows('manage-carnets'));
 check('coordinador puede manage-transfers',    Gate::forUser($coordinador)->allows('manage-transfers'));
 check('auditor NO puede manage-transfers',     !Gate::forUser($auditor)->allows('manage-transfers'));
@@ -78,7 +77,6 @@ check('Auditor GET /supplies/create -> 403',   httpAs($kernel, $auditor, '/suppl
 check('Admin GET /supplies/create -> 200',     httpAs($kernel, $admin, '/supplies/create') === 200);
 check('Auditor GET /audit -> 200',             httpAs($kernel, $auditor, '/audit') === 200);
 check('Almacenista GET /audit -> 403',         httpAs($kernel, $almacenista, '/audit') === 403);
-check('Coordinador GET /cpm/create -> 403',    httpAs($kernel, $coordinador, '/cpm/create') === 403);
 check('Admin GET /carnets -> 200',             httpAs($kernel, $admin, '/carnets') === 200);
 check('Auditor GET /carnets -> 403',           httpAs($kernel, $auditor, '/carnets') === 403);
 

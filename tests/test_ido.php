@@ -27,9 +27,3 @@ echo "EOQ Q*: " . $eoq['q_optimo_entero'] . " | ROP: " . $eoq['rop'] . " | N ped
 
 $newsvendor = $service->calcularNewsvendor(400, 80, 45.0, 15.0);
 echo "Newsvendor Q*: " . $newsvendor['q_optimo_entero'] . " | CR: " . $newsvendor['razon_critica'] . " (" . $newsvendor['nivel_servicio_pct'] . "%)" . PHP_EOL;
-
-$cpmProjects = \App\Models\CpmProject::withCount('activities')->get();
-echo "Proyectos CPM logísticos en BD: " . $cpmProjects->count() . PHP_EOL;
-foreach ($cpmProjects as $p) {
-    echo " - Proyecto: {$p->nombre} ({$p->activities_count} actividades)" . PHP_EOL;
-}

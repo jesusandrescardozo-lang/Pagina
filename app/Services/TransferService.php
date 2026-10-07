@@ -6,7 +6,6 @@ use App\Models\InventoryBatch;
 use App\Models\InventoryMovement;
 use App\Models\ShelterInventory;
 use App\Models\SupplyTransfer;
-use App\Services\AuditService;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -242,13 +241,9 @@ class TransferService
             return;
         }
 
+        // Solo cambia el estado. El registro en la bitácora lo hace SIEMPRE el
+        // controlador que invoca esta transición (evita duplicar la entrada).
         $transfer->update(['estado' => $nuevoEstado]);
-
-        AuditService::log(
-            'transferencias',
-            'estado_actualizado',
-            "Transferencia {$transfer->codigo_transferencia} cambió a '{$nuevoEstado}'"
-        );
     }
 
     // ----------------------------------------------------------------

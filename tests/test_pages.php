@@ -5,6 +5,7 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 echo "=== TEST 1: LOGIN PAGE ===\n";
 $req = Request::create('/login', 'GET');
@@ -14,20 +15,22 @@ echo "Status: " . $resp->getStatusCode() . "\n";
 
 $checks = [
     'NutriLnk' => 'NutriLnk branding',
-    'Gestión y Optimización de Insumos' => 'Subtitle correct',
+    'Optimización de Suministros' => 'Subtitle correct',
     'REF-01' => 'REF-01 shelter code present',
     'REF-05' => 'REF-05 shelter code present',
     'Red Centralizada' => 'Central option present',
     '🌐' => 'Globe emoji in central option',
     'Parroquia El Paraíso' => 'Clean parroquia name',
     'Parroquia Coche' => 'Parroquia Coche shown',
-    'circle-info' => 'Helper text with icon present',
+    'Explorar como Invitado' => 'Guest mode entry button present',
 ];
+$failures = 0;
 foreach ($checks as $needle => $label) {
     if (str_contains($html, $needle)) {
         echo "  ✓ $label\n";
     } else {
         echo "  ✗ $label (missing: $needle)\n";
+        $failures++;
     }
 }
 
@@ -42,6 +45,7 @@ foreach ($bad as $needle => $label) {
         echo "  ✓ No: $label\n";
     } else {
         echo "  ✗ Found bad pattern: $label ($needle)\n";
+        $failures++;
     }
 }
 
@@ -73,10 +77,11 @@ $html2 = $resp2->getContent();
 $status2 = $resp2->getStatusCode();
 echo "Status: $status2\n";
 
-if ($status2 === 302) {
+if ($status2 !== 200) {
     $loc = $resp2->headers->get('Location');
-    echo "  → Redirected to: $loc\n";
-} elseif ($status2 === 200) {
+    echo "  ✗ Se esperaba 200, se obtuvo {$status2}" . ($loc ? " -> {$loc}" : '') . "\n";
+    $failures++;
+} else {
     $checks2 = [
         'NutriLnk' => 'NutriLnk branding',
         'topbarShelterForm' => 'Topbar shelter switcher form present',
@@ -88,8 +93,44 @@ if ($status2 === 302) {
             echo "  ✓ $label\n";
         } else {
             echo "  ✗ $label (missing: $needle)\n";
+            $failures++;
         }
     }
 }
 
-echo "\n=== TESTS COMPLETE ===\n";
+echo "\n=== TEST 3: CREDENCIALES DEMO DEL FORMULARIO DE LOGIN ===\n";
+// Regresión: los botones "Rápido" del login deben rellenar las contraseñas
+// REALES del seeder. Si no coinciden, el usuario pulsa el botón y el
+// sistema rechaza el acceso.
+$demoClaves = [
+    'admin@refugios.ve'      => 'Admin1234!',
+    'coordinador@refugios.ve' => 'Coordinador1234!',
+    'almacen@refugios.ve'    => 'Almacen1234!',
+    'auditor@refugios.ve'    => 'Auditor1234!',
+];
+foreach ($demoClaves as $demoEmail => $demoPassword) {
+    $fragmento = "fillCredentials('{$demoEmail}', '{$demoPassword}')";
+    if (str_contains($html, $fragmento)) {
+        echo "  ✓ {$demoEmail} usa su contraseña real\n";
+    } else {
+        echo "  ✗ {$demoEmail} NO rellena su contraseña real\n";
+        $failures++;
+    }
+    if (Hash::check($demoPassword, \App\Models\User::where('email', $demoEmail)->first()->password ?? '')) {
+        echo "  ✓ {$demoPassword} es válida en el seeder\n";
+    } else {
+        echo "  ✗ {$demoPassword} no valida contra el seeder\n";
+        $failures++;
+    }
+}
+
+// El campo contraseña no debe exponer un valor por defecto en el HTML.
+if (str_contains($html, 'name="password"') && preg_match('/name="password"[^>]*\svalue="/', $html)) {
+    echo "  ✗ El campo contraseña expone un valor precargado en el HTML\n";
+    $failures++;
+} else {
+    echo "  ✓ El campo contraseña no expone valor precargado\n";
+}
+
+echo "\n=== TESTS COMPLETE: " . ($failures === 0 ? 'OK' : "{$failures} FALLO(S)") . " ===\n";
+exit($failures === 0 ? 0 : 1);

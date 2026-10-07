@@ -21,9 +21,8 @@ El sistema cuenta con las siguientes entidades principales en su esquema relacio
 4. **`inventory_batches` (Lotes y Vencimientos)**: Trazabilidad por número de lote, fecha de ingreso y fecha de caducidad con aplicación automática del criterio **FEFO**.
 5. **`inventory_movements` (Kardex Inmutable)**: Registro riguroso de cada entrada (donaciones, compras, transferencias entrantes) y salida (consumo diario de población, transferencias salientes, mermas por vencimiento) con stock anterior y resultante.
 6. **`supply_transfers` (Rebalanceo Logístico Inter-Refugios)**: Órdenes de transferencia recomendadas por algoritmos heurísticos entre refugios donantes (con superávit) y refugios receptores (con déficit crítico).
-7. **`cpm_projects` y `cpm_activities`**: Modelos de redes de actividades con cálculo automático de Ida (Forward Pass), Vuelta (Backward Pass), holguras y Ruta Crítica para la cadena de reabastecimiento humanitario.
-8. **`audit_logs`**: Trazabilidad completa de acciones, IPs, timestamps y cambios de estado.
-9. **`users`**: Gestión de accesos con roles: `admin` (Coordinador General), `coordinador_refugio`, `almacenista` y `auditor`.
+7. **`audit_logs`**: Trazabilidad completa de acciones, IPs, timestamps y cambios de estado.
+8. **`users`**: Gestión de accesos con roles: `admin` (Coordinador General), `coordinador_refugio`, `almacenista` y `auditor`.
 
 ---
 
@@ -61,16 +60,6 @@ El algoritmo analiza continuamente la red:
 1. Detecta refugios con déficit inminente ($< 2.5$ días de autonomía).
 2. Identifica refugios con excedentes ($> 6.0$ días de autonomía para el mismo insumo).
 3. Calcula la cantidad óptima a transferir para nivelar la cobertura del receptor a un mínimo seguro (4 días) sin desproteger al refugio donante, generando la orden de transferencia sin incurrir en compras externas.
-
-#### E. Método de la Ruta Crítica (CPM - Critical Path Method)
-Optimiza la secuencia de actividades de la cadena logística de reabastecimiento en convoy:
-- **Paso Adelante (Forward Pass)**:
-  $$ES_j = \max_{i \in \text{Pred}(j)}(EF_i), \quad EF_j = ES_j + D_j$$
-- **Paso Atrás (Backward Pass)**:
-  $$LF_i = \min_{j \in \text{Succ}(i)}(LS_j), \quad LS_i = LF_i - D_i$$
-- **Holgura y Ruta Crítica**:
-  $$\text{Holgura}_i = LS_i - ES_i = LF_i - EF_i$$
-  Las actividades con $\text{Holgura} = 0$ forman la Ruta Crítica (destacadas en rojo en el grafo interactivo con **Vis.js**).
 
 ---
 
@@ -134,3 +123,32 @@ Optimiza la secuencia de actividades de la cadena logística de reabastecimiento
 | **Coordinador de Albergue** | `coordinador@refugios.ve` | `Coordinador1234!` | Censo de población, solicitud de suministros y consumos en sitio |
 | **Encargada de Almacén** | `almacen@refugios.ve` | `Almacen1234!` | Recepción de donaciones, control de lotes y despacho en convoy |
 | **Auditora Humanitaria** | `auditor@refugios.ve` | `Auditor1234!` | Consulta de libros Kardex, bitácora de auditoría y reportes PDF |
+
+> En la pantalla de inicio de sesión, la barra **«Rápido»** permite rellenar cada cuenta de demostración con un solo clic. El campo contraseña se deja vacío por seguridad: se escribe una sola vez.
+
+### 6. VERIFICACIÓN AUTOMÁTICA (PRUEBAS DE CORRECCIÓN DE CÓDIGO)
+
+El sistema incluye una suite propia de verificación (sin PHPUnit) que demuestra que la aplicación **se ejecuta sin errores**:
+
+```bash
+php tests/run_all.php          # suite completa → 16 correctas · 0 fallos · 0 omitidas
+php tests/run_all.php --quick  # versiones rápidas
+```
+
+Pruebas de corrección de código (garantizan el arranque limpio):
+
+| Suite | Qué comprueba |
+|---|---|
+| `tests/diagnostico.php` | Entorno, `.env`, `APP_KEY`, extensiones y base de datos |
+| `tests/test_integrity.php` | Sintaxis de todo el código, los 13 archivos `config/`, migraciones de caché/trabajos, caché/log/rutas y ausencia de depuración (`dd()`, `APP_DEBUG=true`) |
+| `tests/test_http_smoke.php` | Las 55 rutas responden y respetan la matriz de permisos de los 4 roles + invitado |
+| `tests/test_pages.php` | Las páginas clave renderizan y las credenciales demo coinciden con el seeder |
+
+Complementos: `test_crud_forms.php`, `test_transfer_state_machine.php`, `test_authorization_matrix.php`, `test_role_permissions.php`, `test_direct_auth.php`, `test_shelter_switching.php`, `test_google2fa_system.php`, `test_totp_algo.php`, `test_ido.php`, `test_full_verification.php` y las suites E2E por HTTP (`test_http_flow.php`, `test_e2e_login_http.php`), que se omiten automáticamente si no hay servidor activo.
+
+### 7. INTERFAZ, PALETA Y TEMAS
+
+- **Paleta oficial:** neutros sobrios de base carbón (`#121519` / `#171b21`) con **ámbar suave** (`#e6a86c`, `#d89656`, `#c88340`) como único acento de marca. Sin gradientes corporativos, sin halos ni puntos decorativos; radios contenidos (8/12/16 px) y sombras sutiles.
+- **Estados semánticos:** verde `#10b981` (ok), ámbar `#e6a86c` (alerta), rosa `#f43f5e` (peligro).
+- **Temas:** el sistema recuerda la preferencia del usuario (`Modo Oscuro` / `Modo Claro`) en `localStorage` y se aplica sin parpadeo al cargar; el tema por defecto es **oscuro**.
+- **Accesibilidad y fluidez:** transiciones cortas (0.2 s) y soporte de `prefers-reduced-motion` para usuarios sensible al movimiento.

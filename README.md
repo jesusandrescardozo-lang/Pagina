@@ -1,6 +1,6 @@
 # NutriLnk — Sistema de Gestión de Inventarios Médicos y Alimentarios en Refugios
 
-Aplicación web para la **gestión de inventarios de insumos médicos y alimentos en refugios de emergencia**, desarrollada con Laravel 9 (PHP 8.0+). Proyecto del área de Investigación de Operaciones (EOQ, Newsvendor, CPM) para la cadena logística humanitaria de reabastecimiento entre albergues.
+Aplicación web para la **gestión de inventarios de insumos médicos y alimentos en refugios de emergencia**, desarrollada con Laravel 9 (PHP 8.0+). Proyecto del área de Investigación de Operaciones (EOQ, Newsvendor) para la cadena logística humanitaria de reabastecimiento entre albergues.
 
 ## Características principales
 
@@ -9,7 +9,6 @@ Aplicación web para la **gestión de inventarios de insumos médicos y alimento
 - **Lotes FEFO** (*First Expired, First Out*): despacho por fecha de vencimiento con bloqueo de fila (`lockForUpdate`) para evitar sobre-despacho.
 - **Transferencias inter-refugios**: máquina de estados estricta (`borrador → aprobada → en_tránsito → recibida / cancelada`) con deducción FEFO al despachar y restauración de stock/lotes al cancelar.
 - **Modelos de inventario (I.O.)**: cálculo EOQ, punto de reorden, stock de seguridad y Newsvendor; clasificación ABC.
-- **CPM (Ruta Crítica)**: registro de proyectos, actividades, cálculo ES/EF/LS/lf y holgura con grafo interactivo.
 - **Reportes PDF** (dompdf) y **bitácora de auditoría** de todas las acciones.
 - **Seguridad**: CSRF habilitado, *throttling* de intentos de login y matriz de permisos unificada en Gates (`admin`, `coordinador_refugio`, `almacenista`, `auditor`). *El acceso 2FA/Google Authenticator fue retirado del flujo: el login va directo al panel con contraseña.*
 - **Borrado lógico** de refugios/insumos: eliminar ya no destruye en cascada inventarios, lotes ni kardex.
@@ -48,14 +47,49 @@ php artisan serve                     # http://localhost:8000
 
 ## Pruebas
 
-El proyecto incluye suites de verificación propias (sin PHPUnit):
+El proyecto incluye suites de verificación propias (sin PHPUnit). **Todo se ejecuta con un único comando:**
 
 ```bash
-php tests/test_crud_forms.php            # FormRequests + soft deletes (24 aserciones)
-php tests/test_transfer_state_machine.php # estados de transferencia + FEFO (23)
-php tests/test_authorization_matrix.php  # matriz de permisos (24)
-php tests/test_direct_auth.php           # login directo sin 2FA (4 aserciones)
-php tests/test_e2e_login_http.php        # E2E login directo por HTTP (requiere serve)
+php tests/run_all.php            # suite completa (16 suites)
+php tests/run_all.php --quick    # solo las pruebas rápidas
+php tests/run_all.php --verbose  # salida detallada de cada aserción
+```
+
+Último resultado: **16 correctas · 0 con fallo · 0 omitidas** (exit code `0`).
+
+### Pruebas de corrección de código
+
+Verifican que la aplicación arranca sin errores y que no quedan fallos estructurales:
+
+| Suite | Qué comprueba |
+|---|---|
+| `tests/diagnostico.php` | Integridad general: `.env`, `APP_KEY`, extensiones PHP, base de datos y rutas |
+| `tests/test_integrity.php` | Sintaxis de todo el código (`php -l`), los 13 archivos `config/`, `php artisan`, caché, log, RateLimiter, esquema de tablas y ausencia de `dd()`/`var_dump()`/`APP_DEBUG=true` |
+| `tests/test_http_smoke.php` | Recorrido HTTP de las 55 rutas × 5 roles (invitado, admin, coordinador, almacén, auditor) + matriz de permisos |
+| `tests/test_pages.php` | Renderizado de páginas clave, credenciales demo del login y coherencia con el seeder |
+
+### Pruebas de lógica de negocio
+
+```bash
+php tests/test_crud_forms.php             # FormRequests + soft deletes
+php tests/test_transfer_state_machine.php # estados de transferencia + FEFO
+php tests/test_authorization_matrix.php   # matriz de permisos
+php tests/test_role_permissions.php       # permisos por rol
+php tests/test_direct_auth.php            # login directo sin 2FA
+php tests/test_shelter_switching.php      # aislamiento por refugio
+php tests/test_google2fa_system.php       # sistema 2FA
+php tests/test_totp_algo.php              # algoritmo TOTP RFC 6238
+php tests/test_ido.php                    # métricas de IDO
+php tests/test_full_verification.php      # contenido de dashboard/login
+```
+
+### Pruebas end-to-end (HTTP)
+
+Requieren el servidor local (`php artisan serve`); si no está activo se marcan como **omitidas**:
+
+```bash
+php tests/test_http_flow.php       # login + recorrido completo por HTTP
+php tests/test_e2e_login_http.php  # login E2E de los 4 roles por HTTP
 ```
 
 ## Stack tecnológico

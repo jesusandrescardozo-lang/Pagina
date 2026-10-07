@@ -19,39 +19,40 @@
 
     <style>
         :root {
-            --bg-body: #08090d;
-            --bg-card: rgba(18, 20, 29, 0.92);
+            --bg-body: #121519;
+            --bg-card: #171b21;
             --border-card: rgba(255, 255, 255, 0.08);
             --border-card-hover: rgba(255, 255, 255, 0.16);
-            --text-title: #ffffff;
-            --text-sub: #94a3b8;
-            --input-bg: rgba(255, 255, 255, 0.035);
+            --text-title: #f4f6f8;
+            --text-sub: #9aa4b2;
+            --input-bg: rgba(255, 255, 255, 0.04);
             --input-border: rgba(255, 255, 255, 0.1);
             --input-focus-border: #e6a86c;
-            --input-focus-glow: rgba(230, 168, 108, 0.22);
-            --btn-gold: linear-gradient(135deg, #e4aa6e 0%, #d89656 100%);
-            --btn-gold-hover: linear-gradient(135deg, #f0ba80 0%, #e09f5f 100%);
-            --btn-gold-shadow: rgba(216, 150, 86, 0.35);
+            --input-focus-glow: rgba(230, 168, 108, 0.18);
+            --btn-gold: #e6a86c;
+            --btn-gold-hover: #f0b67f;
+            --btn-gold-shadow: rgba(216, 150, 86, 0.22);
             --amber-accent: #e6a86c;
-            --split-bg: #090a0f;
+            --split-bg: #0f1216;
+            --transition: 0.2s ease;
         }
 
         [data-bs-theme="light"] {
-            --bg-body: #f3f5f9;
-            --bg-card: rgba(255, 255, 255, 0.94);
-            --border-card: rgba(0, 0, 0, 0.08);
-            --border-card-hover: rgba(0, 0, 0, 0.16);
-            --text-title: #0f172a;
-            --text-sub: #64748b;
+            --bg-body: #f4f5f7;
+            --bg-card: #ffffff;
+            --border-card: rgba(15, 23, 42, 0.1);
+            --border-card-hover: rgba(15, 23, 42, 0.2);
+            --text-title: #1c2128;
+            --text-sub: #69707d;
             --input-bg: #ffffff;
-            --input-border: rgba(0, 0, 0, 0.12);
-            --input-focus-border: #d89656;
-            --input-focus-glow: rgba(216, 150, 86, 0.18);
-            --btn-gold: linear-gradient(135deg, #df9f5f 0%, #c88340 100%);
-            --btn-gold-hover: linear-gradient(135deg, #e8a96b 0%, #d48e4b 100%);
-            --btn-gold-shadow: rgba(200, 131, 64, 0.3);
+            --input-border: rgba(15, 23, 42, 0.14);
+            --input-focus-border: #c88340;
+            --input-focus-glow: rgba(200, 131, 64, 0.16);
+            --btn-gold: #c88340;
+            --btn-gold-hover: #b9773a;
+            --btn-gold-shadow: rgba(200, 131, 64, 0.2);
             --amber-accent: #c88340;
-            --split-bg: #eaeff5;
+            --split-bg: #eef0f3;
         }
 
         * {
@@ -83,7 +84,7 @@
         .showcase-panel {
             flex: 1.1;
             position: relative;
-            background-color: #0b0c10;
+            background-color: var(--split-bg);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -180,9 +181,8 @@
         .accent-vertical-bar {
             width: 3.5px;
             height: 64px;
-            background: linear-gradient(to bottom, #e4aa6e, #d89656);
+            background: var(--amber-accent);
             border-radius: 4px;
-            box-shadow: 0 0 15px rgba(228, 170, 110, 0.6);
             flex-shrink: 0;
             margin-top: 4px;
         }
@@ -263,43 +263,36 @@
             transition: transform 0.3s ease;
         }
 
-        /* The Luxury Login Card */
+        /* The Login Card */
         .login-card {
             width: 100%;
             max-width: 440px;
             background: var(--bg-card);
             border: 1px solid var(--border-card);
-            border-radius: 28px;
-            padding: 38px 34px 32px;
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.45),
-                0 1px 1px rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 36px 32px 30px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
             position: relative;
-            transition: all 0.3s ease;
+            transition: border-color var(--transition), box-shadow var(--transition);
         }
 
         [data-bs-theme="light"] .login-card {
-            box-shadow: 
-                0 20px 50px rgba(15, 23, 42, 0.08),
-                0 1px 3px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
         }
 
-        /* Card Hexagon Geometric Logo Badge */
+        /* Card Logo Badge */
         .card-logo-badge {
-            width: 58px;
-            height: 58px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(230, 168, 108, 0.15) 0%, rgba(230, 168, 108, 0.03) 70%, transparent 100%);
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 16px;
+            border-radius: 14px;
+            background: rgba(230, 168, 108, 0.1);
             border: 1px solid rgba(230, 168, 108, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--amber-accent);
-            font-size: 1.45rem;
-            box-shadow: 0 4px 20px rgba(230, 168, 108, 0.18);
+            font-size: 1.35rem;
         }
 
         .login-card-title {
@@ -371,7 +364,7 @@
             width: 100%;
             background: var(--input-bg);
             border: 1px solid var(--input-border);
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 12px 16px 12px 46px;
             color: var(--text-title);
             font-size: 0.90rem;
@@ -468,7 +461,7 @@
             background: rgba(230, 168, 108, 0.1);
         }
 
-        /* Warm Gold/Amber Login Button (Image 1 Style) */
+        /* Amber Login Button */
         .btn-luxury-login {
             width: 100%;
             background: var(--btn-gold);
@@ -476,7 +469,7 @@
             border: none;
             outline: none;
             padding: 13px 20px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-size: 0.95rem;
             font-weight: 700;
             display: flex;
@@ -484,16 +477,16 @@
             justify-content: center;
             gap: 10px;
             cursor: pointer;
-            box-shadow: 0 8px 24px var(--btn-gold-shadow);
-            transition: all 0.25s ease;
+            box-shadow: 0 6px 16px var(--btn-gold-shadow);
+            transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
             margin-top: 4px;
         }
 
         .btn-luxury-login:hover {
             background: var(--btn-gold-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px var(--btn-gold-shadow);
-            color: #0d0804;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px var(--btn-gold-shadow);
+            color: #1a120b;
         }
 
         .btn-luxury-login:active {
@@ -527,7 +520,7 @@
             border: 1px solid var(--border-card);
             color: var(--text-title);
             padding: 11px 18px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-size: 0.86rem;
             font-weight: 600;
             text-decoration: none;
@@ -574,6 +567,19 @@
                 background: var(--bg-body);
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .showcase-panel:hover .showcase-bg-img {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -599,7 +605,7 @@
             <div class="welcome-quote-box">
                 <div class="accent-vertical-bar"></div>
                 <div>
-                    <h2 class="welcome-headline">Welcome<br>Back</h2>
+                    <h2 class="welcome-headline">Bienvenido<br>de nuevo</h2>
                     <p class="welcome-subline">
                         Plataforma Humanitaria de Gestión y Optimización de Suministros para la Red de Refugios.
                     </p>
@@ -631,7 +637,7 @@
                 <i class="fa-solid fa-cube"></i>
             </div>
 
-            <h1 class="login-card-title">Login</h1>
+            <h1 class="login-card-title">Iniciar sesión</h1>
             <p class="login-card-subtitle">Inicia sesión en tu cuenta para continuar</p>
 
             @if ($errors->any())
@@ -651,16 +657,16 @@
             <!-- Quick Demo Selectors -->
             <div class="demo-accounts-bar" title="Acceso rápido con un clic para pruebas">
                 <span style="font-size: 0.70rem; color: var(--text-sub); align-self: center; margin-right: 2px;">Rápido:</span>
-                <button type="button" class="demo-pill" onclick="fillCredentials('admin@refugios.ve', 'password')">
+                <button type="button" class="demo-pill" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
                     👑 Admin
                 </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('coordinador@refugios.ve', 'password')">
+                <button type="button" class="demo-pill" onclick="fillCredentials('coordinador@refugios.ve', 'Coordinador1234!')">
                     📋 Coordinador
                 </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('almacen@refugios.ve', 'password')">
+                <button type="button" class="demo-pill" onclick="fillCredentials('almacen@refugios.ve', 'Almacen1234!')">
                     📦 Almacenista
                 </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('auditor@refugios.ve', 'password')">
+                <button type="button" class="demo-pill" onclick="fillCredentials('auditor@refugios.ve', 'Auditor1234!')">
                     🛡️ Auditor
                 </button>
             </div>
@@ -671,7 +677,7 @@
                 <!-- Email -->
                 <div class="form-group-custom">
                     <div class="form-label-row">
-                        <label class="form-label-custom" for="email">Email Address</label>
+                        <label class="form-label-custom" for="email">Correo electrónico</label>
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-regular fa-envelope input-icon-left"></i>
@@ -681,7 +687,7 @@
                             name="email" 
                             value="{{ old('email', 'admin@refugios.ve') }}" 
                             class="sleek-input" 
-                            placeholder="you@example.com" 
+                            placeholder="nombre@refugios.ve" 
                             required 
                             autocomplete="email"
                             autofocus
@@ -692,8 +698,8 @@
                 <!-- Password -->
                 <div class="form-group-custom">
                     <div class="form-label-row">
-                        <label class="form-label-custom" for="password">Password</label>
-                        <span class="forgot-link" style="cursor: pointer;" onclick="fillCredentials('admin@refugios.ve', 'password')">
+                        <label class="form-label-custom" for="password">Contraseña</label>
+                        <span class="forgot-link" style="cursor: pointer;" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
                             ¿Olvidó contraseña?
                         </span>
                     </div>
@@ -703,7 +709,6 @@
                             type="password" 
                             id="password" 
                             name="password" 
-                            value="password"
                             class="sleek-input" 
                             placeholder="••••••••••••" 
                             required 
@@ -738,13 +743,13 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn-luxury-login" id="submitBtn">
-                    <span>Login</span>
+                    <span>Iniciar sesión</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
 
             <!-- Divider -->
-            <div class="or-divider">or continue with</div>
+            <div class="or-divider">o bien</div>
 
             <!-- Guest Mode -->
             <a href="{{ route('guest.enter') }}" class="btn-guest-action">
@@ -755,7 +760,7 @@
             <!-- Security footer (Image 1 style) -->
             <div class="card-security-footer">
                 <i class="fa-solid fa-shield-halved"></i>
-                <span>Your data is secure with us</span>
+                <span>Tus datos están protegidos</span>
             </div>
 
         </div>
