@@ -1,6 +1,6 @@
 <?php
 /**
- * EJECUTOR ÚNICO DE PRUEBAS — proyecto hospital-triage (NutriLnk).
+ * EJECUTOR ÚNICO DE PRUEBAS — proyecto hospital-triage (NUTRILINK).
  *
  * Ejecuta todas las suites del proyecto en un solo comando y devuelve un
  * código de salida distinto de cero si ALGUNA falla:
@@ -75,7 +75,7 @@ $grupoActual = '';
 
 echo "\n";
 echo "==============================================================\n";
-echo "  SUITE DE VERIFICACIÓN — NutriLnk / hospital-triage\n";
+echo "  SUITE DE VERIFICACIÓN — NUTRILINK / hospital-triage\n";
 echo "  PHP " . PHP_VERSION . ' · Laravel ' . app()->version() . "\n";
 echo "  Servidor local : " . ($servidorOk ? 'detectado (127.0.0.1:8000)' : 'no detectado (suites HTTP → SKIP)') . "\n";
 echo "==============================================================\n";

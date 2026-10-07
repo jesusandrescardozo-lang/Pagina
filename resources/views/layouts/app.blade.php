@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'NutriLnk') }} — @yield('title', 'Gestión Humanitaria')</title>
+    <title>{{ config('app.name', 'NUTRILINK') }} — @yield('title', 'Gestión Humanitaria')</title>
     
     <!-- Instant Theme Loader (Zero Flash) -->
     <script>
@@ -1038,7 +1038,7 @@
                 <i class="fa-solid fa-boxes-stacked"></i>
             </div>
             <div class="sidebar-logo-text">
-                <h5>NutriLnk</h5>
+                <h5>NUTRILINK</h5>
                 <small>Gestión Humanitaria</small>
             </div>
         </a>

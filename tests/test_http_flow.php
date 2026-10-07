@@ -75,7 +75,7 @@ $dashCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 echo "3. GET {$location} => HTTP {$dashCode}\n";
 check('El dashboard responde 200', $dashCode === 200);
-check('Contiene el topbar NutriLnk', str_contains((string) $dashHtml, 'NutriLnk'));
+check('Contiene el topbar NUTRILINK', str_contains((string) $dashHtml, 'NUTRILINK'));
 check('Contiene el conmutador de tema (themeSwitchBtn)', str_contains((string) $dashHtml, 'themeSwitchBtn'));
 check('Sin errores visibles en el HTML', !preg_match('/Whoops|Symfony\\\\Component\\\\HttpKernel|Internal Server Error|Undefined variable|ErrorException/', (string) $dashHtml));
 

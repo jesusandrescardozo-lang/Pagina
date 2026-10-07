@@ -104,7 +104,7 @@
     </table>
 
     <div class="footer">
-        Informe Académico para Evaluación de Investigación de Operaciones &bull; NutriLnk
+        Informe Académico para Evaluación de Investigación de Operaciones &bull; NUTRILINK
     </div>
 </body>
 </html>

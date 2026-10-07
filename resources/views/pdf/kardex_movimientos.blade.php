@@ -67,7 +67,7 @@
     </table>
 
     <div class="footer">
-        Generado por Sistema NutriLnk &bull; Bitácora Inmutable de Almacén
+        Generado por Sistema NUTRILINK &bull; Bitácora Inmutable de Almacén
     </div>
 </body>
 </html>

@@ -69,7 +69,7 @@
     @endforeach
 
     <div class="footer">
-        Generado por Sistema NutriLnk &bull; Modelos de Investigación de Operaciones Humanitarias
+        Generado por Sistema NUTRILINK &bull; Modelos de Investigación de Operaciones Humanitarias
     </div>
 </body>
 </html>

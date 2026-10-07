@@ -67,7 +67,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'sistema@refugios.ve'),
-        'name' => env('MAIL_FROM_NAME', 'NutriLnk'),
+        'name' => env('MAIL_FROM_NAME', 'NUTRILINK'),
     ],
 
 ];

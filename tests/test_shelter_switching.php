@@ -12,10 +12,10 @@ $reqLogin = Request::create('/login', 'GET');
 $respLogin = $kernel->handle($reqLogin);
 $contentLogin = $respLogin->getContent();
 
-if (strpos($contentLogin, 'NutriLnk') !== false) {
-    echo "✓ 'NutriLnk' branding present in login.\n";
+if (strpos($contentLogin, 'NUTRILINK') !== false) {
+    echo "✓ 'NUTRILINK' branding present in login.\n";
 } else {
-    echo "✗ 'NutriLnk' NOT found in login.\n";
+    echo "✗ 'NUTRILINK' NOT found in login.\n";
 }
 
 if (strpos($contentLogin, '(Investigación de Operaciones)') === false) {
@@ -54,7 +54,7 @@ $respDashGlobal = $kernel->handle($reqDashGlobal);
 $contentGlobal = $respDashGlobal->getContent();
 echo "Status Global: " . $respDashGlobal->getStatusCode() . "\n";
 
-if ($respDashGlobal->getStatusCode() === 200 && strpos($contentGlobal, 'NutriLnk') !== false) {
+if ($respDashGlobal->getStatusCode() === 200 && strpos($contentGlobal, 'NUTRILINK') !== false) {
     echo "✓ Centralized dashboard renders (200) when no shelter selected.\n";
 } else {
     echo "✗ Centralized dashboard failed to render.\n";

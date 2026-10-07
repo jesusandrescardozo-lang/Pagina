@@ -45,8 +45,8 @@ if ($code === '999999') {
 }
 testAssert("Rechaza código numérico no coincidente", $isInvalid === false);
 
-$uri = GoogleAuthenticatorService::getOtpAuthUrl('NutriLnk', 'admin@refugios.ve', $secret);
-testAssert("Genera URI estándar otpauth:// para Google Authenticator", str_starts_with($uri, 'otpauth://totp/NutriLnk:admin%40refugios.ve'));
+$uri = GoogleAuthenticatorService::getOtpAuthUrl('NUTRILINK', 'admin@refugios.ve', $secret);
+testAssert("Genera URI estándar otpauth:// para Google Authenticator", str_starts_with($uri, 'otpauth://totp/NUTRILINK:admin%40refugios.ve'));
 
 $qrSvg = GoogleAuthenticatorService::getQrCodeSvg($uri, 200);
 testAssert("Genera código QR local en SVG (sin servicios externos)", str_contains($qrSvg, '<svg') && !str_contains($qrSvg, 'qrserver.com') && !str_contains($qrSvg, 'api.'));

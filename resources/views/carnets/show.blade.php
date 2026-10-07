@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credencial Oficial - {{ $user->name }} · NutriLnk</title>
+    <title>Credencial Oficial - {{ $user->name }} · NUTRILINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -349,7 +349,7 @@
                     <div class="red"></div>
                 </div>
                 <div class="badge-inst-title">República Bolivariana de Venezuela</div>
-                <div class="badge-inst-sub">NUTRILNK &middot; LOGÍSTICA DC</div>
+                <div class="badge-inst-sub">NUTRILINK &middot; LOGÍSTICA DC</div>
             </div>
 
             <div class="badge-body">

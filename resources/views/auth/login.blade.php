@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriLnk — Iniciar Sesión | Sistema Humanitario y Logístico</title>
+    <title>NUTRILINK — Iniciar Sesión | Sistema Humanitario y Logístico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -593,7 +593,7 @@
 
 <div class="login-layout">
 
-    <!-- LEFT PANEL: ARCHITECTURAL LUXURY (Nexora / NutriLnk Aesthetic) -->
+    <!-- LEFT PANEL: ARCHITECTURAL LUXURY (Nexora / NUTRILINK Aesthetic) -->
     <div class="showcase-panel">
         <img src="/images/login-bg.png" alt="Diseño arquitectónico abstracto" class="showcase-bg-img">
         <div class="showcase-overlay"></div>
@@ -604,7 +604,7 @@
             <div class="showcase-logo-icon">
                 <i class="fa-solid fa-cubes-stacked"></i>
             </div>
-            <div class="showcase-logo-text">NutriLnk</div>
+            <div class="showcase-logo-text">NUTRILINK</div>
         </div>
 
         <!-- Bottom Welcome Tagline & Copyright -->
@@ -620,7 +620,7 @@
             </div>
 
             <div class="showcase-copyright">
-                &copy; {{ date('Y') }} NutriLnk. Todos los derechos reservados.
+                &copy; {{ date('Y') }} NUTRILINK. Todos los derechos reservados.
             </div>
         </div>
     </div>

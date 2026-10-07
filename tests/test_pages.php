@@ -14,7 +14,7 @@ $html = $resp->getContent();
 echo "Status: " . $resp->getStatusCode() . "\n";
 
 $checks = [
-    'NutriLnk' => 'NutriLnk branding',
+    'NUTRILINK' => 'NUTRILINK branding',
     'Optimización de Suministros' => 'Subtitle correct',
     'REF-01' => 'REF-01 shelter code present',
     'REF-05' => 'REF-05 shelter code present',
@@ -83,7 +83,7 @@ if ($status2 !== 200) {
     $failures++;
 } else {
     $checks2 = [
-        'NutriLnk' => 'NutriLnk branding',
+        'NUTRILINK' => 'NUTRILINK branding',
         'topbarShelterForm' => 'Topbar shelter switcher form present',
         'REF-01' => 'Shelter REF-01 listed on dashboard',
         'REF-02' => 'Multiple shelters listed on dashboard',

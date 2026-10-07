@@ -1,4 +1,4 @@
-# NutriLnk — Sistema de Gestión de Inventarios Médicos y Alimentarios en Refugios
+# NUTRILINK — Sistema de Gestión de Inventarios Médicos y Alimentarios en Refugios
 
 Aplicación web para la **gestión de inventarios de insumos médicos y alimentos en refugios de emergencia**, desarrollada con Laravel 9 (PHP 8.0+). Proyecto del área de Investigación de Operaciones (EOQ, Newsvendor) para la cadena logística humanitaria de reabastecimiento entre albergues.
 

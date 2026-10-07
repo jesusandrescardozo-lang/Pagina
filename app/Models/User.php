@@ -77,7 +77,7 @@ class User extends Authenticatable
     public function getGoogle2faOtpAuthUrl(): string
     {
         $secret = $this->getGoogle2faSecret();
-        return \App\Services\GoogleAuthenticatorService::getOtpAuthUrl('NutriLnk', $this->email, $secret);
+        return \App\Services\GoogleAuthenticatorService::getOtpAuthUrl('NUTRILINK', $this->email, $secret);
     }
 
     /**
