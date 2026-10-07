@@ -98,9 +98,13 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            opacity: 0.88;
-            filter: contrast(1.08) brightness(0.92);
+            /* La imagen es vertical (640x958) con el motivo en la parte alta:
+               anclamos arriba para que la punta del dibujo no se recorte. */
+            object-position: center top;
+            opacity: 1;
+            /* Es una foto casi negra: hay que aclararla un poco para que las
+               aristas grises del patrón se distingan del fondo. */
+            filter: brightness(1.18) contrast(1.06);
             transition: transform 12s ease;
         }
 
@@ -108,16 +112,16 @@
             transform: scale(1.03);
         }
 
-        /* Cinematic Gradient Overlays */
+        /* Cinematic Gradient Overlays (más suave: la imagen ya es oscura) */
         .showcase-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(7, 9, 14, 0.72) 0%,
-                rgba(7, 9, 14, 0.2) 40%,
-                rgba(7, 9, 14, 0.4) 65%,
-                rgba(7, 9, 14, 0.95) 100%
+                rgba(7, 9, 14, 0.58) 0%,
+                rgba(7, 9, 14, 0.12) 34%,
+                rgba(7, 9, 14, 0.32) 62%,
+                rgba(7, 9, 14, 0.86) 100%
             );
             pointer-events: none;
             z-index: 1;
@@ -433,9 +437,12 @@
         .demo-accounts-bar {
             display: flex;
             align-items: center;
+            /* Si los 4 perfiles no entran en una línea, pasan a la siguiente:
+               así ningún botón queda recortado (antes se cortaba "Auditor"
+               porque la barra hacía scroll horizontal con la barra oculta). */
+            flex-wrap: wrap;
             gap: 6px;
             margin-bottom: 20px;
-            overflow-x: auto;
             padding-bottom: 4px;
             scrollbar-width: none;
         }
@@ -588,7 +595,7 @@
 
     <!-- LEFT PANEL: ARCHITECTURAL LUXURY (Nexora / NutriLnk Aesthetic) -->
     <div class="showcase-panel">
-        <img src="/images/login-bg.jpg" alt="Instalaciones Humanitarias" class="showcase-bg-img">
+        <img src="/images/login-bg.png" alt="Diseño arquitectónico abstracto" class="showcase-bg-img">
         <div class="showcase-overlay"></div>
         <div class="showcase-right-edge-fade"></div>
 
