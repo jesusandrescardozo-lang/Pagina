@@ -72,14 +72,23 @@ return new class extends Migration {
     private function indexExists(string $table, string $name): bool
     {
         $conn = Schema::getConnection();
+        $driver = $conn->getDriverName();
 
-        if ($conn->getDriverName() === 'sqlite') {
+        if ($driver === 'sqlite') {
             return (bool) $conn->selectOne(
                 "SELECT 1 AS ok FROM sqlite_master WHERE type = 'index' AND name = ?",
                 [$name]
             );
         }
 
+        if ($driver === 'pgsql') {
+            return (bool) $conn->selectOne(
+                'SELECT 1 AS ok FROM pg_indexes WHERE schemaname = \'public\' AND tablename = ? AND indexname = ?',
+                [$table, $name]
+            );
+        }
+
+        // MySQL / MariaDB
         $row = $conn->selectOne(
             'SELECT 1 AS ok FROM information_schema.statistics
              WHERE table_schema = DATABASE() AND table_name = ? AND index_name = ?',

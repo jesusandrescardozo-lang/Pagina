@@ -7,6 +7,7 @@ use App\Models\Shelter;
 use App\Services\AuditService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,15 +20,27 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => ['required', 'email', 'max:255'],
+            'password' => ['required', 'string', 'max:255'],
             'shelter_id' => ['nullable', 'exists:shelters,id'],
         ]);
+
+        // Protección de fuerza bruta: máximo 5 intentos por minuto por IP.
+        $throttleKey = 'login:' . $request->ip();
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+
+            return back()->withErrors([
+                'email' => "Demasiados intentos de inicio de sesión. Inténtelo de nuevo en {$seconds} segundos.",
+            ])->onlyInput('email');
+        }
+        RateLimiter::hit($throttleKey, 60);
 
         $remember = $request->boolean('remember');
 
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
             $request->session()->regenerate();
+            RateLimiter::clear($throttleKey);
 
             $user = Auth::user();
 

@@ -1,0 +1,34 @@
+flowchart LR
+  START((1))
+  N2((2))
+  N3((3))
+  N4((4))
+  N5((5))
+  N6((6))
+  N7((7))
+  N8((8))
+  N9((9))
+  N11((11))
+  N12((12))
+  START -- "A1 (10)" --> N2
+  N2 -- "A2 (5)" --> N3
+  N3 -- "A3 (2)" --> N4
+  N4 -- "B1 (8)" --> N5
+  N5 -- "B2 (6)" --> N6
+  N5 -- "B3 (5)" --> N7
+  N8 -- "C1 (6)" --> N9
+  N7 -- "C2 (5)" --> N9
+  N6 -- "C3 (7)" --> N11
+  N5 -- "C4 (4)" --> N12
+  N6 -. "d1 (0)" .-> N8
+  N7 -. "d2 (0)" .-> N8
+  classDef union fill:#dce9ff,stroke:#1c4fd8,stroke-width:3px,color:#000;
+  class N9 union;
+  class N11 union;
+  class N12 union;
+  linkStyle 0 stroke:#c00000,stroke-width:3px;
+  linkStyle 1 stroke:#c00000,stroke-width:3px;
+  linkStyle 2 stroke:#c00000,stroke-width:3px;
+  linkStyle 3 stroke:#c00000,stroke-width:3px;
+  linkStyle 4 stroke:#c00000,stroke-width:3px;
+  linkStyle 6 stroke:#c00000,stroke-width:3px;

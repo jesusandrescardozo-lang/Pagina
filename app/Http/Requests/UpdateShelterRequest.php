@@ -14,11 +14,12 @@ class UpdateShelterRequest extends StoreShelterRequest
         $rules = parent::rules();
 
         $shelter = $this->route('shelter');
-        $rules['codigo'] = 'required|string|max:20|unique:shelters,codigo,' . $shelter->id;
+        // Igual que en creación, pero relajando `unique` para conservar el propio código.
+        $rules['codigo'] = 'required|string|min:3|max:20|regex:/^[A-Za-z0-9-]+$/|unique:shelters,codigo,' . $shelter->id;
 
         // En edición las poblaciones son obligatorias (en creación son opcionales).
         foreach (['poblacion_adultos', 'poblacion_ninos', 'poblacion_adultos_mayores', 'poblacion_atencion_medica'] as $campo) {
-            $rules[$campo] = 'required|integer|min:0';
+            $rules[$campo] = 'required|integer|min:0|max:1000000';
         }
 
         return $rules;

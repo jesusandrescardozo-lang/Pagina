@@ -10,14 +10,14 @@ Aplicación web para la **gestión de inventarios de insumos médicos y alimento
 - **Transferencias inter-refugios**: máquina de estados estricta (`borrador → aprobada → en_tránsito → recibida / cancelada`) con deducción FEFO al despachar y restauración de stock/lotes al cancelar.
 - **Modelos de inventario (I.O.)**: cálculo EOQ, punto de reorden, stock de seguridad y Newsvendor; clasificación ABC.
 - **Reportes PDF** (dompdf) y **bitácora de auditoría** de todas las acciones.
-- **Seguridad**: CSRF habilitado, *throttling* de intentos de login y matriz de permisos unificada en Gates (`admin`, `coordinador_refugio`, `almacenista`, `auditor`). *El acceso 2FA/Google Authenticator fue retirado del flujo: el login va directo al panel con contraseña.*
+- **Seguridad**: CSRF habilitado, *throttling* de intentos de login, registro de cuentas restringido a dominios de correo institucionales (`REGISTRO_DOMINIOS`) y matriz de permisos unificada en Gates (`admin`, `coordinador_refugio`, `almacenista`, `auditor`). *El acceso 2FA/Google Authenticator fue retirado del flujo: el login va directo al panel con contraseña.*
 - **Borrado lógico** de refugios/insumos: eliminar ya no destruye en cascada inventarios, lotes ni kardex.
 
 ## Requisitos
 
-- PHP 8.0 o superior (`pdo_sqlite`, `mbstring`, `openssl`, `tokenizer`, `xml`)
+- PHP 8.0 o superior (`pdo_pgsql` o `pdo_sqlite`, `mbstring`, `openssl`, `tokenizer`, `xml`)
 - Composer
-- No requiere servidor de BD: usa **SQLite** (se crea automáticamente)
+- Base de datos: **SQLite** (desarrollo local, sin servidor) o **PostgreSQL/Neon** (producción). El driver se elige en `.env` (`DB_CONNECTION`).
 
 ## Instalación
 
@@ -28,9 +28,34 @@ composer install
 copy .env.example .env
 type nul > database\database.sqlite   # Linux/macOS: touch database/database.sqlite
 php artisan key:generate
+```
+
+Configura la base de datos en `.env`:
+
+- **Desarrollo local (SQLite, sin servidor):**
+  ```dotenv
+  DB_CONNECTION=sqlite
+  DB_DATABASE=database/database.sqlite
+  ```
+- **Producción (Neon / PostgreSQL):** usa la cadena de conexión del panel de Neon en `DATABASE_URL` y revisa el bloque `# ── Base de datos: Neon` de `.env.example`.
+
+```bash
 php artisan migrate:fresh --seed      # crea tablas + datos de demostración
 php artisan serve                     # http://localhost:8000
 ```
+
+### Variable `REGISTRO_DOMINIOS`
+
+Controla el auto-registro de cuentas de empleado desde la pantalla de login:
+
+```dotenv
+REGISTRO_DOMINIOS=refugios.ve,refugios.org   # lista separada por comas
+```
+
+- Solo se aceptan correos de esos dominios; el enlace "Crear cuenta de empleado" se oculta si la lista está vacía.
+- Dejarla vacía (`REGISTRO_DOMINIOS=`) **desactiva el registro** por completo.
+- Las cuentas creadas quedan con rol `operador` (solo lectura) hasta que un administrador asigne un rol con permisos.
+
 
 > Detalle completo en [`MANUAL_DE_USUARIO.md`](MANUAL_DE_USUARIO.md).
 
@@ -50,12 +75,10 @@ php artisan serve                     # http://localhost:8000
 El proyecto incluye suites de verificación propias (sin PHPUnit). **Todo se ejecuta con un único comando:**
 
 ```bash
-php tests/run_all.php            # suite completa (16 suites)
+php tests/run_all.php            # suite completa (20 suites)
 php tests/run_all.php --quick    # solo las pruebas rápidas
 php tests/run_all.php --verbose  # salida detallada de cada aserción
 ```
-
-Último resultado: **16 correctas · 0 con fallo · 0 omitidas** (exit code `0`).
 
 ### Pruebas de corrección de código
 
@@ -66,12 +89,17 @@ Verifican que la aplicación arranca sin errores y que no quedan fallos estructu
 | `tests/diagnostico.php` | Integridad general: `.env`, `APP_KEY`, extensiones PHP, base de datos y rutas |
 | `tests/test_integrity.php` | Sintaxis de todo el código (`php -l`), los 13 archivos `config/`, `php artisan`, caché, log, RateLimiter, esquema de tablas y ausencia de `dd()`/`var_dump()`/`APP_DEBUG=true` |
 | `tests/test_http_smoke.php` | Recorrido HTTP de las 55 rutas × 5 roles (invitado, admin, coordinador, almacén, auditor) + matriz de permisos |
+| `tests/test_smoke_rapido.php` | Renderizado sin errores (200) de las páginas principales autenticadas y públicas |
 | `tests/test_pages.php` | Renderizado de páginas clave, credenciales demo del login y coherencia con el seeder |
 
 ### Pruebas de lógica de negocio
 
 ```bash
 php tests/test_crud_forms.php             # FormRequests + soft deletes
+php tests/test_validations.php            # validaciones de negocio (Kardex, transferencias, throttle)
+php tests/test_registro.php               # registro institucional (dominios permitidos)
+php tests/test_registro_login.php         # flujo completo registro -> login -> dashboard
+php tests/test_cache_version.php          # invalidación de caché analítica por versión
 php tests/test_transfer_state_machine.php # estados de transferencia + FEFO
 php tests/test_authorization_matrix.php   # matriz de permisos
 php tests/test_role_permissions.php       # permisos por rol

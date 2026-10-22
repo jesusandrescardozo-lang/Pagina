@@ -1,0 +1,39 @@
+flowchart LR
+  subgraph fase1["1. Inicio"]
+    direction TB
+    A1["<b>A1</b> Levantamiento de req.<br/>D: 10 d | CRÍTICA<br/>PASO: 0 → 10<br/>PAST: 0 → 10"]
+    A2["<b>A2</b> Factibilidad y alcance<br/>D: 5 d | CRÍTICA<br/>PASO: 10 → 15<br/>PAST: 10 → 15"]
+    A3["<b>A3</b> Acta de inicio<br/>D: 2 d | CRÍTICA<br/>PASO: 15 → 17<br/>PAST: 15 → 17"]
+  end
+  subgraph fase2["2. Análisis"]
+    direction TB
+    B1["<b>B1</b> Requisitos<br/>D: 8 d | CRÍTICA<br/>PASO: 17 → 25<br/>PAST: 17 → 25"]
+    B2["<b>B2</b> Modelo de procesos<br/>D: 6 d | CRÍTICA<br/>PASO: 25 → 31<br/>PAST: 25 → 31"]
+    B3["<b>B3</b> Modelo ER de datos<br/>D: 5 d | HT 1<br/>PASO: 25 → 30<br/>PAST: 26 → 31"]
+  end
+  subgraph fase3["3. Diseño"]
+    direction TB
+    C1["<b>C1</b> Diseño arquitectónico<br/>D: 6 d | CRÍTICA<br/>PASO: 31 → 37<br/>PAST: 31 → 37"]
+    C2["<b>C2</b> Diseño de BD<br/>D: 5 d | HT 2<br/>PASO: 30 → 35<br/>PAST: 32 → 37"]
+    C3["<b>C3</b> Mockups de interfaz<br/>D: 7 d | HT 3<br/>PASO: 31 → 38<br/>PAST: 34 → 41"]
+    C4["<b>C4</b> Diseño de seguridad<br/>D: 4 d | HT 29<br/>PASO: 25 → 29<br/>PAST: 54 → 58"]
+  end
+  A1 --> A2
+  A2 --> A3
+  A3 --> B1
+  B1 --> B2
+  B1 --> B3
+  B2 --> C1
+  B3 --> C1
+  B3 --> C2
+  B2 --> C3
+  B1 --> C4
+  classDef critica fill:#ffd6d6,stroke:#c00000,stroke-width:3px,color:#000;
+  classDef fantasma fill:#f7f7f7,stroke:#888,stroke-width:1px,stroke-dasharray:6 4,color:#444;
+  classDef fantasmaCrit fill:#fff0f0,stroke:#c00000,stroke-width:2px,stroke-dasharray:6 4,color:#000;
+  class A1 critica;
+  class A2 critica;
+  class A3 critica;
+  class B1 critica;
+  class B2 critica;
+  class C1 critica;

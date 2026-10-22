@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: var(--amber); font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
                 {{ $supply->codigo }}
             </span>
             <span class="badge {{ $supply->categoria_badge['class'] }}" style="font-size:0.75rem;">
@@ -83,7 +83,7 @@
 
                 <div class="row g-3 mb-4 align-items-center">
                     <div class="col-md-7">
-                        <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="p-3 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border);">
                             <div class="form-check m-0">
                                 <input class="form-check-input" type="checkbox" name="es_perecedero" id="es_perecedero" value="1" {{ old('es_perecedero', $supply->es_perecedero) ? 'checked' : '' }} style="accent-color: var(--accent);">
                                 <label class="form-check-label text-white fw-bold" for="es_perecedero" style="font-size:0.85rem;">

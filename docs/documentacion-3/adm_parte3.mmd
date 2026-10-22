@@ -1,0 +1,29 @@
+flowchart LR
+  N16((16))
+  N17((17))
+  N18((18))
+  N19((19))
+  N20((20))
+  N21((21))
+  N22((22))
+  N23((23))
+  N24((24))
+  N16 -- "E1 (6)" --> N17
+  N17 -- "E2 (5)" --> N18
+  N18 -- "E3 (4)" --> N19
+  N19 -- "F1 (4)" --> N20
+  N20 -- "F2 (4)" --> N22
+  N22 -- "F3 (2)" --> N23
+  N19 -- "G1 (4)" --> N21
+  N23 -- "G2 (2)" --> N24
+  N21 -. "d6 (0)" .-> N22
+  N21 -. "d7 (0)" .-> N23
+  classDef union fill:#dce9ff,stroke:#1c4fd8,stroke-width:3px,color:#000;
+  class N16 union;
+  linkStyle 0 stroke:#c00000,stroke-width:3px;
+  linkStyle 1 stroke:#c00000,stroke-width:3px;
+  linkStyle 2 stroke:#c00000,stroke-width:3px;
+  linkStyle 3 stroke:#c00000,stroke-width:3px;
+  linkStyle 4 stroke:#c00000,stroke-width:3px;
+  linkStyle 5 stroke:#c00000,stroke-width:3px;
+  linkStyle 7 stroke:#c00000,stroke-width:3px;

@@ -11,7 +11,7 @@ return new class extends Migration {
         // Permite: (a) recibir en destino respetando vencimientos reales,
         //          (b) devolver los lotes al origen si se cancela en tránsito.
         Schema::table('supply_transfers', function (Blueprint $table) {
-            $table->json('lotes_despacho')->nullable()->after('observaciones');
+            $table->json('lotes_despacho')->nullable();
         });
     }
 

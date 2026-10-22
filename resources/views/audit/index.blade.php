@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-shield-halved me-1"></i> Trazabilidad SHA-256
             </span>
-            <span class="badge" style="background: rgba(230, 168, 108, 0.10); color: #f5ede0; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.25); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.10); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.25); border-radius: 9999px; padding: 3px 10px;">
                 {{ $logs->total() }} Eventos Registrados
             </span>
         </div>
@@ -76,14 +76,14 @@
             <tbody>
                 @forelse($logs as $log)
                 <tr>
-                    <td style="font-size: 0.76rem; color: rgba(226, 232, 240, 0.7); white-space: nowrap;">
+                    <td style="font-size: 0.76rem; color: var(--text-muted); white-space: nowrap;">
                         <i class="fa-regular fa-clock me-1 text-info"></i> {{ $log->created_at->format('d/m/Y H:i:s') }}
                     </td>
                     <td>
                         <strong class="text-white">{{ $log->user->name ?? 'Sistema / Automático' }}</strong>
                     </td>
                     <td>
-                        <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.3);">
+                        <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.3);">
                             {{ $log->modulo }}
                         </span>
                     </td>
@@ -94,7 +94,7 @@
                         {{ $log->descripcion }}
                     </td>
                     <td class="text-end">
-                        <code style="color: #e6a86c; font-size: 0.76rem;">{{ $log->ip_address ?: '127.0.0.1' }}</code>
+                        <code style="color: var(--amber); font-size: 0.76rem;">{{ $log->ip_address ?: '127.0.0.1' }}</code>
                     </td>
                 </tr>
                 @empty
@@ -109,11 +109,8 @@
         </table>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-secondary border-opacity-25">
-        <span class="text-muted small">Página {{ $logs->currentPage() }} de {{ $logs->lastPage() }}</span>
-        <div>
-            {{ $logs->withQueryString()->links() }}
-        </div>
+    <div class="mt-3 pt-3 border-top border-secondary border-opacity-25">
+        {{ $logs->withQueryString()->links() }}
     </div>
 </div>
 

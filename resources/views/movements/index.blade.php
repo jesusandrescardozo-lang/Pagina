@@ -16,10 +16,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-clipboard-check me-1"></i> Auditoría FEFO Activa
             </span>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--ok-text); font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 Registro Criptográfico Inmutable
             </span>
         </div>
@@ -107,7 +107,7 @@
             <tbody>
                 @forelse($movements as $mov)
                 <tr>
-                    <td style="font-size: 0.76rem; color: rgba(226, 232, 240, 0.7); white-space: nowrap;">
+                    <td style="font-size: 0.76rem; color: var(--text-muted); white-space: nowrap;">
                         <i class="fa-regular fa-calendar-check text-info me-1"></i>
                         {{ $mov->fecha_movimiento->format('d/m/Y H:i') }}
                     </td>
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         @if($mov->batch)
-                            <code style="color: #e6a86c; font-weight: 700;">{{ $mov->batch->numero_lote }}</code>
+                            <code style="color: var(--amber); font-weight: 700;">{{ $mov->batch->numero_lote }}</code>
                             @if($mov->batch->fecha_vencimiento)
                                 <small class="d-block text-muted">Vence: {{ $mov->batch->fecha_vencimiento->format('d/m/Y') }}</small>
                             @endif
@@ -148,7 +148,7 @@
                         {{ $mov->motivo ?: 'Sin observación' }}
                     </td>
                     <td class="text-end">
-                        <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; font-size: 0.72rem; padding: 4px 8px;">
+                        <span class="badge" style="background: var(--surface-quiet); color: var(--text-muted); font-size: 0.72rem; padding: 4px 8px;">
                             <i class="fa-solid fa-user-check me-1 text-info"></i> {{ $mov->user->name ?? 'Sistema' }}
                         </span>
                     </td>

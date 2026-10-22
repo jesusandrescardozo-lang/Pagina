@@ -14,7 +14,8 @@ class UpdateSupplyRequest extends StoreSupplyRequest
         $rules = parent::rules();
 
         $supply = $this->route('supply');
-        $rules['codigo'] = 'required|string|max:30|unique:supplies,codigo,' . $supply->id;
+        // Igual que en creación, pero relajando `unique` para conservar el propio código.
+        $rules['codigo'] = 'required|string|min:3|max:30|regex:/^[A-Za-z0-9-]+$/|unique:supplies,codigo,' . $supply->id;
 
         return $rules;
     }

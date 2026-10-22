@@ -19,8 +19,8 @@
 
     <style>
         :root {
-            --bg-body: #121519;
-            --bg-card: #171b21;
+            --bg-body: #16110c;
+            --bg-card: #1d1712;
             --border-card: rgba(255, 255, 255, 0.08);
             --border-card-hover: rgba(255, 255, 255, 0.16);
             --text-title: #f4f6f8;
@@ -38,21 +38,21 @@
         }
 
         [data-bs-theme="light"] {
-            --bg-body: #f4f5f7;
-            --bg-card: #ffffff;
-            --border-card: rgba(15, 23, 42, 0.1);
-            --border-card-hover: rgba(15, 23, 42, 0.2);
-            --text-title: #1c2128;
-            --text-sub: #69707d;
-            --input-bg: #ffffff;
-            --input-border: rgba(15, 23, 42, 0.14);
-            --input-focus-border: #c88340;
-            --input-focus-glow: rgba(200, 131, 64, 0.16);
-            --btn-gold: #c88340;
-            --btn-gold-hover: #b9773a;
-            --btn-gold-shadow: rgba(200, 131, 64, 0.2);
-            --amber-accent: #c88340;
-            --split-bg: #eef0f3;
+            --bg-body: #d9dce0;
+            --bg-card: #e6e8eb;
+            --border-card: rgba(29, 33, 38, 0.14);
+            --border-card-hover: rgba(29, 33, 38, 0.26);
+            --text-title: #1d2126;
+            --text-sub: #5b636d;
+            --input-bg: #cfd2d7;
+            --input-border: rgba(29, 33, 38, 0.18);
+            --input-focus-border: #8f5c1f;
+            --input-focus-glow: rgba(143, 92, 31, 0.16);
+            --btn-gold: #b87b3f;
+            --btn-gold-hover: #a56e35;
+            --btn-gold-shadow: rgba(143, 92, 31, 0.22);
+            --amber-accent: #8f5c1f;
+            --split-bg: #d2d5da;
         }
 
         * {
@@ -80,7 +80,7 @@
             min-height: 100vh;
         }
 
-        /* LEFT PANEL: LUXURY ARCHITECTURAL SHOWCASE (Inspired by Image 1) */
+        /* LEFT PANEL: ESCENARIO ARQUITECTÓNICO CÁLIDO */
         .showcase-panel {
             flex: 1.1;
             position: relative;
@@ -92,36 +92,24 @@
             overflow: hidden;
         }
 
-        .showcase-bg-img {
+        /* Fondo SVG arquitectónico cálido */
+        .showcase-scene {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            /* La imagen es vertical (640x958) con el motivo en la parte alta:
-               anclamos arriba para que la punta del dibujo no se recorte. */
-            object-position: center top;
-            opacity: 1;
-            /* Es una foto casi negra: hay que aclararla un poco para que las
-               aristas grises del patrón se distingan del fondo. */
-            filter: brightness(1.18) contrast(1.06);
-            transition: transform 12s ease;
+            z-index: 0;
         }
 
-        .showcase-panel:hover .showcase-bg-img {
-            transform: scale(1.03);
-        }
-
-        /* Cinematic Gradient Overlays (más suave: la imagen ya es oscura) */
         .showcase-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(7, 9, 14, 0.58) 0%,
-                rgba(7, 9, 14, 0.12) 34%,
-                rgba(7, 9, 14, 0.32) 62%,
-                rgba(7, 9, 14, 0.86) 100%
+                rgba(10, 8, 6, 0.15) 0%,
+                rgba(10, 8, 6, 0.05) 34%,
+                rgba(10, 8, 6, 0.12) 62%,
+                rgba(10, 8, 6, 0.45) 100%
             );
             pointer-events: none;
             z-index: 1;
@@ -150,15 +138,13 @@
             width: 38px;
             height: 38px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(230, 168, 108, 0.12);
+            border: 1px solid rgba(230, 168, 108, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            color: var(--amber-accent);
             font-size: 1.05rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         .showcase-logo-text {
@@ -214,7 +200,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* RIGHT PANEL: FLOATING SLEEK LOGIN CARD (Image 1 Style) */
+        /* RIGHT PANEL: TARJETA DE LOGIN / REGISTRO */
         .form-panel {
             flex: 1;
             display: flex;
@@ -252,7 +238,6 @@
             align-items: center;
             gap: 8px;
             transition: all 0.25s ease;
-            backdrop-filter: blur(12px);
         }
 
         .theme-toggle-btn:hover {
@@ -281,7 +266,7 @@
         }
 
         [data-bs-theme="light"] .login-card {
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
         }
 
         /* Card Logo Badge */
@@ -429,17 +414,14 @@
 
         [data-bs-theme="light"] .sleek-select option,
         [data-bs-theme="light"] .sleek-select optgroup {
-            background: #ffffff;
-            color: #0f172a;
+            background: #cfd2d7;
+            color: #1d2126;
         }
 
         /* Demo Quick Account Pills */
         .demo-accounts-bar {
             display: flex;
             align-items: center;
-            /* Si los 4 perfiles no entran en una línea, pasan a la siguiente:
-               así ningún botón queda recortado (antes se cortaba "Auditor"
-               porque la barra hacía scroll horizontal con la barra oculta). */
             flex-wrap: wrap;
             gap: 6px;
             margin-bottom: 20px;
@@ -562,6 +544,34 @@
             font-size: 0.85rem;
         }
 
+        /* Toggle login / registro */
+        .auth-mode-toggle {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.82rem;
+            color: var(--text-sub);
+        }
+
+        .auth-mode-toggle a {
+            color: var(--amber-accent);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .auth-mode-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* Formularios ocultos por modo */
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
         /* Responsive Breakpoints */
         @media (max-width: 992px) {
             .showcase-panel {
@@ -583,9 +593,6 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            .showcase-panel:hover .showcase-bg-img {
-                transform: none;
-            }
         }
     </style>
 </head>
@@ -593,9 +600,85 @@
 
 <div class="login-layout">
 
-    <!-- LEFT PANEL: ARCHITECTURAL LUXURY (Nexora / NUTRILINK Aesthetic) -->
+    <!-- LEFT PANEL: ESCENARIO ARQUITECTÓNICO CÁLIDO -->
     <div class="showcase-panel">
-        <img src="/images/login-bg.png" alt="Diseño arquitectónico abstracto" class="showcase-bg-img">
+        <!-- Escena SVG: arcos arquitectónicos con luz ámbar cálida -->
+        <svg class="showcase-scene" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+                <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3d2b1a"/>
+                    <stop offset="45%" stop-color="#241a10"/>
+                    <stop offset="100%" stop-color="#120d08"/>
+                </linearGradient>
+                <linearGradient id="archGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f0b67f" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#d89656" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="floorGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#e6a86c" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#d89656" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="warmLight" cx="0.5" cy="0.8" r="0.75">
+                    <stop offset="0%" stop-color="#f5c490" stop-opacity="0.7"/>
+                    <stop offset="50%" stop-color="#e6a86c" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#d89656" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="archStroke" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f0b67f" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#a0682f" stop-opacity="0.4"/>
+                </linearGradient>
+                <linearGradient id="archFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#e6a86c" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#8a5a2a" stop-opacity="0.05"/>
+                </linearGradient>
+            </defs>
+
+            <!-- Cielo base -->
+            <rect width="800" height="1000" fill="url(#skyGrad)"/>
+
+            <!-- Luz cálida ambiental -->
+            <ellipse cx="400" cy="780" rx="520" ry="340" fill="url(#warmLight)"/>
+
+            <!-- Arcos arquitectónicos (perspectiva) -->
+            <g>
+                <!-- Arco trasero -->
+                <path d="M 160 1000 L 160 400 A 240 240 0 0 1 640 400 L 640 1000" fill="none" stroke="url(#archStroke)" stroke-width="4" opacity="0.5"/>
+                <path d="M 200 1000 L 200 430 A 200 200 0 0 1 600 430 L 600 1000" fill="none" stroke="url(#archStroke)" stroke-width="3.5" opacity="0.6"/>
+                <!-- Arco medio -->
+                <path d="M 250 1000 L 250 470 A 150 150 0 0 1 550 470 L 550 1000" fill="none" stroke="url(#archStroke)" stroke-width="4" opacity="0.75"/>
+                <path d="M 285 1000 L 285 495 A 115 115 0 0 1 515 495 L 515 1000" fill="none" stroke="url(#archStroke)" stroke-width="3.5" opacity="0.85"/>
+                <!-- Arco frontal -->
+                <path d="M 320 1000 L 320 520 A 80 80 0 0 1 480 520 L 480 1000" fill="none" stroke="url(#archStroke)" stroke-width="4.5" opacity="1"/>
+                <path d="M 350 1000 L 350 545 A 50 50 0 0 1 450 545 L 450 1000" fill="none" stroke="url(#archStroke)" stroke-width="4" opacity="1"/>
+            </g>
+
+            <!-- Relleno luminoso de los arcos -->
+            <path d="M 320 1000 L 320 520 A 80 80 0 0 1 480 520 L 480 1000 Z" fill="url(#archGlow)" opacity="0.5"/>
+            <path d="M 250 1000 L 250 470 A 150 150 0 0 1 550 470 L 550 1000 Z" fill="url(#archGlow)" opacity="0.3"/>
+            <path d="M 160 1000 L 160 400 A 240 240 0 0 1 640 400 L 640 1000 Z" fill="url(#archFill)" opacity="0.6"/>
+
+            <!-- Piso con reflejo cálido -->
+            <rect x="0" y="860" width="800" height="140" fill="url(#floorGlow)"/>
+            <line x1="0" y1="860" x2="800" y2="860" stroke="#f0b67f" stroke-opacity="0.4" stroke-width="1.5"/>
+
+            <!-- Columnas laterales con luz -->
+            <rect x="100" y="280" width="18" height="720" fill="#2e2114"/>
+            <rect x="682" y="280" width="18" height="720" fill="#2e2114"/>
+            <rect x="100" y="280" width="18" height="720" fill="url(#archGlow)" opacity="0.5"/>
+            <rect x="682" y="280" width="18" height="720" fill="url(#archGlow)" opacity="0.5"/>
+
+            <!-- Partículas de luz -->
+            <circle cx="300" cy="350" r="2.5" fill="#f5c490" opacity="0.8"/>
+            <circle cx="420" cy="280" r="2" fill="#f0b67f" opacity="0.7"/>
+            <circle cx="500" cy="380" r="2.5" fill="#f5c490" opacity="0.6"/>
+            <circle cx="360" cy="450" r="2" fill="#e6a86c" opacity="0.7"/>
+            <circle cx="460" cy="320" r="1.5" fill="#f5c490" opacity="0.8"/>
+            <circle cx="250" cy="420" r="1.5" fill="#e6a86c" opacity="0.6"/>
+            <circle cx="540" cy="440" r="2" fill="#f0b67f" opacity="0.5"/>
+            <circle cx="380" cy="380" r="1.5" fill="#f5c490" opacity="0.7"/>
+            <circle cx="330" cy="500" r="1" fill="#e6a86c" opacity="0.5"/>
+            <circle cx="470" cy="480" r="1.5" fill="#f0b67f" opacity="0.6"/>
+        </svg>
         <div class="showcase-overlay"></div>
         <div class="showcase-right-edge-fade"></div>
 
@@ -625,7 +708,7 @@
         </div>
     </div>
 
-    <!-- RIGHT PANEL: SLEEK LUXURY LOGIN CARD -->
+    <!-- RIGHT PANEL: TARJETA DE LOGIN / REGISTRO -->
     <div class="form-panel">
 
         <!-- Topbar: Dark / Light Mode Toggle Button -->
@@ -644,130 +727,298 @@
                 <i class="fa-solid fa-cube"></i>
             </div>
 
-            <h1 class="login-card-title">Iniciar sesión</h1>
-            <p class="login-card-subtitle">Inicia sesión en tu cuenta para continuar</p>
+            <!-- ============ MODO: INICIAR SESIÓN ============ -->
+            <div class="auth-form active" id="loginMode">
+                <h1 class="login-card-title">Iniciar sesión</h1>
+                <p class="login-card-subtitle">Inicia sesión en tu cuenta para continuar</p>
 
-            @if ($errors->any())
-                <div class="alert alert-danger p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5;">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>{{ $errors->first() }}</span>
+                @if ($errors->any())
+                    <div class="alert alert-danger p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>{{ $errors->first() }}</span>
+                    </div>
+                @endif
+
+                @if (session('info'))
+                    <div class="alert alert-info p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(230, 168, 108, 0.12); border: 1px solid rgba(230, 168, 108, 0.3); color: #e6a86c;">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>{{ session('info') }}</span>
+                    </div>
+                @endif
+
+                <!-- Quick Demo Selectors -->
+                <div class="demo-accounts-bar" title="Acceso rápido con un clic para pruebas">
+                    <span style="font-size: 0.70rem; color: var(--text-sub); align-self: center; margin-right: 2px;">Rápido:</span>
+                    <button type="button" class="demo-pill" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
+                        👑 Admin
+                    </button>
+                    <button type="button" class="demo-pill" onclick="fillCredentials('coordinador@refugios.ve', 'Coordinador1234!')">
+                        📋 Coordinador
+                    </button>
+                    <button type="button" class="demo-pill" onclick="fillCredentials('almacen@refugios.ve', 'Almacen1234!')">
+                        📦 Almacenista
+                    </button>
+                    <button type="button" class="demo-pill" onclick="fillCredentials('auditor@refugios.ve', 'Auditor1234!')">
+                        🛡️ Auditor
+                    </button>
                 </div>
-            @endif
 
-            @if (session('info'))
-                <div class="alert alert-info p-2 px-3 rounded-3 mb-3 d-flex align-items-center gap-2" style="font-size: 0.82rem; background: rgba(230, 168, 108, 0.12); border: 1px solid rgba(230, 168, 108, 0.3); color: #e6a86c;">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span>{{ session('info') }}</span>
+                <form method="POST" action="{{ route('login') }}" autocomplete="on" id="loginForm">
+                    @csrf
+
+                    <!-- Email -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="email">Correo electrónico</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope input-icon-left"></i>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value="{{ old('email', 'admin@refugios.ve') }}"
+                                class="sleek-input"
+                                placeholder="nombre@refugios.ve"
+                                required
+                                autocomplete="email"
+                                autofocus
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="password">Contraseña</label>
+                            <span class="forgot-link" style="cursor: pointer;" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
+                                ¿Olvidó contraseña?
+                            </span>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon-left"></i>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="sleek-input"
+                                placeholder="••••••••••••"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="btn-toggle-eye" id="togglePasswordBtn" title="Mostrar/Ocultar" aria-label="Mostrar u ocultar contraseña">
+                                <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sede / Refugio Asignado -->
+                    <div class="form-group-custom mb-4">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="shelter_id">Sede / Refugio Asignado</label>
+                            <span style="font-size: 0.68rem; color: var(--amber-accent); opacity: 0.9;">Opcional</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-building-shield input-icon-left"></i>
+                            <select name="shelter_id" id="shelter_id" class="sleek-input sleek-select">
+                                <option value="" selected>🌐 Red Centralizada (Todos los Refugios)</option>
+                                <optgroup label="── Centros Humanitarios ──">
+                                    @foreach($shelters as $s)
+                                        <option value="{{ $s->id }}">
+                                            [{{ $s->codigo }}] {{ $s->nombre }} — {{ $s->municipio }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-luxury-login" id="submitBtn">
+                        <span>Iniciar sesión</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="or-divider">o bien</div>
+
+                <!-- Guest Mode -->
+                <a href="{{ route('guest.enter') }}" class="btn-guest-action">
+                    <i class="fa-solid fa-compass me-1"></i>
+                    <span>Explorar como Invitado (Modo Lectura)</span>
+                </a>
+
+                <!-- Security footer -->
+                <div class="card-security-footer">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Tus datos están protegidos</span>
                 </div>
-            @endif
 
-            <!-- Quick Demo Selectors -->
-            <div class="demo-accounts-bar" title="Acceso rápido con un clic para pruebas">
-                <span style="font-size: 0.70rem; color: var(--text-sub); align-self: center; margin-right: 2px;">Rápido:</span>
-                <button type="button" class="demo-pill" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
-                    👑 Admin
-                </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('coordinador@refugios.ve', 'Coordinador1234!')">
-                    📋 Coordinador
-                </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('almacen@refugios.ve', 'Almacen1234!')">
-                    📦 Almacenista
-                </button>
-                <button type="button" class="demo-pill" onclick="fillCredentials('auditor@refugios.ve', 'Auditor1234!')">
-                    🛡️ Auditor
-                </button>
+                <!-- Toggle a registro (solo si hay dominios institucionales autorizados) -->
+                @if (count(config('app.dominios_registro', [])) > 0)
+                <div class="auth-mode-toggle">
+                    ¿No tienes cuenta? <a onclick="switchMode('register')">Crear cuenta de empleado</a>
+                </div>
+                @endif
             </div>
 
-            <form method="POST" action="{{ route('login') }}" autocomplete="on" id="loginForm">
-                @csrf
+            <!-- ============ MODO: REGISTRAR EMPLEADO ============ -->
+            <div class="auth-form" id="registerMode">
+                <h1 class="login-card-title">Crear cuenta</h1>
+                <p class="login-card-subtitle">Regístrate con tu correo institucional ({{ implode(', ', config('app.dominios_registro', [])) }})</p>
 
-                <!-- Email -->
-                <div class="form-group-custom">
-                    <div class="form-label-row">
-                        <label class="form-label-custom" for="email">Correo electrónico</label>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-envelope input-icon-left"></i>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            value="{{ old('email', 'admin@refugios.ve') }}" 
-                            class="sleek-input" 
-                            placeholder="nombre@refugios.ve" 
-                            required 
-                            autocomplete="email"
-                            autofocus
-                        >
-                    </div>
-                </div>
-
-                <!-- Password -->
-                <div class="form-group-custom">
-                    <div class="form-label-row">
-                        <label class="form-label-custom" for="password">Contraseña</label>
-                        <span class="forgot-link" style="cursor: pointer;" onclick="fillCredentials('admin@refugios.ve', 'Admin1234!')">
-                            ¿Olvidó contraseña?
-                        </span>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-lock input-icon-left"></i>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            class="sleek-input" 
-                            placeholder="••••••••••••" 
-                            required 
-                            autocomplete="current-password"
-                        >
-                        <button type="button" class="btn-toggle-eye" id="togglePasswordBtn" title="Mostrar/Ocultar" aria-label="Mostrar u ocultar contraseña">
-                            <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Sede / Refugio Asignado -->
-                <div class="form-group-custom mb-4">
-                    <div class="form-label-row">
-                        <label class="form-label-custom" for="shelter_id">Sede / Refugio Asignado</label>
-                        <span style="font-size: 0.68rem; color: var(--amber-accent); opacity: 0.9;">Opcional</span>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-building-shield input-icon-left"></i>
-                        <select name="shelter_id" id="shelter_id" class="sleek-input sleek-select">
-                            <option value="" selected>🌐 Red Centralizada (Todos los Refugios)</option>
-                            <optgroup label="── Centros Humanitarios ──">
-                                @foreach($shelters as $s)
-                                    <option value="{{ $s->id }}">
-                                        [{{ $s->codigo }}] {{ $s->nombre }} — {{ $s->municipio }}
-                                    </option>
+                @if ($errors->any())
+                    <div class="alert alert-danger p-2 px-3 rounded-3 mb-3 d-flex align-items-start gap-2" style="font-size: 0.82rem; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5;">
+                        <i class="fa-solid fa-circle-exclamation mt-1"></i>
+                        <div>
+                            <strong class="d-block mb-1">Corrija los siguientes errores:</strong>
+                            <ul class="mb-0 ps-3" style="font-size: 0.78rem;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
                                 @endforeach
-                            </optgroup>
-                        </select>
+                            </ul>
+                        </div>
                     </div>
+                @endif
+
+                <form method="POST" action="{{ route('register') }}" autocomplete="on" id="registerForm">
+                    @csrf
+
+                    <!-- Nombre completo -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="name">Nombre completo</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-user input-icon-left"></i>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="{{ old('name') }}"
+                                class="sleek-input"
+                                placeholder="Ej: María Fernanda Pérez"
+                                required
+                                autocomplete="name"
+                                autofocus
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Correo institucional -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="reg_email">Correo institucional</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope input-icon-left"></i>
+                            <input
+                                type="email"
+                                id="reg_email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                class="sleek-input"
+                                placeholder="nombre@refugios.ve"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Cargo -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="cargo">Cargo</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-briefcase input-icon-left"></i>
+                            <select name="cargo" id="cargo" class="sleek-input sleek-select" required>
+                                <option value="" selected disabled>Seleccione su cargo</option>
+                                <option value="Coordinador de Refugio" {{ old('cargo') == 'Coordinador de Refugio' ? 'selected' : '' }}>Coordinador de Refugio</option>
+                                <option value="Almacenista" {{ old('cargo') == 'Almacenista' ? 'selected' : '' }}>Almacenista</option>
+                                <option value="Auditor" {{ old('cargo') == 'Auditor' ? 'selected' : '' }}>Auditor</option>
+                                <option value="Operador de Campo" {{ old('cargo') == 'Operador de Campo' ? 'selected' : '' }}>Operador de Campo</option>
+                                <option value="Personal Médico" {{ old('cargo') == 'Personal Médico' ? 'selected' : '' }}>Personal Médico</option>
+                                <option value="Logística y Transporte" {{ old('cargo') == 'Logística y Transporte' ? 'selected' : '' }}>Logística y Transporte</option>
+                                <option value="Otro" {{ old('cargo') == 'Otro' ? 'selected' : '' }}>Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Refugio asignado -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="reg_shelter_id">Refugio asignado</label>
+                            <span style="font-size: 0.68rem; color: var(--amber-accent); opacity: 0.9;">Opcional</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-building-shield input-icon-left"></i>
+                            <select name="shelter_id" id="reg_shelter_id" class="sleek-input sleek-select">
+                                <option value="" selected>🌐 Red Centralizada (Todos los Refugios)</option>
+                                <optgroup label="── Centros Humanitarios ──">
+                                    @foreach($shelters as $s)
+                                        <option value="{{ $s->id }}" {{ old('shelter_id') == $s->id ? 'selected' : '' }}>
+                                            [{{ $s->codigo }}] {{ $s->nombre }} — {{ $s->municipio }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="reg_password">Contraseña</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon-left"></i>
+                            <input
+                                type="password"
+                                id="reg_password"
+                                name="password"
+                                class="sleek-input"
+                                placeholder="Mínimo 8 caracteres"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="btn-toggle-eye" onclick="toggleRegPassword()" title="Mostrar/Ocultar" aria-label="Mostrar u ocultar contraseña">
+                                <i class="fa-regular fa-eye" id="toggleRegPasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Confirmar contraseña -->
+                    <div class="form-group-custom">
+                        <div class="form-label-row">
+                            <label class="form-label-custom" for="reg_password_confirmation">Confirmar contraseña</label>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon-left"></i>
+                            <input
+                                type="password"
+                                id="reg_password_confirmation"
+                                name="password_confirmation"
+                                class="sleek-input"
+                                placeholder="Repita su contraseña"
+                                required
+                                autocomplete="new-password"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-luxury-login">
+                        <span>Crear cuenta</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Volver a login -->
+                <div class="auth-mode-toggle">
+                    ¿Ya tienes cuenta? <a onclick="switchMode('login')">Iniciar sesión</a>
                 </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn-luxury-login" id="submitBtn">
-                    <span>Iniciar sesión</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
-
-            <!-- Divider -->
-            <div class="or-divider">o bien</div>
-
-            <!-- Guest Mode -->
-            <a href="{{ route('guest.enter') }}" class="btn-guest-action">
-                <i class="fa-solid fa-compass me-1"></i>
-                <span>Explorar como Invitado (Modo Lectura)</span>
-            </a>
-
-            <!-- Security footer (Image 1 style) -->
-            <div class="card-security-footer">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span>Tus datos están protegidos</span>
             </div>
 
         </div>
@@ -805,23 +1056,48 @@
         applyTheme(savedTheme);
     });
 
-    // Toggle Password Visibility
+    // Toggle entre login y registro
+    function switchMode(mode) {
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.getElementById(mode + 'Mode').classList.add('active');
+    }
+
+    // Si el registro fue rechazado, el controlador redirige a /login#registro:
+    // hay que abrir el modo registro para que sus errores sean visibles
+    // (si no, se mostrarían dentro del formulario de inicio de sesión).
+    if (window.location.hash === '#registro') {
+        switchMode('register');
+    }
+
+    // Toggle Password Visibility (login)
     const toggleBtn = document.getElementById('togglePasswordBtn');
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.getElementById('togglePasswordIcon');
 
     if (toggleBtn && passwordInput && toggleIcon) {
-        toggleBtn.addEventListener('click', function () {
+        toggleBtn.addEventListener('click', function() {
             const isPassword = passwordInput.type === 'password';
             passwordInput.type = isPassword ? 'text' : 'password';
             toggleIcon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
         });
     }
 
+    // Toggle Password Visibility (registro)
+    function toggleRegPassword() {
+        const input = document.getElementById('reg_password');
+        const icon = document.getElementById('toggleRegPasswordIcon');
+        if (!input) return;
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        icon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    }
+
     // Helper to auto-fill credentials for testing
     function fillCredentials(email, password) {
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = password;
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('password');
+        if (emailInput) emailInput.value = email;
+        if (passInput) passInput.value = password;
     }
 </script>
 

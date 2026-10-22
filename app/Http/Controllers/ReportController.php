@@ -28,6 +28,10 @@ class ReportController extends Controller
 
     public function inventarioRefugios(Request $request)
     {
+        $request->validate([
+            'shelter_id' => 'nullable|exists:shelters,id',
+        ]);
+
         $query = Shelter::with(['inventories.supply', 'inventories.activeBatchesFefo']);
 
         if ($request->filled('shelter_id')) {
@@ -48,6 +52,13 @@ class ReportController extends Controller
 
     public function kardexMovimientos(Request $request)
     {
+        $request->validate([
+            'shelter_id' => 'nullable|exists:shelters,id',
+            'supply_id' => 'nullable|exists:supplies,id',
+            'fecha_desde' => 'nullable|date',
+            'fecha_hasta' => 'nullable|date|after_or_equal:fecha_desde',
+        ]);
+
         $query = InventoryMovement::with(['shelter', 'supply', 'batch', 'user']);
 
         if ($request->filled('shelter_id')) {

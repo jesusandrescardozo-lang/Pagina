@@ -9,10 +9,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: var(--amber); font-size:0.75rem;">
                 <i class="fa-solid fa-route me-1"></i> LOGÍSTICA DE REBALANCEO
             </span>
-            <span class="badge" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size:0.72rem;">
+            <span class="badge" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border); color: var(--text-muted); font-size:0.72rem;">
                 Inter-Albergues Red
             </span>
         </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="d-flex align-items-center gap-2">
                         <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #d89656, #e6a86c);"></div>
-                        <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.4); color: #e6a86c; padding: 6px 8px;"><i class="fa-solid fa-truck-fast"></i></span>
+                        <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.4); color: var(--amber); padding: 6px 8px;"><i class="fa-solid fa-truck-fast"></i></span>
                         <div style="height: 2px; width: 60px; background: linear-gradient(90deg, #e6a86c, #c88340);"></div>
                     </div>
                     <div>

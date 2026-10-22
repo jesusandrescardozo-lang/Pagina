@@ -167,10 +167,63 @@ class InventoryOptimizationService
     }
 
     /**
+     * Duración de la caché de los cálculos analíticos (segundos).
+     * Son lecturas costosas que cambian poco entre peticiones.
+     */
+    public const CACHE_TTL = 60;
+
+    /**
+     * Clave que guarda la "versión" vigente de la caché analítica.
+     *
+     * Toda clave analítica incorpora esta versión ("matriz_autonomia:3:12").
+     * Invalidar consiste en incrementarla: las entradas anteriores quedan
+     * huérfanas y expiran solas en CACHE_TTL. Así NO hace falta un
+     * Cache::flush() global, que destruiría también claves ajenas
+     * (rate-limiter de login, sesiones, tokens...).
+     */
+    public const CACHE_VERSION_KEY = 'io:cache_version';
+
+    /**
+     * Versión vigente de la caché analítica (1 si nadie ha invalidado aún).
+     */
+    public static function cacheVersion(): int
+    {
+        return (int) cache()->remember(self::CACHE_VERSION_KEY, 7 * 24 * 3600, fn () => 1);
+    }
+
+    /**
+     * Invalida TODA la caché analítica sin tocar el resto del caché de la app.
+     * Llamado por AuditService en cada escritura de inventario.
+     */
+    public static function invalidarCacheAnalitica(): void
+    {
+        // forever: la versión no caduca; las entradas con versión anterior
+        // expiran por CACHE_TTL de forma natural.
+        cache()->forever(self::CACHE_VERSION_KEY, self::cacheVersion() + 1);
+    }
+
+    /**
+     * Construye una clave de caché analítica con la versión vigente.
+     */
+    private function cacheKeyConVersion(string $prefijo, ?int $shelterId): string
+    {
+        return "{$prefijo}:" . self::cacheVersion() . ':' . ($shelterId ?? 'global');
+    }
+
+    /**
      * ANÁLISIS ABC DE INVENTARIOS (Pareto)
      * Clasifica los insumos según valor total de consumo anual o criticidad.
      */
     public function calcularClasificacionAbc(?int $shelterId = null): array
+    {
+        $cacheKey = $this->cacheKeyConVersion('clasificacion_abc', $shelterId);
+
+        return cache()->remember($cacheKey, self::CACHE_TTL, function () use ($shelterId) {
+            return $this->calcularAbc($shelterId);
+        });
+    }
+
+    private function calcularAbc(?int $shelterId = null): array
     {
         $supplies = Supply::with('inventories.shelter')->get();
         if ($supplies->isEmpty()) {
@@ -250,6 +303,15 @@ class InventoryOptimizationService
      */
     public function getMatrizAutonomia(?int $shelterId = null): array
     {
+        $cacheKey = $this->cacheKeyConVersion('matriz_autonomia', $shelterId);
+
+        return cache()->remember($cacheKey, self::CACHE_TTL, function () use ($shelterId) {
+            return $this->calcularMatrizAutonomia($shelterId);
+        });
+    }
+
+    private function calcularMatrizAutonomia(?int $shelterId = null): array
+    {
         $query = Shelter::with(['inventories.supply'])->where('estado', '!=', 'cerrado');
         if ($shelterId !== null) {
             $query->where('id', $shelterId);
@@ -265,6 +327,10 @@ class InventoryOptimizationService
             $minDiasMedicos = 999.0;
 
             foreach ($shelter->inventories as $inv) {
+                // El refugio padre ya está en memoria: vincularlo evita que cada
+                // inventario lance su propia consulta (N+1).
+                $inv->setRelation('shelter', $shelter);
+
                 $supply = $inv->supply;
                 if (!$supply) continue;
 
@@ -333,14 +399,27 @@ class InventoryOptimizationService
      */
     public function sugerirTransferenciasRebalanceo(?int $shelterId = null): array
     {
+        $cacheKey = $this->cacheKeyConVersion('sugerencias_rebalanceo', $shelterId);
+
+        return cache()->remember($cacheKey, self::CACHE_TTL, function () use ($shelterId) {
+            return $this->calcularSugerenciasRebalanceo($shelterId);
+        });
+    }
+
+    private function calcularSugerenciasRebalanceo(?int $shelterId = null): array
+    {
         $supplies = Supply::all();
         $sugerencias = [];
 
+        // Una sola consulta para todos los inventarios (antes era una por insumo).
+        $inventariosPorSuministro = ShelterInventory::with(['shelter', 'supply'])
+            ->whereIn('supply_id', $supplies->pluck('id'))
+            ->whereHas('shelter', fn($q) => $q->where('estado', 'activo'))
+            ->get()
+            ->groupBy('supply_id');
+
         foreach ($supplies as $supply) {
-            $inventarios = ShelterInventory::with('shelter')
-                ->where('supply_id', $supply->id)
-                ->whereHas('shelter', fn($q) => $q->where('estado', 'activo'))
-                ->get();
+            $inventarios = $inventariosPorSuministro->get($supply->id, collect());
 
             $deficitarios = []; // Refugios con < 2.5 días
             $superavitarios = []; // Refugios con > 6.0 días

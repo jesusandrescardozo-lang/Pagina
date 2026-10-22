@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreInventoryMovementRequest;
 use App\Models\Shelter;
 use App\Models\Supply;
 use App\Models\ShelterInventory;
@@ -60,21 +61,11 @@ class InventoryMovementController extends Controller
         ));
     }
 
-    public function store(Request $request)
+    public function store(StoreInventoryMovementRequest $request)
     {
-        $validated = $request->validate([
-            'shelter_id' => 'required|exists:shelters,id',
-            'supply_id' => 'required|exists:supplies,id',
-            'tipo' => 'required|in:entrada_donacion,entrada_compra,entrada_transferencia,salida_consumo,salida_transferencia,salida_merma_caducidad,ajuste_inventario',
-            'cantidad' => 'required|numeric|min:0.01',
-            'documento_referencia' => 'nullable|string|max:100',
-            'motivo' => 'nullable|string',
-            // Datos del lote para entradas
-            'numero_lote' => 'nullable|string|max:60',
-            'fecha_vencimiento' => 'nullable|date',
-        ]);
+        $validated = $request->validated();
 
-        return DB::transaction(function () use ($validated, $request) {
+        return DB::transaction(function () use ($validated) {
             $shelter = Shelter::findOrFail($validated['shelter_id']);
             $supply = Supply::findOrFail($validated['supply_id']);
 

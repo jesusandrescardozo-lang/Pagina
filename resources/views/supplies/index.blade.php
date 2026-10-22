@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-boxes-stacked me-1"></i> Control Central de Suministros
             </span>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--ok-text); font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 {{ $supplies->count() }} Insumos Catalogados
             </span>
         </div>
@@ -115,7 +115,7 @@
                 @forelse($supplies as $supply)
                 <tr>
                     <td>
-                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $supply->codigo }}</code>
+                        <code style="color: var(--amber); font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $supply->codigo }}</code>
                     </td>
                     <td>
                         <strong class="text-white d-block">{{ $supply->nombre }}</strong>
@@ -140,7 +140,7 @@
                         <span class="text-white fw-semibold">${{ number_format($supply->costo_unitario, 2) }}</span>
                     </td>
                     <td>
-                        <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; font-size: 0.74rem;">
+                        <span class="badge" style="background: var(--surface-quiet); color: var(--text-muted); font-size: 0.74rem;">
                             <i class="fa-regular fa-clock me-1 text-info"></i> {{ $supply->tiempo_entrega_dias }} días
                         </span>
                     </td>

@@ -18,10 +18,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-satellite-dish me-1"></i> Red de Protección Civil
             </span>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--ok-text); font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 {{ $totalCentros }} Centros Activos
             </span>
         </div>
@@ -31,11 +31,11 @@
 
     <div class="d-flex align-items-center gap-3 flex-wrap">
         <div class="d-flex gap-2">
-            <div class="p-2 px-3 rounded-3" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+            <div class="p-2 px-3 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border); text-align: center;">
                 <span class="text-muted d-block" style="font-size: 0.68rem; text-transform: uppercase;">Población Total</span>
                 <strong class="text-white fs-6">{{ number_format($poblacionTotal) }}</strong>
             </div>
-            <div class="p-2 px-3 rounded-3" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+            <div class="p-2 px-3 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border); text-align: center;">
                 <span class="text-muted d-block" style="font-size: 0.68rem; text-transform: uppercase;">Ocupación Global</span>
                 <strong class="text-info fs-6">{{ $ocupacionPromedio }}%</strong>
             </div>
@@ -94,7 +94,7 @@
                 </p>
 
                 <!-- Métricas de Población & Capacidad -->
-                <div class="p-3 rounded-3 mb-3" style="background: rgba(11, 15, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.08);">
+                <div class="p-3 rounded-3 mb-3" style="background: var(--bg-secondary); border: 1px solid var(--border);">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="stat-label">Población / Capacidad</span>
                         <span class="fw-bold text-white fs-6">{{ $shelter->poblacion_total }} / {{ $shelter->capacidad_maxima }}</span>

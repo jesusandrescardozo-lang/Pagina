@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-file-shield me-1"></i> Documentación Oficial Certificada
             </span>
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 9999px; padding: 3px 10px;">
                 Exportación PDF Directa
             </span>
         </div>
@@ -29,11 +29,11 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #d89656;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: var(--amber); font-size: 1.35rem;">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Existencias</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Existencias</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Inventario &amp; Cobertura</h5>
                     </div>
                 </div>
@@ -67,11 +67,11 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #c07840;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: var(--amber); font-size: 1.35rem;">
                         <i class="fa-solid fa-clipboard-check"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Trazabilidad</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Trazabilidad</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Kardex Oficial</h5>
                     </div>
                 </div>
@@ -115,11 +115,11 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 3px solid #e6a86c;">
             <div>
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: #e6a86c; font-size: 1.35rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(216, 150, 86, 0.15); border: 1px solid rgba(216, 150, 86, 0.35); display: flex; align-items: center; justify-content: center; color: var(--amber); font-size: 1.35rem;">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div>
-                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Técnico I.O.</span>
+                        <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.68rem;">PDF &bull; Técnico I.O.</span>
                         <h5 class="fw-bold text-white mb-0" style="font-size: 1.05rem;">Modelos I.O. &amp; ABC</h5>
                     </div>
                 </div>

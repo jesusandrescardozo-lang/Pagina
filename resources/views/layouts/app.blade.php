@@ -32,6 +32,8 @@
            bordes definidos y radios contenidos para un aspecto serio.
            ============================================================ */
         :root {
+            color-scheme: dark;
+
             /* Base neutra */
             --bg-primary: #121519;
             --bg-secondary: #171b20;
@@ -63,6 +65,26 @@
             --border-hover: rgba(148, 163, 184, 0.24);
             --border-accent: rgba(230, 168, 108, 0.40);
 
+            /* Tokens semánticos de texto — cada tema define su propio contraste */
+            --ok-text: #6ee7b7;
+            --warn-text: #facc15;
+            --danger-text: #fb7185;
+
+            /* Superficies discretas (chips, celdas, avatares) */
+            --surface-quiet: rgba(255, 255, 255, 0.06);
+            --surface-quiet-hover: rgba(255, 255, 255, 0.10);
+            --quiet-border: rgba(255, 255, 255, 0.12);
+
+            /* Colores nativos de Bootstrap alineados a la paleta carbón */
+            --bs-body-bg: #121519;
+            --bs-body-color: #e7e9ee;
+            --bs-emphasis-color: #e7e9ee;
+            --bs-heading-color: #e7e9ee;
+            --bs-muted-color: rgba(206, 212, 220, 0.62);
+            --bs-border-color: rgba(148, 163, 184, 0.13);
+            --bs-secondary-bg: #171b20;
+            --bs-tertiary-bg: #15191f;
+
             /* Métricas compartidas */
             --sidebar-width: 264px;
             --radius-sm: 8px;
@@ -73,35 +95,77 @@
             --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* ============================================================
+           MODO CLARO — paleta gris sobria (sin blancos puros)
+           Mantiene la misma estructura de contraste del modo oscuro:
+           fondos grises por niveles, ámbar apagado para texto/acentos
+           y semáforo de estados oscurecido para legibilidad (AA).
+           ============================================================ */
         [data-bs-theme="light"] {
-            --bg-primary: #f2f3f5;
-            --bg-secondary: #e9ebee;
-            --bg-card: rgba(255, 255, 255, 0.96);
-            --bg-card-hover: rgba(255, 255, 255, 1);
-            --sidebar-bg: #fafbfc;
-            --accent: #b87b3f;
-            --accent-light: #c88340;
-            --accent-soft: rgba(200, 131, 64, 0.10);
-            --ok: #059669;
-            --ok-soft: rgba(5, 150, 105, 0.10);
-            --warn: #c88340;
-            --warn-soft: rgba(200, 131, 64, 0.10);
-            --danger: #e11d48;
-            --danger-soft: rgba(225, 29, 72, 0.10);
-            --info: #b87b3f;
-            --amber: #b87b3f;
-            --rose: #e11d48;
-            --purple: #b87b3f;
-            --text-primary: #1b2027;
-            --text-muted: #6b7480;
-            --border: rgba(15, 23, 42, 0.10);
-            --border-hover: rgba(15, 23, 42, 0.18);
-            --border-accent: rgba(184, 123, 63, 0.40);
-            --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 22px rgba(15, 23, 42, 0.06);
-            --shadow-raised: 0 2px 6px rgba(15, 23, 42, 0.07), 0 14px 32px rgba(15, 23, 42, 0.09);
+            color-scheme: light;
+
+            /* Base gris — niveles de elevación sin brillo */
+            --bg-primary: #d9dce0;   /* página */
+            --bg-secondary: #cfd2d7; /* paneles, cabeceras de tabla, inputs */
+            --bg-card: #e6e8eb;      /* tarjetas */
+            --bg-card-hover: #eef0f2;
+            --sidebar-bg: #d2d5da;   /* barra lateral: un paso más oscura que la página */
+
+            /* Acento: ámbar apagado */
+            --accent: #b87b3f;       /* rellenos sólidos (texto oscuro encima) */
+            --accent-light: #8f5c1f; /* texto e íconos con contraste sobre gris */
+            --accent-soft: rgba(143, 92, 31, 0.12);
+
+            /* Semáforo de estados — mismo árbol de color, tonos apagados */
+            --ok: #0f7a5d;
+            --ok-soft: rgba(15, 122, 93, 0.12);
+            --warn: #8f5c1f;
+            --warn-soft: rgba(143, 92, 31, 0.12);
+            --danger: #c02446;
+            --danger-soft: rgba(192, 36, 70, 0.11);
+            --info: #8f5c1f;
+            --amber: #8f5c1f;
+            --rose: #c02446;
+            --purple: #8f5c1f;
+
+            /* Texto — contraste fuerte sobre gris (respalda al modo oscuro) */
+            --text-primary: #1d2126;
+            --text-muted: #5b636d;
+            --border: rgba(29, 33, 38, 0.16);
+            --border-hover: rgba(29, 33, 38, 0.30);
+            --border-accent: rgba(143, 92, 31, 0.45);
+
+            /* Tokens semánticos de texto */
+            --ok-text: #0b6b4f;
+            --warn-text: #8a5a1f;
+            --danger-text: #b31740;
+
+            /* Superficies discretas */
+            --surface-quiet: rgba(29, 33, 38, 0.06);
+            --surface-quiet-hover: rgba(29, 33, 38, 0.10);
+            --quiet-border: rgba(29, 33, 38, 0.16);
+
+            /* Sombras más suaves sobre gris */
+            --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.08), 0 6px 18px rgba(15, 23, 42, 0.07);
+            --shadow-raised: 0 2px 6px rgba(15, 23, 42, 0.10), 0 14px 30px rgba(15, 23, 42, 0.11);
+
+            /* Alinea los colores nativos de Bootstrap (menús, modales, tooltips)
+               con la escala gris en lugar del blanco puro */
+            --bs-body-bg: #e6e8eb;
+            --bs-body-color: #1d2126;
+            --bs-emphasis-color: #1d2126;
+            --bs-heading-color: #1d2126;
+            --bs-muted-color: #5b636d;
+            --bs-border-color: rgba(29, 33, 38, 0.16);
+            --bs-secondary-bg: #d9dce0;
+            --bs-tertiary-bg: #cfd2d7;
         }
 
         /* Unificación global de clases auxiliares con la paleta ámbar */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
         .text-info {
             color: var(--accent-light) !important;
         }
@@ -168,8 +232,8 @@
         }
 
         [data-bs-theme="light"] .theme-switch-pill {
-            background: #ffffff;
-            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+            background: var(--bg-card);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         .theme-switch-pill:hover {
@@ -276,7 +340,7 @@
         .sidebar-search-box i {
             position: absolute;
             left: 11px;
-            color: rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
             font-size: 0.78rem;
             pointer-events: none;
         }
@@ -348,7 +412,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
             margin: 0;
             display: flex;
             align-items: center;
@@ -357,7 +421,8 @@
 
         .sidebar-section-toggle {
             font-size: 0.58rem;
-            color: rgba(148, 163, 184, 0.45);
+            color: var(--text-muted);
+            opacity: 0.7;
             transition: transform 0.2s ease;
         }
 
@@ -397,7 +462,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(148, 163, 184, 0.12);
+            background: var(--surface-quiet);
             font-size: 0.82rem;
             flex-shrink: 0;
             color: var(--text-muted);
@@ -406,7 +471,7 @@
 
         .sidebar-nav .nav-link:hover {
             color: var(--text-primary);
-            background: rgba(148, 163, 184, 0.10);
+            background: var(--surface-quiet-hover);
             border-color: var(--border);
         }
 
@@ -448,7 +513,7 @@
             gap: 10px;
             padding: 8px 10px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--surface-quiet);
             border: 1px solid var(--border);
             margin-bottom: 8px;
         }
@@ -486,7 +551,7 @@
             border-radius: var(--radius-sm);
             background: var(--danger-soft);
             border: 1px solid rgba(244, 63, 94, 0.26);
-            color: #fb7185;
+            color: var(--danger-text);
             font-size: 0.78rem;
             font-weight: 600;
             cursor: pointer;
@@ -500,7 +565,7 @@
         .btn-logout:hover {
             background: rgba(244, 63, 94, 0.2);
             border-color: rgba(244, 63, 94, 0.42);
-            color: #fda4af;
+            color: var(--danger-text);
         }
 
         /* MAIN CONTENT AREA */
@@ -529,7 +594,7 @@
         }
 
         [data-bs-theme="light"] .topbar {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(210, 213, 218, 0.95);
         }
 
         .topbar-left {
@@ -805,12 +870,20 @@
             letter-spacing: 0.3px;
         }
 
-        .bg-ok    { background: rgba(16, 185, 129, 0.13); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.30); }
-        .bg-warn  { background: rgba(230, 168, 108, 0.13); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.34); }
-        .bg-err   { background: rgba(244, 63, 94, 0.13);  color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.32); }
-        .bg-info2 { background: rgba(230, 168, 108, 0.13); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.34); }
-        .bg-amber { background: rgba(230, 168, 108, 0.13); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.34); }
-        .bg-purple{ background: rgba(216, 150, 86, 0.13);  color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.30); }
+        .bg-ok    { background: var(--ok-soft); color: var(--ok-text); border: 1px solid rgba(16, 185, 129, 0.30); }
+        .bg-warn  { background: var(--warn-soft); color: var(--amber); border: 1px solid rgba(230, 168, 108, 0.34); }
+        .bg-err   { background: var(--danger-soft); color: var(--danger-text); border: 1px solid rgba(244, 63, 94, 0.32); }
+        .bg-info2 { background: var(--warn-soft); color: var(--amber); border: 1px solid rgba(230, 168, 108, 0.34); }
+        .bg-amber { background: var(--warn-soft); color: var(--amber); border: 1px solid rgba(230, 168, 108, 0.34); }
+        .bg-purple{ background: var(--accent-soft); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.30); }
+
+        /* Bordes de los badges semánticos: se adaptan al tema */
+        [data-bs-theme="light"] .bg-ok    { border-color: rgba(15, 122, 93, 0.35); }
+        [data-bs-theme="light"] .bg-warn,
+        [data-bs-theme="light"] .bg-info2,
+        [data-bs-theme="light"] .bg-amber { border-color: rgba(143, 92, 31, 0.38); }
+        [data-bs-theme="light"] .bg-err   { border-color: rgba(192, 36, 70, 0.35); }
+        [data-bs-theme="light"] .bg-purple{ border-color: rgba(143, 92, 31, 0.35); }
 
         /* BUTTONS */
         .btn-accent {
@@ -892,11 +965,11 @@
             font-size: 1.2rem; margin-bottom: 12px;
         }
 
-        .stat-card.c-blue   .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
-        .stat-card.c-green  .stat-icon { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .stat-card.c-amber  .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
-        .stat-card.c-red    .stat-icon { background: rgba(244, 63, 94, 0.15);  color: #fb7185; }
-        .stat-card.c-purple .stat-icon { background: rgba(216, 150, 86, 0.15); color: #e6a86c; }
+        .stat-card.c-blue   .stat-icon { background: var(--accent-soft); color: var(--amber); }
+        .stat-card.c-green  .stat-icon { background: var(--ok-soft); color: var(--ok-text); }
+        .stat-card.c-amber  .stat-icon { background: var(--accent-soft); color: var(--amber); }
+        .stat-card.c-red    .stat-icon { background: var(--danger-soft); color: var(--danger-text); }
+        .stat-card.c-purple .stat-icon { background: var(--accent-soft); color: var(--amber); }
 
         .stat-label {
             font-size: 0.70rem; font-weight: 700; letter-spacing: 0.8px;
@@ -937,7 +1010,7 @@
         .progress-glass {
             height: 7px;
             border-radius: 4px;
-            background: rgba(148, 163, 184, 0.16);
+            background: var(--surface-quiet-hover);
             overflow: hidden;
         }
 
@@ -948,30 +1021,44 @@
         }
 
         .bar-accent { background: var(--accent); }
-        .bar-success { background: #10b981; }
-        .bar-warning { background: #e6a86c; }
-        .bar-danger  { background: #f43f5e; }
+        .bar-success { background: var(--ok); }
+        .bar-warning { background: var(--amber); }
+        .bar-danger  { background: var(--danger); }
 
         /* ============================================================
-           MODO CLARO — mismos tokens, contraste suave y sin brillos
+           MODO CLARO — ajustes por componente sobre la escala gris
            ============================================================ */
         [data-bs-theme="light"] .sidebar {
-            box-shadow: 1px 0 0 rgba(15, 23, 42, 0.07);
+            box-shadow: 1px 0 0 rgba(15, 23, 42, 0.10);
+            border-right-color: rgba(29, 33, 38, 0.20);
         }
 
-        [data-bs-theme="light"] .sidebar-user,
+        /* Superficies: gris claro en lugar de blanco puro */
         [data-bs-theme="light"] .shelter-select-wrap,
         [data-bs-theme="light"] .live-clock-pill,
         [data-bs-theme="light"] .theme-switch-pill,
         [data-bs-theme="light"] .btn-glass,
         [data-bs-theme="light"] .glass-card,
         [data-bs-theme="light"] .cockpit-page-header,
-        [data-bs-theme="light"] .stat-card {
-            background: #ffffff;
+        [data-bs-theme="light"] .stat-card,
+        [data-bs-theme="light"] .sidebar-user {
+            background: var(--bg-card);
+        }
+
+        [data-bs-theme="light"] .btn-glass:hover,
+        [data-bs-theme="light"] .glass-card:hover,
+        [data-bs-theme="light"] .stat-card:hover {
+            background: var(--bg-card-hover);
+        }
+
+        [data-bs-theme="light"] .theme-switch-pill {
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         [data-bs-theme="light"] .dark-table thead th {
-            background: #f6f7f9;
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            border-bottom-color: var(--border-hover);
         }
 
         [data-bs-theme="light"] .dark-table tbody tr:hover td {
@@ -979,21 +1066,82 @@
         }
 
         [data-bs-theme="light"] .form-control-glass,
-        [data-bs-theme="light"] .form-select-glass {
-            background: #ffffff !important;
+        [data-bs-theme="light"] .form-select-glass,
+        [data-bs-theme="light"] .form-control-glass:focus,
+        [data-bs-theme="light"] .form-select-glass:focus {
+            background: var(--bg-secondary) !important;
         }
 
         [data-bs-theme="light"] .form-control-glass:focus,
         [data-bs-theme="light"] .form-select-glass:focus {
-            background: #ffffff !important;
+            background: var(--bg-card) !important;
+        }
+
+        /* Etiquetas "texto blanco": en modo claro pasan a tinta oscura
+           (las que viven sobre fondos de color se excluyen) */
+        [data-bs-theme="light"] .text-white:not(.badge):not(.bg-dark):not(.bg-danger):not(.bg-success):not(.bg-warning):not(.bg-primary) {
+            color: var(--text-primary) !important;
+        }
+
+        [data-bs-theme="light"] .btn-close-white {
+            filter: brightness(0);
+            opacity: 0.6;
+        }
+
+        /* Botones de relleno: texto oscuro sobre ámbar */
+        [data-bs-theme="light"] .btn-info,
+        [data-bs-theme="light"] .bg-info {
+            color: #1a0e04 !important;
+        }
+
+        [data-bs-theme="light"] .badge.bg-info,
+        [data-bs-theme="light"] .alert-info {
+            color: var(--accent-light) !important;
+        }
+
+        /* Íconos de navegación y etiquetas de sección sobre gris */
+        [data-bs-theme="light"] .nav-icon {
+            background: rgba(29, 33, 38, 0.07);
+        }
+
+        [data-bs-theme="light"] .sidebar-nav .nav-link:hover .nav-icon {
+            background: var(--accent-soft);
+        }
+
+        [data-bs-theme="light"] .guest-banner {
+            background: var(--warn-soft);
+            border-bottom-color: var(--border-accent);
+        }
+
+        [data-bs-theme="light"] .badge-guest,
+        [data-bs-theme="light"] .btn-guest-login {
+            color: #1a0e04;
         }
 
         [data-bs-theme="light"] .btn-logout {
-            color: var(--danger);
+            color: var(--danger-text);
+            background: var(--danger-soft);
+            border-color: rgba(192, 36, 70, 0.30);
+        }
+
+        [data-bs-theme="light"] .btn-logout:hover {
+            background: rgba(192, 36, 70, 0.16);
+            border-color: rgba(192, 36, 70, 0.45);
+            color: var(--danger-text);
         }
 
         [data-bs-theme="light"] .sidebar-footer {
             background: var(--sidebar-bg);
+            border-top-color: var(--border-hover);
+        }
+
+        /* Barra de desplazamiento del menú, acorde al tema */
+        [data-bs-theme="light"] .sidebar-nav {
+            scrollbar-color: rgba(143, 92, 31, 0.35) transparent;
+        }
+
+        [data-bs-theme="light"] .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(143, 92, 31, 0.35);
         }
 
         /* Accesibilidad: respeta la preferencia de movimiento reducido */
@@ -1060,7 +1208,7 @@
         <div class="sidebar-section-group" data-section="control">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-compass" style="color: #e6a86c;"></i> Centro de Control
+                    <i class="fa-solid fa-compass" style="color: var(--amber);"></i> Centro de Control
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -1080,7 +1228,7 @@
         <div class="sidebar-section-group" data-section="humanitaria">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-people-roof" style="color: #e6a86c;"></i> Gestión Humanitaria
+                    <i class="fa-solid fa-people-roof" style="color: var(--amber);"></i> Gestión Humanitaria
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -1111,7 +1259,7 @@
         <div class="sidebar-section-group" data-section="logistica">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-truck-ramp-box" style="color: #e6a86c;"></i> Logística &amp; Envíos
+                    <i class="fa-solid fa-truck-ramp-box" style="color: var(--amber);"></i> Logística &amp; Envíos
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -1142,7 +1290,7 @@
         <div class="sidebar-section-group" data-section="herramientas">
             <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
                 <span class="sidebar-section-label">
-                    <i class="fa-solid fa-brain" style="color: #e6a86c;"></i> Herramientas I.O. &amp; Control
+                    <i class="fa-solid fa-brain" style="color: var(--amber);"></i> Herramientas I.O. &amp; Control
                 </span>
                 <i class="fa-solid fa-chevron-down sidebar-section-toggle"></i>
             </div>
@@ -1185,11 +1333,11 @@
             <div class="sidebar-user" style="border-color: rgba(245, 158, 11, 0.35); background: rgba(245, 158, 11, 0.08);">
                 <div class="user-avatar" style="background: var(--accent);"><i class="fa-solid fa-eye" style="font-size:0.85rem;"></i></div>
                 <div style="flex:1; overflow:hidden;">
-                    <div class="user-name text-truncate" style="color:#fbbf24;">Modo Invitado</div>
+                    <div class="user-name text-truncate" style="color: var(--amber);">Modo Invitado</div>
                     <div class="user-role" style="color:rgba(251,191,36,0.75);">Exploración / Solo Lectura</div>
                 </div>
             </div>
-            <a href="{{ route('login') }}" class="btn-logout" style="background:rgba(216,150,86,0.15); border-color:rgba(216,150,86,0.35); color:#e6a86c; text-decoration:none; margin-bottom:6px;">
+            <a href="{{ route('login') }}" class="btn-logout" style="background:rgba(216,150,86,0.15); border-color:rgba(216,150,86,0.35); color: var(--amber); text-decoration:none; margin-bottom:6px;">
                 <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
             </a>
             <a href="{{ route('guest.exit') }}" class="btn-logout" style="font-size:0.72rem; opacity:0.7; text-decoration:none;">
@@ -1202,7 +1350,7 @@
                     <div class="user-name text-truncate d-flex align-items-center justify-content-between">
                         <span class="text-truncate">{{ auth()->user()->name ?? 'Usuario' }}</span>
                         @if(auth()->check())
-                            <a href="{{ route('carnets.show', auth()->user()) }}" target="_blank" title="Ver mi credencial oficial" style="color:#e6a86c; font-size:0.85rem;" class="ms-1">
+                            <a href="{{ route('carnets.show', auth()->user()) }}" target="_blank" title="Ver mi credencial oficial" style="color: var(--amber); font-size:0.85rem;" class="ms-1">
                                 <i class="fa-solid fa-id-badge"></i>
                             </a>
                         @endif
@@ -1256,12 +1404,12 @@
             <form action="{{ route('shelter.switch') }}" method="POST" id="topbarShelterForm" class="d-flex align-items-center m-0">
                 @csrf
                 <div class="shelter-select-wrap">
-                    <i class="fa-solid fa-building-shield me-2" style="font-size: 0.85rem; color: #e6a86c;"></i>
+                    <i class="fa-solid fa-building-shield me-2" style="font-size: 0.85rem; color: var(--amber);"></i>
                     <select name="shelter_id" onchange="document.getElementById('topbarShelterForm').submit()" title="Seleccionar contexto operativo">
-                        <option value="" style="background: #0f172a; color: #e6a86c;">🌐 Red Centralizada (Todos los Refugios)</option>
-                        <optgroup label="── Centros / Albergues Humanitarios ──" style="background: #090d16; color: #94a3b8;">
+                        <option value="">🌐 Red Centralizada (Todos los Refugios)</option>
+                        <optgroup label="── Centros / Albergues Humanitarios ──">
                             @foreach(\App\Models\Shelter::orderBy('codigo')->get() as $navShelter)
-                                <option value="{{ $navShelter->id }}" {{ session('shelter_id') == $navShelter->id ? 'selected' : '' }} style="background: #0f172a; color: #fff;">
+                                <option value="{{ $navShelter->id }}" {{ session('shelter_id') == $navShelter->id ? 'selected' : '' }}>
                                     [{{ $navShelter->codigo }}] {{ $navShelter->nombre }} — {{ $navShelter->municipio }}
                                 </option>
                             @endforeach
@@ -1271,7 +1419,7 @@
             </form>
 
             @if(session('shelter_id'))
-                <a href="{{ route('shelter.switch') }}" class="btn-glass py-1 px-2" style="color: #e6a86c; font-size: 0.74rem; border-radius: 10px;" title="Restablecer a Red Centralizada">
+                <a href="{{ route('shelter.switch') }}" class="btn-glass py-1 px-2" style="color: var(--amber); font-size: 0.74rem; border-radius: 10px;" title="Restablecer a Red Centralizada">
                     <i class="fa-solid fa-arrows-rotate me-1"></i> Ver Centralizado
                 </a>
             @endif
@@ -1305,7 +1453,7 @@
     <!-- Content Area -->
     <main class="main-content">
         @if(session('success'))
-        <div class="alert alert-success d-flex align-items-center justify-content-between p-3 rounded-4 mb-4" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399;">
+        <div class="alert alert-success d-flex align-items-center justify-content-between p-3 rounded-4 mb-4" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--ok-text);">
             <div class="d-flex align-items-center gap-2">
                 <i class="fa-solid fa-circle-check fs-5"></i>
                 <span>{{ session('success') }}</span>
@@ -1315,10 +1463,27 @@
         @endif
 
         @if(session('error'))
-        <div class="alert alert-danger d-flex align-items-center justify-content-between p-3 rounded-4 mb-4" style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); color: #fb7185;">
+        <div class="alert alert-danger d-flex align-items-center justify-content-between p-3 rounded-4 mb-4" style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); color: var(--danger-text);">
             <div class="d-flex align-items-center gap-2">
                 <i class="fa-solid fa-triangle-exclamation fs-5"></i>
                 <span>{{ session('error') }}</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.remove()" aria-label="Cerrar"></button>
+        </div>
+        @endif
+
+        @if ($errors->any())
+        <div class="alert alert-danger d-flex align-items-start justify-content-between p-3 rounded-4 mb-4" style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); color: var(--danger-text);">
+            <div class="d-flex align-items-start gap-2 w-100">
+                <i class="fa-solid fa-circle-exclamation fs-5 mt-1"></i>
+                <div class="w-100">
+                    <strong class="d-block mb-1">Corrija los siguientes errores:</strong>
+                    <ul class="mb-0 ps-3" style="font-size: 0.84rem;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.remove()" aria-label="Cerrar"></button>
         </div>

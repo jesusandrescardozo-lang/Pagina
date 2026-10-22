@@ -1,0 +1,100 @@
+flowchart LR
+  subgraph fase1["1. Inicio"]
+    direction TB
+    A1["<b>A1</b> Levantamiento de req.<br/>D: 10 d | CRÍTICA<br/>PASO: 0 → 10<br/>PAST: 0 → 10"]
+    A2["<b>A2</b> Factibilidad y alcance<br/>D: 5 d | CRÍTICA<br/>PASO: 10 → 15<br/>PAST: 10 → 15"]
+    A3["<b>A3</b> Acta de inicio<br/>D: 2 d | CRÍTICA<br/>PASO: 15 → 17<br/>PAST: 15 → 17"]
+  end
+  subgraph fase2["2. Análisis"]
+    direction TB
+    B1["<b>B1</b> Requisitos<br/>D: 8 d | CRÍTICA<br/>PASO: 17 → 25<br/>PAST: 17 → 25"]
+    B2["<b>B2</b> Modelo de procesos<br/>D: 6 d | CRÍTICA<br/>PASO: 25 → 31<br/>PAST: 25 → 31"]
+    B3["<b>B3</b> Modelo ER de datos<br/>D: 5 d | HT 1<br/>PASO: 25 → 30<br/>PAST: 26 → 31"]
+  end
+  subgraph fase3["3. Diseño"]
+    direction TB
+    C1["<b>C1</b> Diseño arquitectónico<br/>D: 6 d | CRÍTICA<br/>PASO: 31 → 37<br/>PAST: 31 → 37"]
+    C2["<b>C2</b> Diseño de BD<br/>D: 5 d | HT 2<br/>PASO: 30 → 35<br/>PAST: 32 → 37"]
+    C3["<b>C3</b> Mockups de interfaz<br/>D: 7 d | HT 3<br/>PASO: 31 → 38<br/>PAST: 34 → 41"]
+    C4["<b>C4</b> Diseño de seguridad<br/>D: 4 d | HT 29<br/>PASO: 25 → 29<br/>PAST: 54 → 58"]
+  end
+  subgraph fase4["4. Construcción"]
+    direction TB
+    D1["<b>D1</b> Entorno y migraciones<br/>D: 4 d | CRÍTICA<br/>PASO: 37 → 41<br/>PAST: 37 → 41"]
+    D2["<b>D2</b> Módulo refugios/insumos<br/>D: 8 d | CRÍTICA<br/>PASO: 41 → 49<br/>PAST: 41 → 49"]
+    D3["<b>D3</b> Kardex y lotes FEFO<br/>D: 7 d | CRÍTICA<br/>PASO: 49 → 56<br/>PAST: 49 → 56"]
+    D4["<b>D4</b> Transferencias<br/>D: 8 d | CRÍTICA<br/>PASO: 56 → 64<br/>PAST: 56 → 64"]
+    D5["<b>D5</b> Modelos de inventario<br/>D: 6 d | HT 9<br/>PASO: 49 → 55<br/>PAST: 58 → 64"]
+    D6["<b>D6</b> Seguridad y auditoría<br/>D: 6 d | HT 17<br/>PASO: 41 → 47<br/>PAST: 58 → 64"]
+    D7["<b>D7</b> Reportes PDF y dashboard<br/>D: 5 d | HT 10<br/>PASO: 49 → 54<br/>PAST: 59 → 64"]
+  end
+  subgraph fase5["5. Pruebas"]
+    direction TB
+    E1["<b>E1</b> Pruebas unitarias<br/>D: 6 d | CRÍTICA<br/>PASO: 64 → 70<br/>PAST: 64 → 70"]
+    E2["<b>E2</b> Pruebas E2E<br/>D: 5 d | CRÍTICA<br/>PASO: 70 → 75<br/>PAST: 70 → 75"]
+    E3["<b>E3</b> Usabilidad (UAT)<br/>D: 4 d | CRÍTICA<br/>PASO: 75 → 79<br/>PAST: 75 → 79"]
+  end
+  subgraph fase6["6. Implantación"]
+    direction TB
+    F1["<b>F1</b> Despliegue<br/>D: 4 d | CRÍTICA<br/>PASO: 79 → 83<br/>PAST: 79 → 83"]
+    F2["<b>F2</b> Capacitación<br/>D: 4 d | CRÍTICA<br/>PASO: 83 → 87<br/>PAST: 83 → 87"]
+    F3["<b>F3</b> Puesta en producción<br/>D: 2 d | CRÍTICA<br/>PASO: 87 → 89<br/>PAST: 87 → 89"]
+  end
+  subgraph fase7["7. Cierre"]
+    direction TB
+    G1["<b>G1</b> Manual de usuario<br/>D: 4 d | HT 4<br/>PASO: 79 → 83<br/>PAST: 83 → 87"]
+    G2["<b>G2</b> Cierre y lecciones<br/>D: 2 d | CRÍTICA<br/>PASO: 89 → 91<br/>PAST: 89 → 91"]
+  end
+  A1 --> A2
+  A2 --> A3
+  A3 --> B1
+  B1 --> B2
+  B1 --> B3
+  B2 --> C1
+  B3 --> C1
+  B3 --> C2
+  B2 --> C3
+  B1 --> C4
+  C1 --> D1
+  C2 --> D1
+  D1 --> D2
+  C3 --> D2
+  D2 --> D3
+  D3 --> D4
+  D2 --> D5
+  C4 --> D6
+  D1 --> D6
+  D2 --> D7
+  D4 --> E1
+  D5 --> E1
+  D6 --> E1
+  D7 --> E1
+  E1 --> E2
+  E2 --> E3
+  E3 --> F1
+  F1 --> F2
+  F2 --> F3
+  G1 --> F3
+  E3 --> G1
+  F3 --> G2
+  G1 --> G2
+  classDef critica fill:#ffd6d6,stroke:#c00000,stroke-width:3px,color:#000;
+  classDef fantasma fill:#f7f7f7,stroke:#888,stroke-width:1px,stroke-dasharray:6 4,color:#444;
+  classDef fantasmaCrit fill:#fff0f0,stroke:#c00000,stroke-width:2px,stroke-dasharray:6 4,color:#000;
+  class A1 critica;
+  class A2 critica;
+  class A3 critica;
+  class B1 critica;
+  class B2 critica;
+  class C1 critica;
+  class D1 critica;
+  class D2 critica;
+  class D3 critica;
+  class D4 critica;
+  class E1 critica;
+  class E2 critica;
+  class E3 critica;
+  class F1 critica;
+  class F2 critica;
+  class F3 critica;
+  class G2 critica;

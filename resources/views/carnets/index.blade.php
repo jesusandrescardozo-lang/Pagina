@@ -10,10 +10,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(230, 168, 108, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-id-card-clip me-1"></i> Credenciales Criptográficas
             </span>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--ok-text); font-size: 0.72rem; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 {{ $users->count() }} Funcionarios Autorizados
             </span>
         </div>
@@ -60,17 +60,17 @@
                     </td>
                     <td>
                         @if($u->shelter)
-                            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.3); font-size: 0.74rem; border-radius: 8px;">
+                            <span class="badge" style="background: rgba(230, 168, 108, 0.15); color: var(--amber); border: 1px solid rgba(230, 168, 108, 0.3); font-size: 0.74rem; border-radius: 8px;">
                                 <i class="fa-solid fa-tents me-1"></i> [{{ $u->shelter->codigo }}] {{ $u->shelter->nombre }}
                             </span>
                         @else
-                            <span class="badge" style="background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); font-size: 0.74rem; border-radius: 8px;">
+                            <span class="badge" style="background: rgba(148, 163, 184, 0.15); color: var(--text-muted); border: 1px solid rgba(148, 163, 184, 0.3); font-size: 0.74rem; border-radius: 8px;">
                                 🌐 Centralizado
                             </span>
                         @endif
                     </td>
                     <td class="text-center">
-                        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; padding: 4px 10px; font-size: 0.72rem;">
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: var(--ok-text); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; padding: 4px 10px; font-size: 0.72rem;">
                             <i class="fa-solid fa-circle-check me-1"></i> Autorizado
                         </span>
                     </td>

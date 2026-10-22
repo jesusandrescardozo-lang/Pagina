@@ -9,7 +9,7 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: var(--amber); font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
                 <i class="fa-solid fa-barcode me-1"></i>{{ $supply->codigo }}
             </span>
             <span class="badge {{ $supply->categoria_badge['class'] }}" style="font-size:0.75rem;">
@@ -19,7 +19,7 @@
                 Clase {{ $supply->clasificacion_abc }}
             </span>
             @if($supply->es_perecedero)
-                <span class="badge" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: #fbbf24; font-size:0.72rem;">
+                <span class="badge" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: var(--amber); font-size:0.72rem;">
                     <i class="fa-solid fa-hourglass-half me-1"></i> FEFO Activo
                 </span>
             @endif
@@ -46,19 +46,19 @@
     </div>
     <div class="row g-3 text-center">
         <div class="col-6 col-md-2">
-            <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="p-2 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border);">
                 <span class="stat-label">Costo Unitario (C)</span>
                 <div class="fs-5 fw-bold text-white font-monospace">${{ number_format($supply->costo_unitario, 2) }}</div>
             </div>
         </div>
         <div class="col-6 col-md-2">
-            <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="p-2 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border);">
                 <span class="stat-label">Costo de Pedido (S)</span>
                 <div class="fs-5 fw-bold text-white font-monospace">${{ number_format($supply->costo_pedido, 2) }}</div>
             </div>
         </div>
         <div class="col-6 col-md-2">
-            <div class="p-2 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="p-2 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border);">
                 <span class="stat-label">Costo Almacén/Año (H)</span>
                 <div class="fs-5 fw-bold text-white font-monospace">${{ number_format($supply->costo_mantenimiento_anual, 2) }}</div>
             </div>
@@ -92,7 +92,7 @@
                 <div class="section-heading mb-0 text-info" style="font-size:0.9rem;">
                     <i class="fa-solid fa-square-root-variable me-1"></i> Resultados del Modelo EOQ (Wilson)
                 </div>
-                <span class="badge" style="background: rgba(230,168,108,0.12); border: 1px solid rgba(230,168,108,0.3); color: #e6a86c; font-size:0.72rem;">
+                <span class="badge" style="background: rgba(230,168,108,0.12); border: 1px solid rgba(230,168,108,0.3); color: var(--amber); font-size:0.72rem;">
                     Demanda Anual D = {{ number_format($demandaAnual, 0) }}
                 </span>
             </div>
@@ -148,7 +148,7 @@
                 <div class="section-heading mb-0 text-white" style="font-size:0.9rem;">
                     <i class="fa-solid fa-chart-line me-1 text-info"></i> Curva de Costo Total vs Tamaño de Lote (Q)
                 </div>
-                <small class="badge" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); font-size:0.7rem;">Punto Mínimo = Q*</small>
+                <small class="badge" style="background: var(--surface-quiet); color: var(--text-muted); font-size:0.7rem;">Punto Mínimo = Q*</small>
             </div>
             <div style="height: 280px; position: relative;">
                 <canvas id="chartEoq"></canvas>
@@ -169,7 +169,7 @@
                 Alineado a alimentos perecederos y kits de emergencia: balancea el costo de subestimación/escasez ($C_u$) vs costo de desecho por vencimiento ($C_o$).
             </p>
         </div>
-        <span class="badge" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: #f59e0b; font-size:0.75rem;">
+        <span class="badge" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: var(--amber); font-size:0.75rem;">
             Razón Crítica: {{ $newsvendor['razon_critica'] }}
         </span>
     </div>
@@ -256,6 +256,9 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Colores de gráficos leídos de los tokens del tema (funcionan en modo claro y oscuro)
+    const cssVar = (name) => (getComputedStyle(document.documentElement).getPropertyValue(name) || '').trim();
+
     const curvaData = {!! json_encode($eoq['curva_costos']) !!};
     if (curvaData && curvaData.length > 0) {
         const labels = curvaData.map(p => p.q);
@@ -272,8 +275,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Costo de Ordenar',
                         data: cOrdenar,
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'rgba(245,158,11,0.05)',
+                        borderColor: cssVar('--warn-text'),
+                        backgroundColor: cssVar('--warn-soft'),
                         borderWidth: 2,
                         pointRadius: 0,
                         tension: 0.3
@@ -281,8 +284,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Costo de Mantener',
                         data: cMantener,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16,185,129,0.05)',
+                        borderColor: cssVar('--ok'),
+                        backgroundColor: cssVar('--ok-soft'),
                         borderWidth: 2,
                         pointRadius: 0,
                         tension: 0.3
@@ -290,8 +293,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Costo Total Anual',
                         data: cTotal,
-                        borderColor: '#e6a86c',
-                        backgroundColor: 'rgba(230,168,108,0.1)',
+                        borderColor: cssVar('--amber'),
+                        backgroundColor: cssVar('--accent-soft'),
                         borderWidth: 3,
                         pointRadius: 0,
                         tension: 0.3,
@@ -304,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        labels: { color: '#f1f0ff', font: { family: 'Inter', size: 11 } }
+                        labels: { color: cssVar('--text-primary'), font: { family: 'Inter', size: 11 } }
                     },
                     tooltip: {
                         callbacks: {
@@ -314,14 +317,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Tamaño del Lote (Q)', color: 'rgba(241,240,255,0.6)' },
-                        ticks: { color: 'rgba(241,240,255,0.6)' },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
+                        title: { display: true, text: 'Tamaño del Lote (Q)', color: cssVar('--text-muted') },
+                        ticks: { color: cssVar('--text-muted') },
+                        grid: { color: cssVar('--border') }
                     },
                     y: {
-                        title: { display: true, text: 'Costo Anual ($)', color: 'rgba(241,240,255,0.6)' },
-                        ticks: { color: 'rgba(241,240,255,0.6)' },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
+                        title: { display: true, text: 'Costo Anual ($)', color: cssVar('--text-muted') },
+                        ticks: { color: cssVar('--text-muted') },
+                        grid: { color: cssVar('--border') }
                     }
                 }
             }

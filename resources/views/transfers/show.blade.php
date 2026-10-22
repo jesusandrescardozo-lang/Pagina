@@ -24,58 +24,58 @@
     <!-- Datos principales -->
     <div class="col-lg-7">
         <div class="glass-panel p-4">
-            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: rgba(241, 240, 255, 0.6);">
+            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">
                 <i class="fa-solid fa-truck-ramp-box me-1"></i> Datos del Envío
             </h6>
 
             <div class="row g-3">
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Refugio Origen</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Refugio Origen</small>
                     <strong class="text-info">
                         {{ $transfer->refugioOrigen ? "[{$transfer->refugioOrigen->codigo}] {$transfer->refugioOrigen->nombre}" : '—' }}
                     </strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Refugio Destino</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Refugio Destino</small>
                     <strong class="text-success">
                         {{ $transfer->refugioDestino ? "[{$transfer->refugioDestino->codigo}] {$transfer->refugioDestino->nombre}" : '—' }}
                     </strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Insumo</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Insumo</small>
                     <strong>{{ $transfer->supply ? "{$transfer->supply->codigo} — {$transfer->supply->nombre}" : '—' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Cantidad</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Cantidad</small>
                     <strong class="text-warning">{{ number_format($transfer->cantidad, 1) }} {{ $transfer->supply->unidad_medida ?? '' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Fecha de Solicitud</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Fecha de Solicitud</small>
                     <strong>{{ $transfer->fecha_solicitud ? $transfer->fecha_solicitud->format('d/m/Y H:i') : '—' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Vehículo / Convoy</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Vehículo / Convoy</small>
                     <strong>{{ $transfer->vehiculo_transporte ?? 'Sin asignar' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Salida</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Salida</small>
                     <strong>{{ $transfer->fecha_salida ? $transfer->fecha_salida->format('d/m/Y H:i') : '—' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Llegada</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Llegada</small>
                     <strong>{{ $transfer->fecha_llegada ? $transfer->fecha_llegada->format('d/m/Y H:i') : '—' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Solicitado por</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Solicitado por</small>
                     <strong>{{ $transfer->solicitadoPor->name ?? '—' }}</strong>
                 </div>
                 <div class="col-md-6">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Aprobado / Despachado por</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Aprobado / Despachado por</small>
                     <strong>{{ $transfer->aprobadoPor->name ?? '—' }}</strong>
                 </div>
                 @if($transfer->observaciones)
                 <div class="col-12">
-                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: rgba(241,240,255,0.5);">Observaciones</small>
+                    <small class="d-block text-uppercase" style="font-size: 0.65rem; color: var(--text-muted);">Observaciones</small>
                     <span>{{ $transfer->observaciones }}</span>
                 </div>
                 @endif
@@ -83,11 +83,11 @@
 
             <!-- Lotes FEFO despachados -->
             @if(!empty($transfer->lotes_despacho))
-            <hr style="border-color: rgba(255,255,255,0.08);">
-            <h6 class="text-uppercase mb-2" style="font-size: 0.72rem; letter-spacing: 1px; color: rgba(241, 240, 255, 0.6);">
+            <hr style="border-color: var(--border);">
+            <h6 class="text-uppercase mb-2" style="font-size: 0.72rem; letter-spacing: 1px; color: var(--text-muted);">
                 <i class="fa-solid fa-boxes-stacked me-1"></i> Lotes Despachados (FEFO)
             </h6>
-            <ul class="mb-0" style="font-size: 0.78rem; color: rgba(226,232,240,0.8);">
+            <ul class="mb-0" style="font-size: 0.78rem; color: var(--text-muted);">
                 @foreach($transfer->lotes_despacho as $lote)
                 <li>
                     Lote <strong>{{ $lote['numero_lote'] }}</strong> —
@@ -105,7 +105,7 @@
     <!-- Historial + acciones -->
     <div class="col-lg-5">
         <div class="glass-panel p-4 mb-3">
-            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: rgba(241, 240, 255, 0.6);">
+            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">
                 <i class="fa-solid fa-diagram-project me-1"></i> Flujo de Estados
             </h6>
             <ul class="list-unstyled mb-0" style="font-size: 0.8rem;">
@@ -117,11 +117,11 @@
                 @endphp
                 @foreach($flujo as $idx => $etapa)
                     @if($transfer->estado === 'cancelada')
-                        <li class="py-1" style="color: rgba(241,240,255,0.35);"><i class="fa-regular fa-circle me-2"></i> {{ $etapa }}</li>
+                        <li class="py-1" style="color: var(--text-muted);"><i class="fa-regular fa-circle me-2"></i> {{ $etapa }}</li>
                     @elseif($actualIdx !== false && $idx <= $actualIdx)
                         <li class="py-1 text-success"><i class="fa-solid fa-circle-check me-2"></i> {{ $etapa }}</li>
                     @else
-                        <li class="py-1" style="color: rgba(241,240,255,0.45);"><i class="fa-regular fa-circle me-2"></i> {{ $etapa }}</li>
+                        <li class="py-1" style="color: var(--text-muted);"><i class="fa-regular fa-circle me-2"></i> {{ $etapa }}</li>
                     @endif
                 @endforeach
                 @if($transfer->estado === 'cancelada')
@@ -164,7 +164,7 @@
 
         <!-- Responsables -->
         <div class="glass-panel p-4">
-            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: rgba(241, 240, 255, 0.6);">
+            <h6 class="text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted);">
                 <i class="fa-solid fa-file-lines me-1"></i> Trazabilidad (Kardex)
             </h6>
             @forelse($movimientos as $m)
@@ -174,7 +174,7 @@
                         {{ ucwords(str_replace('_', ' ', $m->tipo)) }}
                     </span>
                     — {{ $m->shelter->nombre ?? '—' }}<br>
-                    <small style="color: rgba(226,232,240,0.55);">
+                    <small style="color: var(--text-muted);">
                         {{ number_format($m->cantidad, 1) }} {{ $transfer->supply->unidad_medida ?? '' }}
                         | Stock: {{ number_format($m->stock_anterior, 1) }} → {{ number_format($m->stock_nuevo, 1) }}
                         | {{ $m->fecha_movimiento->format('d/m/Y H:i') }}
@@ -182,7 +182,7 @@
                     </small>
                 </div>
             @empty
-                <small style="color: rgba(226,232,240,0.5);">Sin movimientos registrados todavía (se generan al despachar y recepcionar).</small>
+                <small style="color: var(--text-muted);">Sin movimientos registrados todavía (se generan al despachar y recepcionar).</small>
             @endforelse
         </div>
     </div>

@@ -1,0 +1,39 @@
+flowchart LR
+  subgraph fase1["4. Construcción"]
+    direction TB
+    D1["<b>D1</b> Entorno y migraciones<br/>D: 4 d | CRÍTICA<br/>PASO: 37 → 41<br/>PAST: 37 → 41"]
+    D2["<b>D2</b> Módulo refugios/insumos<br/>D: 8 d | CRÍTICA<br/>PASO: 41 → 49<br/>PAST: 41 → 49"]
+    D3["<b>D3</b> Kardex y lotes FEFO<br/>D: 7 d | CRÍTICA<br/>PASO: 49 → 56<br/>PAST: 49 → 56"]
+    D4["<b>D4</b> Transferencias<br/>D: 8 d | CRÍTICA<br/>PASO: 56 → 64<br/>PAST: 56 → 64"]
+    D5["<b>D5</b> Modelos de inventario<br/>D: 6 d | HT 9<br/>PASO: 49 → 55<br/>PAST: 58 → 64"]
+    D6["<b>D6</b> Seguridad y auditoría<br/>D: 6 d | HT 17<br/>PASO: 41 → 47<br/>PAST: 58 → 64"]
+    D7["<b>D7</b> Reportes PDF y dashboard<br/>D: 5 d | HT 10<br/>PASO: 49 → 54<br/>PAST: 59 → 64"]
+  end
+  subgraph fase2["3. Diseño"]
+    direction TB
+    C1["<b>C1</b> Diseño arquitectónico<br/>D: 6 d | CRÍTICA<br/>PASO: 31 → 37<br/>PAST: 31 → 37<br/><i>enlace con la parte 1</i>"]
+    C2["<b>C2</b> Diseño de BD<br/>D: 5 d | HT 2<br/>PASO: 30 → 35<br/>PAST: 32 → 37<br/><i>enlace con la parte 1</i>"]
+    C3["<b>C3</b> Mockups de interfaz<br/>D: 7 d | HT 3<br/>PASO: 31 → 38<br/>PAST: 34 → 41<br/><i>enlace con la parte 1</i>"]
+    C4["<b>C4</b> Diseño de seguridad<br/>D: 4 d | HT 29<br/>PASO: 25 → 29<br/>PAST: 54 → 58<br/><i>enlace con la parte 1</i>"]
+  end
+  C1 --> D1
+  C2 --> D1
+  D1 --> D2
+  C3 --> D2
+  D2 --> D3
+  D3 --> D4
+  D2 --> D5
+  C4 --> D6
+  D1 --> D6
+  D2 --> D7
+  classDef critica fill:#ffd6d6,stroke:#c00000,stroke-width:3px,color:#000;
+  classDef fantasma fill:#f7f7f7,stroke:#888,stroke-width:1px,stroke-dasharray:6 4,color:#444;
+  classDef fantasmaCrit fill:#fff0f0,stroke:#c00000,stroke-width:2px,stroke-dasharray:6 4,color:#000;
+  class D1 critica;
+  class D2 critica;
+  class D3 critica;
+  class D4 critica;
+  class C1 fantasmaCrit;
+  class C2 fantasma;
+  class C3 fantasma;
+  class C4 fantasma;

@@ -205,6 +205,7 @@ check('POST /supplies inválido -> 302 con error', $st === 302 && isset($errs['n
     'unidad_medida' => 'unidad',
     'clasificacion_abc' => 'C',
     'es_perecedero' => '1',
+    'dias_vida_util_promedio' => 30,
     'costo_unitario' => 2.5,
     'costo_pedido' => 10,
     'costo_mantenimiento_anual' => 100,
@@ -216,6 +217,99 @@ $supply = Supply::where('codigo', 'TST-001')->first();
 check('POST /supplies válido -> creado', $st === 302 && $supply !== null);
 check('Inventario del insumo creado en todos los refugios', $supply
     && ShelterInventory::where('supply_id', $supply->id)->count() === Shelter::count());
+
+echo "\n-- Validaciones de negocio de insumos --\n";
+[$st, $errs] = httpForm($kernel, $admin, '/supplies', 'POST', [
+    'codigo' => 'TST-002',
+    'nombre' => 'Insumo Perecedero sin vida util',
+    'categoria' => 'alimento',
+    'subcategoria' => 'test',
+    'unidad_medida' => 'unidad',
+    'clasificacion_abc' => 'C',
+    'es_perecedero' => '1',
+    // dias_vida_util_promedio ausente a propósito
+    'costo_unitario' => 2.5,
+    'costo_pedido' => 10,
+    'costo_mantenimiento_anual' => 100,
+    'tiempo_entrega_dias' => 3,
+    'consumo_diario_referencia' => 0.5,
+    'stock_seguridad_sugerido' => 10,
+]);
+check('Perecedero sin dias_vida_util_promedio -> error required_if', $st === 302 && isset($errs['dias_vida_util_promedio']));
+
+[$st, $errs] = httpForm($kernel, $admin, '/supplies', 'POST', [
+    'codigo' => 'TST-003',
+    'nombre' => 'Insumo Newsvendor impar',
+    'categoria' => 'alimento',
+    'subcategoria' => 'test',
+    'unidad_medida' => 'unidad',
+    'clasificacion_abc' => 'C',
+    'costo_unitario' => 2.5,
+    'costo_pedido' => 10,
+    'costo_mantenimiento_anual' => 100,
+    'tiempo_entrega_dias' => 3,
+    'consumo_diario_referencia' => 0.5,
+    'stock_seguridad_sugerido' => 10,
+    'costo_escasez_newsvendor' => 5,
+    // costo_desecho_newsvendor ausente a propósito
+]);
+check('Newsvendor con solo Cu -> error required_if', $st === 302 && isset($errs['costo_escasez_newsvendor']));
+
+[$st, $errs] = httpForm($kernel, $admin, '/supplies', 'POST', [
+    'codigo' => 'TST-004',
+    'nombre' => 'Insumo Coordenadas mal',
+    'categoria' => 'alimento',
+    'subcategoria' => 'test',
+    'unidad_medida' => 'unidad',
+    'clasificacion_abc' => 'C',
+    'costo_unitario' => 2.5,
+    'costo_pedido' => 10,
+    'costo_mantenimiento_anual' => 100,
+    'tiempo_entrega_dias' => 3,
+    'consumo_diario_referencia' => 0.5,
+    'stock_seguridad_sugerido' => 10,
+    'costo_escasez_newsvendor' => 5,
+    'costo_desecho_newsvendor' => 2,
+]);
+check('Newsvendor con Cu y Co -> sin errores de validación', ($st === 200 || $st === 302) && !$errs);
+Supply::where('codigo', 'TST-004')->forceDelete();
+
+echo "\n-- Validaciones de refugios --\n";
+[$st, $errs] = httpForm($kernel, $admin, '/shelters', 'POST', [
+    'codigo' => 'REF-TST2',
+    'nombre' => 'Refugio Coordenadas Test',
+    'departamento' => 'Distrito Capital',
+    'municipio' => 'Libertador',
+    'direccion' => 'Av. Test 2',
+    'coordenadas' => 'coordenadas invalidas',
+    'capacidad_maxima' => 100,
+    'poblacion_adultos' => 10,
+    'poblacion_ninos' => 5,
+    'responsable_nombre' => 'Test',
+    'responsable_telefono' => '0414-0000000',
+    'estado' => 'activo',
+]);
+check('Coordenadas con formato inválido -> error regex', $st === 302 && isset($errs['coordenadas']));
+
+[$st, $errs] = httpForm($kernel, $admin, '/shelters', 'POST', [
+    'codigo' => 'REF-TST3',
+    'nombre' => 'Refugio Poblacion Test',
+    'departamento' => 'Distrito Capital',
+    'municipio' => 'Libertador',
+    'direccion' => 'Av. Test 3',
+    'capacidad_maxima' => 100,
+    'poblacion_adultos' => 10,
+    'poblacion_ninos' => 5,
+    'poblacion_atencion_medica' => 99,
+    'responsable_nombre' => 'Test',
+    'responsable_telefono' => '0414-0000000',
+    'estado' => 'activo',
+]);
+check('Atención médica > población total -> error de coherencia', $st === 302 && isset($errs['poblacion_atencion_medica']));
+Shelter::whereIn('codigo', ['REF-TST2', 'REF-TST3'])->get()->each(function ($m) {
+    ShelterInventory::where('shelter_id', $m->id)->delete();
+    $m->forceDelete();
+});
 
 if ($supply) {
     $inventariosAntes = ShelterInventory::where('supply_id', $supply->id)->count();

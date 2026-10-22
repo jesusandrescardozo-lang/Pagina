@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Database\Connectors\NeonPostgresConnector;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
@@ -11,6 +12,11 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Conector PDO para Postgres: añade options='endpoint=...' al DSN
+        // (Neon exige SNI y el driver libpq antiguo no lo soporta solo).
+        // Laravel resuelve el conector vía este binding ("db.connector.pgsql"),
+        // por lo que no hace falta sobrescribir la clase Connection.
+        $this->app->bind('db.connector.pgsql', fn () => new NeonPostgresConnector);
     }
 
     public function boot(): void

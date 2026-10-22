@@ -16,10 +16,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.72rem; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 9999px; padding: 3px 10px;">
                 <i class="fa-solid fa-truck-ramp-box me-1"></i> Red de Distribución Inter-Refugios
             </span>
-            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+            <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                 Optimización Heurística de Cobertura
             </span>
         </div>
@@ -65,7 +65,7 @@
     <div class="row g-3">
         @foreach($sugerencias as $sug)
         <div class="col-md-6 col-lg-4">
-            <div class="p-3 rounded-3 h-100 d-flex flex-column justify-content-between" style="background: rgba(11, 15, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div class="p-3 rounded-3 h-100 d-flex flex-column justify-content-between" style="background: var(--bg-secondary); border: 1px solid var(--border);">
                 <div>
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <strong class="text-white">{{ $sug['supply']->nombre }}</strong>
@@ -75,7 +75,7 @@
                         <div><i class="fa-solid fa-arrow-up-from-bracket text-success me-1"></i> Origen: <strong class="text-white">{{ $sug['refugio_origen']->nombre }}</strong></div>
                         <div><i class="fa-solid fa-arrow-down-to-bracket text-danger me-1"></i> Destino: <strong class="text-white">{{ $sug['refugio_destino']->nombre }}</strong></div>
                     </div>
-                    <div class="p-2 rounded-2 mb-2" style="background: rgba(255, 255, 255, 0.04); font-size: 0.74rem;">
+                    <div class="p-2 rounded-2 mb-2" style="background: var(--surface-quiet); font-size: 0.74rem;">
                         <span class="stat-label mb-0 text-info">Cantidad Sugerida:</span>
                         <strong class="fs-6 text-white">{{ $sug['cantidad_sugerida'] }} {{ $sug['unidad_medida'] }}</strong>
                     </div>
@@ -142,7 +142,7 @@
                 @forelse($transfers as $t)
                 <tr>
                     <td>
-                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $t->codigo_transferencia }}</code>
+                        <code style="color: var(--amber); font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $t->codigo_transferencia }}</code>
                     </td>
                     <td>
                         <span class="bg-glass {{ $t->prioridad_badge['class'] }}">
@@ -172,7 +172,7 @@
                             {{ $t->estado_badge['text'] }}
                         </span>
                     </td>
-                    <td style="font-size: 0.76rem; color: rgba(226, 232, 240, 0.7);">
+                    <td style="font-size: 0.76rem; color: var(--text-muted);">
                         {{ $t->fecha_solicitud->format('d/m/Y H:i') }}
                     </td>
                     <td class="text-end">

@@ -115,11 +115,10 @@
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2.25rem;
         font-weight: 800;
-        color: #ffffff; /* número siempre en blanco: el estado se ve en la barra */
+        color: var(--text-primary); /* el número toma la tinta del tema; el estado se ve en la barra */
         line-height: 1.1;
         letter-spacing: -0.5px;
     }
-    [data-bs-theme="light"] .stat-panel .stat-big-num { color: #101828; }
 
     .stat-tag {
         font-size: 0.68rem;
@@ -131,15 +130,15 @@
         gap: 4px;
     }
 
-    .tag-emerald { background: rgba(16, 185, 129, 0.13); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.30); }
-    .tag-rose { background: rgba(244, 63, 94, 0.13);  color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.32); }
-    .tag-amber { background: rgba(230, 168, 108, 0.13); color: #e6a86c; border: 1px solid rgba(230, 168, 108, 0.34); }
+    .tag-emerald { background: rgba(16, 185, 129, 0.13); color: var(--ok-text); border: 1px solid rgba(16, 185, 129, 0.30); }
+    .tag-rose { background: rgba(244, 63, 94, 0.13);  color: var(--danger-text); border: 1px solid rgba(244, 63, 94, 0.32); }
+    .tag-amber { background: rgba(230, 168, 108, 0.13); color: var(--amber); border: 1px solid rgba(230, 168, 108, 0.34); }
 
     /* Semáforo de tarjetas KPI — solo verde / amarillo / rojo.
        El color de estado vive en la insignia y en la barra; el número grande va en blanco. */
-    .tag-signal-ok   { background: rgba(34, 197, 94, 0.14);  color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); }
-    .tag-signal-warn { background: rgba(250, 204, 21, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.38); }
-    .tag-signal-crit { background: rgba(239, 68, 68, 0.15);  color: #f87171; border: 1px solid rgba(239, 68, 68, 0.38); }
+    .tag-signal-ok   { background: rgba(34, 197, 94, 0.14);  color: var(--ok-text); border: 1px solid rgba(34, 197, 94, 0.35); }
+    .tag-signal-warn { background: rgba(250, 204, 21, 0.15); color: var(--warn-text); border: 1px solid rgba(250, 204, 21, 0.38); }
+    .tag-signal-crit { background: rgba(239, 68, 68, 0.15);  color: var(--danger-text); border: 1px solid rgba(239, 68, 68, 0.38); }
 
     .kpi-ok   { background: #22c55e; }
     .kpi-warn { background: #facc15; }
@@ -187,9 +186,9 @@
 
     .icon-blue    { background: var(--accent); color: #1a0e04; }
     .icon-amber   { background: var(--accent-light); color: #1a0e04; }
-    .icon-emerald { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.30); }
+    .icon-emerald { background: rgba(16, 185, 129, 0.16); color: var(--ok-text); border: 1px solid rgba(16, 185, 129, 0.30); }
     .icon-purple  { background: rgba(148, 163, 184, 0.16); color: var(--accent-light); border: 1px solid var(--border); }
-    .icon-rose    { background: rgba(244, 63, 94, 0.14); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.30); }
+    .icon-rose    { background: rgba(244, 63, 94, 0.14); color: var(--danger-text); border: 1px solid rgba(244, 63, 94, 0.30); }
     .icon-slate   { background: var(--bg-secondary); color: var(--accent-light); border: 1px solid var(--border-accent); }
 
     /* Lista de tareas */
@@ -313,33 +312,46 @@
     }
 
     /* ---- Modo claro (dashboard) ---- */
-    [data-bs-theme="light"] .cockpit-hero,
-    [data-bs-theme="light"] .stat-panel,
-    [data-bs-theme="light"] .app-tile-btn,
-    [data-bs-theme="light"] .todo-item,
-    [data-bs-theme="light"] .telemetry-route-card {
-        background: #ffffff !important;
-        box-shadow: var(--shadow-card) !important;
-    }
-
-    [data-bs-theme="light"] .weather-widget-card {
-        background: #f6f7f9 !important;
-        box-shadow: none !important;
-    }
-
     [data-bs-theme="light"] .stat-panel:hover,
     [data-bs-theme="light"] .app-tile-btn:hover {
         border-color: var(--border-accent) !important;
     }
 
-    [data-bs-theme="light"] .icon-blue,
     [data-bs-theme="light"] .icon-amber {
         color: #ffffff !important;
     }
 
     [data-bs-theme="light"] .icon-purple {
-        background: rgba(15, 23, 42, 0.06) !important;
-        color: var(--accent) !important;
+        background: var(--surface-quiet) !important;
+        color: var(--accent-light) !important;
+    }
+
+    [data-bs-theme="light"] .icon-emerald {
+        background: var(--ok-soft) !important;
+        border-color: rgba(15, 122, 93, 0.30) !important;
+    }
+
+    [data-bs-theme="light"] .icon-rose {
+        background: var(--danger-soft) !important;
+        border-color: rgba(192, 36, 70, 0.30) !important;
+    }
+
+    [data-bs-theme="light"] .tag-emerald,
+    [data-bs-theme="light"] .tag-signal-ok {
+        background: var(--ok-soft) !important;
+        border-color: rgba(15, 122, 93, 0.35) !important;
+    }
+
+    [data-bs-theme="light"] .tag-rose,
+    [data-bs-theme="light"] .tag-signal-crit {
+        background: var(--danger-soft) !important;
+        border-color: rgba(192, 36, 70, 0.35) !important;
+    }
+
+    [data-bs-theme="light"] .tag-amber,
+    [data-bs-theme="light"] .tag-signal-warn {
+        background: var(--warn-soft) !important;
+        border-color: rgba(143, 92, 31, 0.38) !important;
     }
 </style>
 
@@ -349,15 +361,15 @@
         <!-- Izquierda: Reloj Gigante y Fecha -->
         <div class="col-lg-5 col-md-6">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                     <i class="fa-solid fa-satellite-dish me-1"></i> Telemetría Activa en Tiempo Real
                 </span>
                 @if($activeShelter)
-                    <span class="badge" style="background: rgba(216, 150, 86, 0.25); color: #f5ede0; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.4); border-radius: 9999px; padding: 3px 10px;">
+                    <span class="badge" style="background: rgba(216, 150, 86, 0.25); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.4); border-radius: 9999px; padding: 3px 10px;">
                         [{{ $activeShelter->codigo }}] {{ $activeShelter->nombre }}
                     </span>
                 @else
-                    <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
+                    <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.72rem; border: 1px solid rgba(216, 150, 86, 0.35); border-radius: 9999px; padding: 3px 10px;">
                         🌐 Red Metropolitana
                     </span>
                 @endif
@@ -369,18 +381,18 @@
         <!-- Centro: Barra de Búsqueda Rápida Widget (Imagen 4) -->
         <div class="col-lg-4 col-md-6">
             <div class="position-relative">
-                <div class="p-3 rounded-4" style="background: rgba(11, 15, 25, 0.8); border: 1px solid rgba(230, 168, 108, 0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+                <div class="p-3 rounded-4" style="background: var(--bg-secondary); border: 1px solid var(--border-accent); box-shadow: var(--shadow-card);">
                     <div class="d-flex align-items-center gap-2 mb-1">
-                        <i class="fa-solid fa-magnifying-glass fs-6" style="color: #e6a86c;"></i>
-                        <span class="text-white fw-bold" style="font-size: 0.84rem;">Buscador Rápido</span>
-                        <span class="ms-auto" style="font-size: 0.62rem; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 5px; color: rgba(255,255,255,0.5);">Ctrl + K</span>
+                        <i class="fa-solid fa-magnifying-glass fs-6" style="color: var(--amber);"></i>
+                        <span class="fw-bold" style="font-size: 0.84rem; color: var(--text-primary);">Buscador Rápido</span>
+                        <span class="ms-auto" style="font-size: 0.62rem; background: var(--surface-quiet); padding: 2px 6px; border-radius: 5px; color: var(--text-muted);">Ctrl + K</span>
                     </div>
                     <input 
                         type="text" 
                         id="cockpitQuickSearch" 
                         class="form-control" 
                         placeholder="Filtrar insumos, centros, órdenes..." 
-                        style="background: transparent; border: none; color: #fff; padding: 4px 0; font-size: 0.82rem; outline: none; box-shadow: none;"
+                        style="background: transparent; border: none; color: var(--text-primary); padding: 4px 0; font-size: 0.82rem; outline: none; box-shadow: none;"
                     >
                 </div>
             </div>
@@ -395,7 +407,7 @@
                 <div>
                     <div class="fw-bold text-white fs-5" style="line-height: 1.1;">24°C</div>
                     <div class="text-muted small" style="font-size: 0.72rem;">Clima Operativo Estable</div>
-                    <span class="badge mt-1" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; font-size: 0.66rem; border: 1px solid rgba(216, 150, 86, 0.3);">
+                    <span class="badge mt-1" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); font-size: 0.66rem; border: 1px solid rgba(216, 150, 86, 0.3);">
                         <i class="fa-solid fa-circle-check me-1"></i> Sin incidencias viales
                     </span>
                 </div>
@@ -490,7 +502,7 @@
 <div class="glass-card p-4 mb-4">
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <span class="section-heading mb-0 text-white">
-            <i class="fa-solid fa-grid-2" style="color: #e6a86c;"></i> Acceso Rápido a Módulos (Quick Access)
+            <i class="fa-solid fa-grid-2" style="color: var(--amber);"></i> Acceso Rápido a Módulos (Quick Access)
         </span>
         <small class="text-muted" style="font-size: 0.74rem;">Acciones inmediatas con un solo clic</small>
     </div>
@@ -555,9 +567,9 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-circle-notch" style="color: #e6a86c;"></i> Salud Global de Suministros
+                    <i class="fa-solid fa-circle-notch" style="color: var(--amber);"></i> Salud Global de Suministros
                 </span>
-                <span class="stat-tag" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35);">
+                <span class="stat-tag" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.35);">
                     <i class="fa-solid fa-bolt"></i> En Línea
                 </span>
             </div>
@@ -576,7 +588,7 @@
             <!-- Mini Barras de Telemetría -->
             <div class="mt-2">
                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.75rem;">
-                    <span class="text-muted"><i class="fa-solid fa-bowl-food me-1" style="color: #e6a86c;"></i> Cobertura Alimentaria</span>
+                    <span class="text-muted"><i class="fa-solid fa-bowl-food me-1" style="color: var(--amber);"></i> Cobertura Alimentaria</span>
                     <strong class="text-white">94%</strong>
                 </div>
                 <div class="progress-glass mb-2">
@@ -592,7 +604,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.75rem;">
-                    <span class="text-muted"><i class="fa-solid fa-bed me-1" style="color: #e6a86c;"></i> Capacidad de Hospedaje</span>
+                    <span class="text-muted"><i class="fa-solid fa-bed me-1" style="color: var(--amber);"></i> Capacidad de Hospedaje</span>
                     <strong class="text-white">{{ $ocupacionPct }}%</strong>
                 </div>
                 <div class="progress-glass">
@@ -607,9 +619,9 @@
         <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-list-check" style="color: #e6a86c;"></i> Acciones Operativas Prioritarias
+                    <i class="fa-solid fa-list-check" style="color: var(--amber);"></i> Acciones Operativas Prioritarias
                 </span>
-                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 6px;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.72rem; border-radius: 6px;">
                     <span id="completedTasksCount">2</span> de 4 Completadas
                 </span>
             </div>
@@ -624,7 +636,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Insumo: Harina PAN &bull; Cobertura menor a 48h</small>
                         </div>
                     </div>
-                    <span class="badge ms-2" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); font-size: 0.65rem;">Urgente</span>
+                    <span class="badge ms-2" style="background: rgba(244, 63, 94, 0.15); color: var(--danger-text); border: 1px solid rgba(244, 63, 94, 0.3); font-size: 0.65rem;">Urgente</span>
                 </div>
 
                 <div class="todo-item completed" onclick="toggleTask(this)">
@@ -635,7 +647,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Despacho de medicamentos recibido conforme</small>
                         </div>
                     </div>
-                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
                 </div>
 
                 <div class="todo-item" onclick="toggleTask(this)">
@@ -646,7 +658,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Ajuste de raciones alimentarias de leche maternal</small>
                         </div>
                     </div>
-                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Media</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Media</span>
                 </div>
 
                 <div class="todo-item completed" onclick="toggleTask(this)">
@@ -657,7 +669,7 @@
                             <small class="text-muted" style="font-size: 0.72rem;">Cierre de inventarios por turno de almacén</small>
                         </div>
                     </div>
-                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
+                    <span class="badge ms-2" style="background: rgba(216, 150, 86, 0.15); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.3); font-size: 0.65rem;">Completado</span>
                 </div>
             </div>
 
@@ -677,7 +689,7 @@
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
             <span class="section-heading mb-1 text-white">
-                <i class="fa-solid fa-route me-1" style="color: #e6a86c;"></i> Optimización Heurística de Transferencias Inter-Refugios
+                <i class="fa-solid fa-route me-1" style="color: var(--amber);"></i> Optimización Heurística de Transferencias Inter-Refugios
             </span>
             <p class="m-0 text-muted" style="font-size: 0.78rem;">
                 Canaliza automáticamente excedentes desde refugios seguros hacia albergues saturados para evitar desabastecimiento.
@@ -692,11 +704,11 @@
     <div class="telemetry-route-card">
         <div class="telemetry-flow">
             <div class="flow-node">
-                <i class="fa-solid fa-warehouse me-1" style="color: #e6a86c;"></i> {{ $sug['refugio_origen']->nombre }}
+                <i class="fa-solid fa-warehouse me-1" style="color: var(--amber);"></i> {{ $sug['refugio_origen']->nombre }}
             </div>
             <div class="d-flex align-items-center gap-1">
                 <i class="fa-solid fa-arrow-right flow-arrow"></i>
-                <span class="badge" style="background: rgba(216, 150, 86, 0.18); color: #e6a86c; border: 1px solid rgba(216, 150, 86, 0.35); font-size: 0.74rem;">
+                <span class="badge" style="background: rgba(216, 150, 86, 0.18); color: var(--amber); border: 1px solid rgba(216, 150, 86, 0.35); font-size: 0.74rem;">
                     {{ $sug['cantidad_sugerida'] }} {{ $sug['unidad_medida'] }} de {{ $sug['supply']->nombre }}
                 </span>
                 <i class="fa-solid fa-arrow-right flow-arrow"></i>
@@ -727,7 +739,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-chart-simple me-1" style="color: #e6a86c;"></i> Capacidad vs Personas Albergadas
+                    <i class="fa-solid fa-chart-simple me-1" style="color: var(--amber);"></i> Capacidad vs Personas Albergadas
                 </span>
                 <span class="stat-tag tag-amber">Tiempo Real</span>
             </div>
@@ -742,7 +754,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-chart-pie me-1" style="color: #e6a86c;"></i> Clasificación ABC de Insumos
+                    <i class="fa-solid fa-chart-pie me-1" style="color: var(--amber);"></i> Clasificación ABC de Insumos
                 </span>
                 <span class="stat-tag tag-amber">Pareto I.O.</span>
             </div>
@@ -758,7 +770,7 @@
     <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
             <span class="section-heading mb-1 text-white">
-                <i class="fa-solid fa-building-shield me-1" style="color: #e6a86c;"></i> Red de Refugios Humanitarios Monitoreados
+                <i class="fa-solid fa-building-shield me-1" style="color: var(--amber);"></i> Red de Refugios Humanitarios Monitoreados
             </span>
             <small class="text-muted">Censo poblacional y nivel de saturación por municipio</small>
         </div>
@@ -786,7 +798,7 @@
                 @php $isActive = $activeShelter && $activeShelter->id == $refugio->id; @endphp
                 <tr style="{{ $isActive ? 'background: rgba(216, 150, 86, 0.12); border-left: 3px solid #e6a86c;' : '' }}">
                     <td>
-                        <code style="color: #e6a86c; font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $refugio->codigo }}</code>
+                        <code style="color: var(--amber); font-weight: 700; background: rgba(216, 150, 86, 0.12); border: 1px solid rgba(216, 150, 86, 0.25); padding: 3px 8px; border-radius: 6px;">{{ $refugio->codigo }}</code>
                         @if($isActive)
                             <span class="badge ms-1" style="background: #e6a86c; color: #1a0e04; font-size: 0.60rem; font-weight: 800;">ACTIVO</span>
                         @endif
@@ -813,7 +825,7 @@
                     </td>
                     <td class="text-end">
                         <div class="d-inline-flex gap-2">
-                            <a href="{{ route('dashboard', ['shelter_id' => $refugio->id]) }}" class="{{ $isActive ? 'btn-glass' : 'btn-accent' }}" style="padding: 5px 12px; font-size: 0.75rem; {{ $isActive ? 'color: #e6a86c; border-color: rgba(216,150,86,0.4);' : '' }}">
+                            <a href="{{ route('dashboard', ['shelter_id' => $refugio->id]) }}" class="{{ $isActive ? 'btn-glass' : 'btn-accent' }}" style="padding: 5px 12px; font-size: 0.75rem; {{ $isActive ? 'color: var(--amber); border-color: rgba(216,150,86,0.4);' : '' }}">
                                 <i class="fa-solid fa-arrows-to-eye"></i> {{ $isActive ? 'Operando' : 'Operar' }}
                             </a>
                             <a href="{{ route('shelters.show', $refugio) }}" class="btn-glass" style="padding: 5px 12px; font-size: 0.75rem;">
@@ -835,7 +847,7 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-clock-rotate-left me-1" style="color: #e6a86c;"></i> Movimientos Recientes de Kardex
+                    <i class="fa-solid fa-clock-rotate-left me-1" style="color: var(--amber);"></i> Movimientos Recientes de Kardex
                 </span>
                 <a href="{{ route('movements.index') }}" class="btn-glass py-1 px-2" style="font-size: 0.74rem;">Ver todos</a>
             </div>
@@ -853,7 +865,7 @@
                     <tbody>
                         @forelse($movimientosRecientes as $mov)
                         <tr>
-                            <td style="font-size: 0.75rem; color: rgba(226, 232, 240, 0.7);">{{ $mov->fecha_movimiento->format('d/m H:i') }}</td>
+                            <td style="font-size: 0.75rem; color: var(--text-muted);">{{ $mov->fecha_movimiento->format('d/m H:i') }}</td>
                             <td>
                                 <span class="bg-glass {{ $mov->tipo_badge['class'] }}" style="font-size: 0.68rem;">
                                     <i class="fa-solid {{ $mov->tipo_badge['icon'] }}"></i> {{ $mov->tipo_badge['text'] }}
@@ -886,12 +898,12 @@
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="section-heading mb-0 text-white">
-                    <i class="fa-solid fa-truck-moving me-1" style="color: #e6a86c;"></i> Transferencias Activas
+                    <i class="fa-solid fa-truck-moving me-1" style="color: var(--amber);"></i> Transferencias Activas
                 </span>
                 <a href="{{ route('transfers.index') }}" class="btn-glass py-1 px-2" style="font-size: 0.74rem;">Ver todas</a>
             </div>
             @forelse($transferenciasActivas as $trf)
-            <div class="p-3 mb-2 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border);">
+            <div class="p-3 mb-2 rounded-3" style="background: var(--surface-quiet); border: 1px solid var(--border);">
                 <div class="d-flex justify-content-between align-items-start mb-1">
                     <span class="fw-bold text-white" style="font-size: 0.85rem;">{{ $trf->codigo_transferencia }}</span>
                     <span class="bg-glass {{ $trf->estado_badge['class'] }}" style="font-size: 0.68rem;">{{ $trf->estado_badge['text'] }}</span>
@@ -900,7 +912,7 @@
                     {{ $trf->refugioOrigen->nombre }} &rarr; <span class="text-white fw-bold">{{ $trf->refugioDestino->nombre }}</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center" style="font-size: 0.76rem;">
-                    <span class="fw-bold" style="color: #e6a86c;">{{ $trf->cantidad }} {{ $trf->supply->unidad_medida }} de {{ $trf->supply->nombre }}</span>
+                    <span class="fw-bold" style="color: var(--amber);">{{ $trf->cantidad }} {{ $trf->supply->unidad_medida }} de {{ $trf->supply->nombre }}</span>
                     <span class="bg-glass {{ $trf->prioridad_badge['class'] }}">{{ $trf->prioridad }}</span>
                 </div>
             </div>
@@ -916,6 +928,9 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Colores de gráficos leídos de los tokens del tema (funcionan en modo claro y oscuro)
+    const cssVar = (name) => (getComputedStyle(document.documentElement).getPropertyValue(name) || '').trim();
+
     // 1. Digital Clock & Date in Hero
     function updateHeroClock() {
         const now = new Date();
@@ -949,7 +964,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: [88.5, 11.5],
                     backgroundColor: [
                         '#d89656', // Dorado ámbar — paleta unificada
-                        'rgba(255, 255, 255, 0.05)'
+                        cssVar('--surface-quiet')
                     ],
                     borderWidth: 0,
                     circumference: 360,
@@ -978,16 +993,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     {
                         label: 'Población Albergada',
                         data: {!! json_encode($chartRefugiosPoblacion) !!},
-                        backgroundColor: 'rgba(216, 150, 86, 0.80)',
-                        borderColor: '#e6a86c',
+                        backgroundColor: cssVar('--accent'),
+                        borderColor: cssVar('--amber'),
                         borderWidth: 1,
                         borderRadius: 8
                     },
                     {
                         label: 'Capacidad Máxima',
                         data: {!! json_encode($chartRefugiosCapacidad) !!},
-                        backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                        borderColor: 'rgba(255, 255, 255, 0.18)',
+                        backgroundColor: cssVar('--surface-quiet'),
+                        borderColor: cssVar('--border-hover'),
                         borderWidth: 1,
                         borderRadius: 8
                     }
@@ -997,11 +1012,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { labels: { color: '#f5ede0', font: { family: 'Plus Jakarta Sans', size: 11 } } }
+                    legend: { labels: { color: cssVar('--text-primary'), font: { family: 'Plus Jakarta Sans', size: 11 } } }
                 },
                 scales: {
-                    x: { ticks: { color: 'rgba(220, 210, 195, 0.65)', font: { size: 10 } }, grid: { display: false } },
-                    y: { ticks: { color: 'rgba(220, 210, 195, 0.65)' }, grid: { color: 'rgba(230,168,108,0.06)' } }
+                    x: { ticks: { color: cssVar('--text-muted'), font: { size: 10 } }, grid: { display: false } },
+                    y: { ticks: { color: cssVar('--text-muted') }, grid: { color: cssVar('--border') } }
                 }
             }
         });
@@ -1039,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#f5ede0', font: { family: 'Plus Jakarta Sans', size: 11 }, boxWidth: 14 }
+                        labels: { color: cssVar('--text-primary'), font: { family: 'Plus Jakarta Sans', size: 11 }, boxWidth: 14 }
                     }
                 },
                 cutout: '72%'

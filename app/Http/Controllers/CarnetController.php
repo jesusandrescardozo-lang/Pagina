@@ -59,6 +59,12 @@ class CarnetController extends Controller
      */
     public function toggle(User $user)
     {
+        // Nadie puede suspender su propia credencial: se quedaría sin
+        // acceso a su identificador oficial y no podría revertirlo.
+        if (Auth::id() === $user->id) {
+            return back()->with('error', 'No puede suspender su propia credencial. Solicite a otro administrador que lo haga.');
+        }
+
         $user->qr_activo = !$user->qr_activo;
         $user->save();
 

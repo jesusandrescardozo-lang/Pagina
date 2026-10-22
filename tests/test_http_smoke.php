@@ -105,13 +105,22 @@ $lectura = ['/dashboard', '/shelters', '/supplies', '/movements', '/transfers',
             '/reports', '/reports/inventario-refugios',
             '/reports/kardex-movimientos', '/reports/analisis-operaciones'];
 
-$shelterId = \App\Models\Shelter::orderBy('id')->first()->id ?? 0;
-$supplyId = \App\Models\Supply::orderBy('id')->first()->id ?? 0;
-$transferId = \App\Models\SupplyTransfer::orderBy('id')->first()->id ?? 0;
+// Las URLs de detalle solo se añaden si existe al menos un registro:
+// con tablas vacías, el fallback anterior generaba rutas inválidas
+// (p. ej. /transfers/0) que devuelven 404 y falsaban el fallo.
+$shelter = \App\Models\Shelter::orderBy('id')->first();
+$supply = \App\Models\Supply::orderBy('id')->first();
+$transfer = \App\Models\SupplyTransfer::orderBy('id')->first();
 
-$lectura[] = "/shelters/{$shelterId}";
-$lectura[] = "/supplies/{$supplyId}";
-$lectura[] = "/transfers/{$transferId}";
+if ($shelter) {
+    $lectura[] = "/shelters/{$shelter->id}";
+}
+if ($supply) {
+    $lectura[] = "/supplies/{$supply->id}";
+}
+if ($transfer) {
+    $lectura[] = "/transfers/{$transfer->id}";
+}
 
 foreach ($usuarios as $rol => $user) {
     $malas = [];

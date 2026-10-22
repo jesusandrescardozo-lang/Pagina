@@ -12,6 +12,16 @@ return [
     'faker_locale' => 'es_ES',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
+
+    /*
+    | Dominios de correo permitidos para el auto-registro de empleados
+    | (lista separada por comas en REGISTRO_DOMINIOS). Si está vacío,
+    | el auto-registro queda deshabilitado por seguridad.
+    */
+    'dominios_registro' => array_values(array_filter(array_map(
+        'trim',
+        explode(',', (string) env('REGISTRO_DOMINIOS', 'refugios.ve'))
+    ))),
     'providers' => [
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,

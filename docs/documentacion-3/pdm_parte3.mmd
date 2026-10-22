@@ -1,0 +1,52 @@
+flowchart LR
+  subgraph fase1["5. Pruebas"]
+    direction TB
+    E1["<b>E1</b> Pruebas unitarias<br/>D: 6 d | CRÍTICA<br/>PASO: 64 → 70<br/>PAST: 64 → 70"]
+    E2["<b>E2</b> Pruebas E2E<br/>D: 5 d | CRÍTICA<br/>PASO: 70 → 75<br/>PAST: 70 → 75"]
+    E3["<b>E3</b> Usabilidad (UAT)<br/>D: 4 d | CRÍTICA<br/>PASO: 75 → 79<br/>PAST: 75 → 79"]
+  end
+  subgraph fase2["6. Implantación"]
+    direction TB
+    F1["<b>F1</b> Despliegue<br/>D: 4 d | CRÍTICA<br/>PASO: 79 → 83<br/>PAST: 79 → 83"]
+    F2["<b>F2</b> Capacitación<br/>D: 4 d | CRÍTICA<br/>PASO: 83 → 87<br/>PAST: 83 → 87"]
+    F3["<b>F3</b> Puesta en producción<br/>D: 2 d | CRÍTICA<br/>PASO: 87 → 89<br/>PAST: 87 → 89"]
+  end
+  subgraph fase3["7. Cierre"]
+    direction TB
+    G1["<b>G1</b> Manual de usuario<br/>D: 4 d | HT 4<br/>PASO: 79 → 83<br/>PAST: 83 → 87"]
+    G2["<b>G2</b> Cierre y lecciones<br/>D: 2 d | CRÍTICA<br/>PASO: 89 → 91<br/>PAST: 89 → 91"]
+  end
+  subgraph fase4["4. Construcción"]
+    direction TB
+    D4["<b>D4</b> Transferencias<br/>D: 8 d | CRÍTICA<br/>PASO: 56 → 64<br/>PAST: 56 → 64<br/><i>enlace con la parte 2</i>"]
+    D5["<b>D5</b> Modelos de inventario<br/>D: 6 d | HT 9<br/>PASO: 49 → 55<br/>PAST: 58 → 64<br/><i>enlace con la parte 2</i>"]
+    D6["<b>D6</b> Seguridad y auditoría<br/>D: 6 d | HT 17<br/>PASO: 41 → 47<br/>PAST: 58 → 64<br/><i>enlace con la parte 2</i>"]
+    D7["<b>D7</b> Reportes PDF y dashboard<br/>D: 5 d | HT 10<br/>PASO: 49 → 54<br/>PAST: 59 → 64<br/><i>enlace con la parte 2</i>"]
+  end
+  D4 --> E1
+  D5 --> E1
+  D6 --> E1
+  D7 --> E1
+  E1 --> E2
+  E2 --> E3
+  E3 --> F1
+  F1 --> F2
+  F2 --> F3
+  G1 --> F3
+  E3 --> G1
+  F3 --> G2
+  G1 --> G2
+  classDef critica fill:#ffd6d6,stroke:#c00000,stroke-width:3px,color:#000;
+  classDef fantasma fill:#f7f7f7,stroke:#888,stroke-width:1px,stroke-dasharray:6 4,color:#444;
+  classDef fantasmaCrit fill:#fff0f0,stroke:#c00000,stroke-width:2px,stroke-dasharray:6 4,color:#000;
+  class E1 critica;
+  class E2 critica;
+  class E3 critica;
+  class F1 critica;
+  class F2 critica;
+  class F3 critica;
+  class G2 critica;
+  class D4 fantasmaCrit;
+  class D5 fantasma;
+  class D6 fantasma;
+  class D7 fantasma;

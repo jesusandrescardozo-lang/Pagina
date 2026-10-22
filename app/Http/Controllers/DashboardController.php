@@ -21,6 +21,10 @@ class DashboardController extends Controller
 
     public function switchShelter(Request $request)
     {
+        $request->validate([
+            'shelter_id' => 'nullable|exists:shelters,id',
+        ]);
+
         $shelterId = $request->input('shelter_id');
         if ($shelterId) {
             $shelter = Shelter::find($shelterId);

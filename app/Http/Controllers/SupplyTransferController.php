@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSupplyTransferRequest;
 use App\Models\InventoryMovement;
 use App\Models\Shelter;
 use App\Models\Supply;
-use App\Models\ShelterInventory;
 use App\Models\SupplyTransfer;
 use App\Services\AuditService;
 use App\Services\InventoryOptimizationService;
@@ -84,27 +84,9 @@ class SupplyTransferController extends Controller
         ));
     }
 
-    public function store(Request $request)
+    public function store(StoreSupplyTransferRequest $request)
     {
-        $validated = $request->validate([
-            'refugio_origen_id' => 'required|exists:shelters,id|different:refugio_destino_id',
-            'refugio_destino_id' => 'required|exists:shelters,id',
-            'supply_id' => 'required|exists:supplies,id',
-            'cantidad' => 'required|numeric|min:0.1',
-            'prioridad' => 'required|in:urgente,alta,media,baja',
-            'vehiculo_transporte' => 'nullable|string|max:100',
-            'observaciones' => 'nullable|string',
-        ]);
-
-        // Verificar disponibilidad en origen
-        $origenInv = ShelterInventory::where('shelter_id', $validated['refugio_origen_id'])
-            ->where('supply_id', $validated['supply_id'])
-            ->first();
-
-        if (!$origenInv || $origenInv->stock_actual < $validated['cantidad']) {
-            $disp = $origenInv ? $origenInv->stock_actual : 0;
-            return back()->withInput()->with('error', "El refugio origen solo tiene {$disp} unidades disponibles. No se puede transferir {$validated['cantidad']}.");
-        }
+        $validated = $request->validated();
 
         $validated['codigo_transferencia'] = 'TRF-' . strtoupper(Str::random(8));
         $validated['estado'] = 'solicitada';

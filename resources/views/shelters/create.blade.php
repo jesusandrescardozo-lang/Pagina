@@ -9,10 +9,10 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: var(--amber); font-size:0.75rem;">
                 <i class="fa-solid fa-plus-circle me-1"></i> ALTA OPERATIVA
             </span>
-            <span class="badge" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size:0.72rem;">
+            <span class="badge" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border); color: var(--text-muted); font-size:0.72rem;">
                 Red Nacional de Albergues
             </span>
         </div>

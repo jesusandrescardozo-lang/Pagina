@@ -1,0 +1,28 @@
+flowchart LR
+  N9((9))
+  N10((10))
+  N11((11))
+  N12((12))
+  N13((13))
+  N14((14))
+  N15((15))
+  N16((16))
+  N9 -- "D1 (4)" --> N10
+  N11 -- "D2 (8)" --> N13
+  N13 -- "D3 (7)" --> N14
+  N14 -- "D4 (8)" --> N16
+  N13 -- "D5 (6)" --> N15
+  N12 -- "D6 (6)" --> N16
+  N13 -- "D7 (5)" --> N16
+  N10 -. "d3 (0)" .-> N11
+  N10 -. "d4 (0)" .-> N12
+  N15 -. "d5 (0)" .-> N16
+  classDef union fill:#dce9ff,stroke:#1c4fd8,stroke-width:3px,color:#000;
+  class N9 union;
+  class N11 union;
+  class N12 union;
+  class N16 union;
+  linkStyle 0 stroke:#c00000,stroke-width:3px;
+  linkStyle 1 stroke:#c00000,stroke-width:3px;
+  linkStyle 2 stroke:#c00000,stroke-width:3px;
+  linkStyle 3 stroke:#c00000,stroke-width:3px;

@@ -51,8 +51,16 @@ class ShelterInventory extends Model
 
     public function getConsumoDiarioEstimadoAttribute(): float
     {
-        $poblacion = $this->shelter ? $this->shelter->poblacion_total : 0;
-        $tasa = $this->supply ? $this->supply->consumo_diario_referencia : 1.0;
+        // Usa las relaciones ya cargadas cuando existen (eager loading) para
+        // evitar una consulta por inventario (problema N+1 con base remota).
+        $poblacion = $this->relationLoaded('shelter')
+            ? (int) ($this->shelter?->poblacion_total ?? 0)
+            : (int) (Shelter::where('shelters.id', $this->shelter_id)->value('poblacion_total') ?? 0);
+
+        $tasa = $this->relationLoaded('supply')
+            ? (float) ($this->supply?->consumo_diario_referencia ?? 1.0)
+            : (float) (Supply::where('supplies.id', $this->supply_id)->value('consumo_diario_referencia') ?? 1.0);
+
         return round($poblacion * $tasa, 2);
     }
 

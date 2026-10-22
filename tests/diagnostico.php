@@ -9,9 +9,17 @@ $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
 echo "== Tablas ==\n";
 $problemas = 0;
-$tables = collect(DB::select("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'"))
+// El listado de tablas depende del motor: sqlite_master solo existe en SQLite,
+// en Postgres/MySQL hay que leer las vistas del catálogo del sistema.
+$driver = DB::connection()->getDriverName();
+$tablasSql = match ($driver) {
+    'sqlite' => "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'",
+    'pgsql'  => "SELECT tablename AS name FROM pg_tables WHERE schemaname = 'public'",
+    default  => "SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()",
+};
+$tables = collect(DB::select($tablasSql))
     ->map(fn ($r) => $r->name)->sort()->values()->all();
-echo '  ' . implode(', ', $tables) . "\n\n";
+echo '  (' . $driver . ') ' . implode(', ', $tables) . "\n\n";
 
 echo "== Claves de configuración críticas ==\n";
 $keys = ['cache.default', 'logging.default', 'queue.default', 'filesystems.default',

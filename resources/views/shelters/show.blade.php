@@ -9,13 +9,13 @@
 <div class="cockpit-page-header">
     <div>
         <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: #e6a86c; font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
+            <span class="badge" style="background: rgba(230,168,108,0.15); border: 1px solid rgba(230,168,108,0.35); color: var(--amber); font-family:'JetBrains Mono',monospace; font-size:0.75rem;">
                 <i class="fa-solid fa-hashtag me-1"></i>{{ $shelter->codigo }}
             </span>
             <span class="badge {{ $shelter->estado_badge['class'] }}" style="font-size:0.75rem;">
                 <i class="fa-solid fa-circle-dot me-1"></i>{{ $shelter->estado_badge['text'] }}
             </span>
-            <span class="badge" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size:0.72rem;">
+            <span class="badge" style="background: var(--surface-quiet); border: 1px solid var(--quiet-border); color: var(--text-muted); font-size:0.72rem;">
                 <i class="fa-solid fa-location-dot me-1 text-info"></i>{{ $shelter->municipio }}, {{ $shelter->departamento }}
             </span>
         </div>
@@ -130,7 +130,7 @@
             </div>
             <small class="text-muted">Cálculo de demanda per cápita y días de cobertura alimentaria humanitaria.</small>
         </div>
-        <span class="badge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399; font-size:0.75rem;">
+        <span class="badge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--ok-text); font-size:0.75rem;">
             <i class="fa-solid fa-check-circle me-1"></i>{{ $inventariosAlimentos->count() }} insumos registrados
         </span>
     </div>
@@ -221,7 +221,7 @@
             </div>
             <small class="text-muted">Garantía de stock para pacientes crónicos, heridos y emergencias sanitarias en el refugio.</small>
         </div>
-        <span class="badge" style="background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.35); color: #fb7185; font-size:0.75rem;">
+        <span class="badge" style="background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.35); color: var(--danger-text); font-size:0.75rem;">
             <i class="fa-solid fa-shield-heart me-1"></i>{{ $inventariosMedicos->count() }} fármacos / kits
         </span>
     </div>
