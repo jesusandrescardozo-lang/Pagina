@@ -1,0 +1,80 @@
+name: CI
+
+# Se ejecuta en cada push y en cada Pull Request hacia main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Solo lectura: el workflow no necesita escribir en el repo.
+permissions:
+  contents: read
+
+# Si llega otro push mientras corre uno, se cancela el anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Suite de verificación (NUTRILINK)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, fileinfo, curl, gd, zip, bcmath, intl, sqlite3, pdo_sqlite, pgsql, pdo_pgsql
+          coverage: none
+
+      - name: Instalar dependencias (Composer)
+        uses: ramsey/composer-install@v3
+
+      - name: Preparar entorno (.env con SQLite)
+        run: |
+          cp .env.example .env
+          # La config de sqlite usa database/database.sqlite (no DATABASE_URL)
+          sed -i '/^DATABASE_URL=/d' .env
+          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          touch database/database.sqlite
+          php artisan key:generate --ansi
+
+      - name: Migrar y sembrar base de datos
+        run: |
+          php artisan migrate --force
+          php artisan db:seed --force
+
+      - name: Levantar servidor y correr la suite de pruebas
+        run: |
+          nohup php artisan serve --host=127.0.0.1 --port=8000 > /tmp/artisan-serve.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:8000/login; then
+              break
+            fi
+            sleep 1
+          done
+          if ! curl -sf -o /dev/null http://127.0.0.1:8000/login; then
+            echo "::error::El servidor de pruebas no arrancó"
+            cat /tmp/artisan-serve.log
+            exit 1
+          fi
+
+          set +e
+          php tests/run_all.php
+          resultado=$?
+          set -e
+
+          echo "===== Log del servidor ====="
+          cat /tmp/artisan-serve.log
+          exit $resultado
+
+      - name: Salida detallada si hay fallos
+        if: failure()
+        run: php tests/run_all.php --verbose || true
