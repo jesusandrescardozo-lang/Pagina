@@ -16,7 +16,20 @@ database/*.db
 # Artefactos locales
 storage/logs/*.log
 storage/framework/sessions/*
+storage/framework/views/*.php
 storage/framework/testing/
+bootstrap/cache/*.php
 public/hot
 *.log
 tests/cookie_*.txt
+
+# ── Despliegue en Vercel: solo lo que hace falta dentro de la imagen ────────
+# Documentacion, pruebas y configuracion de CI/Git no se sirven en produccion.
+tests/
+docs/
+.github/
+.git/
+*.md
+server.php
+docker-start.sh
+Dockerfile

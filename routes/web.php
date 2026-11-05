@@ -17,6 +17,13 @@ use App\Http\Controllers\GuestController;
 |--------------------------------------------------------------------------
 */
 
+// Health check para el despliegue en Vercel: responde 200 sin tocar la sesión
+// ni la base de datos, sirviendo como prueba de humo tras cada deploy.
+Route::get('/health', fn () => response()->json([
+    'status' => 'ok',
+    'time'   => now()->toIso8601String(),
+]))->name('health');
+
 // Redirigir raíz al dashboard o login
 Route::get('/', function () {
     if (auth()->check()) return redirect()->route('dashboard');

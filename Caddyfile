@@ -1,0 +1,22 @@
+# FrankenPHP (Caddy) — despliegue en Vercel (Container runtime)
+# Guía: https://vercel.com/kb/guide/deploy-php-on-vercel-with-docker
+#
+# Vercel enruta al puerto 80 por defecto; PORT lo puede sobrescribir en
+# Settings > Environment Variables. La sintaxis :{$PORT:80} usa PORT si
+# existe y 80 en caso contrario.
+:{$PORT:80} {
+	root * /app/public
+	encode zstd gzip
+
+	# `php_server` ya hace internamente:
+	#   try_files {path} {path}/index.php index.php
+	# es decir, /login, /shelters/5, /health... caen en public/index.php
+	# (equivale al rewrite de .htaccess) y los ficheros estálicos de
+	# public/ se sirven tal cual.
+	php_server
+
+	# Logs de acceso a stdout para que Vercel los capture en runtime logs.
+	log {
+		output stdout
+	}
+}

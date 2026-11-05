@@ -2,6 +2,16 @@
 # Arranque del servicio en Render: puerto, APP_KEY, base de datos y Apache.
 set -e
 
+# 0) Guardia de despliegue: este script es EXCLUSIVO de Render.
+#    Vercel inyecta VERCEL=1 en build y en runtime. Si esta imagen llegara a
+#    ejecutarse alli, el `migrate:fresh --seed` de mas abajo BORRARIA los datos
+#    de Neon. Se aborta antes de tocar la base de datos.
+if [ -n "${VERCEL:-}" ]; then
+  echo "docker-start.sh: entorno Vercel detectado. Este script es solo para Render." >&2
+  echo "docker-start.sh: se aborta ANTES de migrate:fresh --seed para no borrar datos." >&2
+  exit 1
+fi
+
 # 1) Puerto asignado por Render (10000 por defecto)
 sed -ri "s/^Listen .*/Listen ${PORT:-10000}/" /etc/apache2/ports.conf
 

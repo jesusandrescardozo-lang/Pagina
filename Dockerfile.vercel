@@ -1,0 +1,85 @@
+# ── Vercel (Container runtime) — Laravel 9 + FrankenPHP ─────────────────────
+# Guía oficial: https://vercel.com/kb/guide/laravel-php-with-docker
+#
+# IMPORTANTE: este fichero NO reemplaza al `Dockerfile` de Render.
+#   - Vercel  usa Dockerfile.vercel  (entrypoint declarado en vercel.json)
+#   - Render  sigue usando Dockerfile + docker-start.sh
+#
+# OJO con docker-start.sh: hace `migrate:fresh --seed` (borra datos).
+# En Vercel NUNCA se ejecuta: las migraciones se corren aparte con
+# `php artisan migrate --force`.
+
+FROM dunglas/frankenphp:1-php8.2 AS base
+WORKDIR /app
+
+# php.ini de producción (OPcache activado, display_errors desactivado)
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+# Extensiones PHP:
+#   pdo_pgsql -> Neon (Postgres serverless)
+#   intl, zip -> Laravel
+#   gd        -> dompdf / imagenes de PDF
+#   bcmath    -> bacon-qr-code (carnets)
+#   mbstring, dom, xml -> requisitos de laravel/framework
+#   opcache   -> caché de bytecode en producción
+RUN install-php-extensions pdo_pgsql intl zip gd bcmath mbstring dom xml opcache
+
+# ── Etapa 1: dependencias de Composer (capa cachable) ───────────────────────
+FROM base AS dependencies
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip \
+    && rm -rf /var/lib/apt/lists/*
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+
+# ── Etapa 2: imagen final ───────────────────────────────────────────────────
+FROM base AS runtime
+
+# Código de la aplicación. .dockerignore excluye .env, vendor/, tests/, .git/…
+COPY . .
+
+# Dependencias ya resueltas en la etapa anterior
+COPY --from=dependencies /app/vendor ./vendor
+
+# Directorios que Laravel necesita en tiempo de ejecución
+RUN mkdir -p \
+        storage/framework/cache/data \
+        storage/framework/sessions \
+        storage/framework/views \
+        storage/framework/testing \
+        storage/logs \
+        bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
+
+# Cachés de framework generados en el build.
+# NUNCA `config:cache`: congelaría las variables de entorno que Vercel
+# inyecta en tiempo de ejecución (env() devolvería null).
+# NUNCA `migrate` en el build ni en el arranque: ver nota del encabezado.
+RUN php artisan package:discover \
+    && php artisan event:cache \
+    && php artisan view:cache \
+    && php artisan route:cache
+
+# Valores por defecto de producción. Vercel los sobrescribe con los que
+# declares en Settings > Environment Variables (o `vercel env add`).
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    APP_KEY= \
+    APP_URL= \
+    LOG_CHANNEL=stderr \
+    LOG_LEVEL=error \
+    SESSION_DRIVER=database \
+    CACHE_STORE=database \
+    QUEUE_CONNECTION=sync \
+    DB_CONNECTION=pgsql \
+    DB_QUERY_LOG=false \
+    APP_MAINTENANCE_DRIVER=database
+
+COPY Caddyfile /etc/caddy/Caddyfile
+
+# Vercel enruta al puerto 80 por defecto (se puede cambiar con PORT)
+ENV PORT=80
+EXPOSE 80
+
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
