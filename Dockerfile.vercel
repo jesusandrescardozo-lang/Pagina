@@ -53,27 +53,33 @@ RUN mkdir -p \
     && chown -R www-data:www-data storage bootstrap/cache
 
 # ── Cachés de framework ─────────────────────────────────────────────────────
-# Se generan en el build. NUNCA `config:cache` (congelaría las variables de
-# entorno que Vercel inyecta en tiempo de ejecución) y NUNCA `migrate`.
+# NUNCA `config:cache` (congelaría las variables de entorno que Vercel
+# inyecta en tiempo de ejecución) y NUNCA `migrate`.
 #
+# Limpieza crítica: buildah en Vercel NO aplica el .dockerignore del contexto,
+# así que pueden entrar al image el .env local y bootstrap/cache/*.php
+# (services.php/packages.php/routes-v7.php generados en Windows con los
+# paquetes DEV). Eso hacía fallar el arranque con:
+#   Class "NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider" not found
+# Borramos todo para que Laravel lo regenere desde installed.json
+# (solo paquetes de producción) y nos quedamos con el .env del entorno.
+RUN rm -f bootstrap/cache/*.php .env
+
 # Diagnóstico: php.ini-production trae display_errors=Off, que ocultaba el
 # motivo del fallo. Se activa solo durante este paso y se quita después.
 # Si un comando falla se imprime el código y se continúa: Laravel regenera
 # estas cachés en tiempo de ejecución, así el despliegue no se bloquea.
-# Limpieza crítica: buildah en Vercel NO aplica el .dockerignore del contexto,
-# así que pueden entrar al image el .env local y bootstrap/cache/*.php
-# (services.php/packages.php generados en Windows con los paquetes DEV).
-# Eso hacía fallar el arranque con:
-#   Class "NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider" not found
-# Borramos el manifiesto para que Laravel lo regenere desde installed.json
-# (solo paquetes de producción) y nos quedamos con el .env del entorno.
-RUN rm -f bootstrap/cache/*.php .env
-
+#
+# OJO: aquí NO se ejecuta `route:cache`. Las rutas con closures se guardan
+# firmadas con APP_KEY, y la clave real solo existe en tiempo de ejecución
+# (Vercel). Cachearla en el build la firmaba con una clave vacía y todas las
+# peticiones reventaban con InvalidSignatureException. Se genera al arrancar
+# (ver CMD abajo), cuando APP_KEY ya está disponible.
 RUN printf 'display_errors=On\ndisplay_startup_errors=On\nlog_errors=On\nerror_reporting=-1\n' \
         > "$PHP_INI_DIR/conf.d/zz-build-debug.ini" \
     && echo "=== php -v ===" && php -v \
     && echo "=== php -m ===" && php -m \
-    && for c in package:discover event:cache view:cache route:cache; do \
+    && for c in package:discover event:cache view:cache; do \
          echo "===== php artisan $c ====="; \
          php artisan "$c"; \
          echo "----- $c -> exit=$? -----"; \
@@ -102,4 +108,7 @@ COPY Caddyfile /etc/caddy/Caddyfile
 ENV PORT=80
 EXPOSE 80
 
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+# Arranque: genera el caché de rutas con la APP_KEY real del entorno (las
+# closures de las rutas se firman con ella) y luego levanta FrankenPHP.
+# Si route:cache falla se sigue igual: Laravel usaría las rutas sin caché.
+CMD ["sh", "-c", "php artisan route:cache || echo 'route:cache omitido'; exec frankenphp run --config /etc/caddy/Caddyfile"]
