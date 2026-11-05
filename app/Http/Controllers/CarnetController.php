@@ -14,7 +14,10 @@ class CarnetController extends Controller
      */
     public function index()
     {
-        $users = User::with('shelter')->orderBy('name')->get();
+        // TTL corto (15 s): el estado de los carnets cambia con acciones
+        // que no incrementan la versión de caché analítica.
+        $users = $this->cacheaPagina(request(), fn () => User::with('shelter')->orderBy('name')->get(), 15);
+
         return view('carnets.index', compact('users'));
     }
 

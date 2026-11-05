@@ -39,6 +39,16 @@ class NeonPostgresConnector extends PostgresConnector
             $dsn .= ";options='endpoint={$endpoint}'";
         }
 
+        // Diagnóstico de conexión: solo si DB_QUERY_LOG está activo.
+        // Usa config() (no env()): con `artisan config:cache` env() devuelve null.
+        if (config('database.query_log', false)) {
+            @file_put_contents(
+                storage_path('logs/queries.log'),
+                sprintf("[%s] DSN: %s | user=%s | opts=%s\n", date('H:i:s'), $dsn, $config['username'] ?? '', json_encode($this->getOptions($config))),
+                FILE_APPEND
+            );
+        }
+
         return $dsn;
     }
 

@@ -13,7 +13,8 @@ class AuthenticatedSessionController extends Controller
 {
     public function create()
     {
-        $shelters = Shelter::orderBy('codigo')->get();
+        // Lista cacheada: el login no debe pagar una consulta a Neon (~200 ms).
+        $shelters = Shelter::listaParaMenu();
         return view('auth.login', compact('shelters'));
     }
 

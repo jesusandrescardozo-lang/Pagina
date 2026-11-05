@@ -26,22 +26,28 @@ class SupplyTransferController extends Controller
 
     public function index(Request $request)
     {
-        $query = SupplyTransfer::with(['refugioOrigen', 'refugioDestino', 'supply', 'solicitadoPor']);
+        // Caché de página: ver Controller::cacheaPagina().
+        $datos = $this->cacheaPagina($request, function () use ($request) {
+            $query = SupplyTransfer::with(['refugioOrigen', 'refugioDestino', 'supply', 'solicitadoPor']);
 
-        if ($request->filled('estado')) {
-            $query->where('estado', $request->estado);
-        }
+            if ($request->filled('estado')) {
+                $query->where('estado', $request->estado);
+            }
 
-        if ($request->filled('prioridad')) {
-            $query->where('prioridad', $request->prioridad);
-        }
+            if ($request->filled('prioridad')) {
+                $query->where('prioridad', $request->prioridad);
+            }
 
-        $transfers = $query->latest()->paginate(15)->withQueryString();
+            $transfers = $query->latest()->paginate(15)->withQueryString();
 
-        // Sugerencias heurísticas de rebalanceo inter-refugios
-        $sugerencias = $this->inventoryService->sugerirTransferenciasRebalanceo();
+            // Sugerencias heurísticas de rebalanceo inter-refugios (ya cacheadas
+            // en InventoryOptimizationService con invalidación por versión).
+            $sugerencias = $this->inventoryService->sugerirTransferenciasRebalanceo();
 
-        return view('transfers.index', compact('transfers', 'sugerencias'));
+            return compact('transfers', 'sugerencias');
+        });
+
+        return view('transfers.index', $datos);
     }
 
     public function show(SupplyTransfer $transfer)
@@ -65,7 +71,7 @@ class SupplyTransferController extends Controller
     public function create(Request $request)
     {
         $shelters = Shelter::where('estado', '!=', 'cerrado')->orderBy('codigo')->get();
-        $supplies = Supply::orderBy('categoria')->orderBy('nombre')->get();
+        $supplies = Supply::listaParaMenu();
 
         $origenId = $request->get('origen_id');
         $destinoId = $request->get('destino_id');

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\AuditLog;
+use App\Models\Shelter;
+use App\Models\Supply;
 use Illuminate\Database\Eloquent\Model;
 
 class AuditService
@@ -52,6 +54,17 @@ class AuditService
         // falla, no se tira la caché sin motivo.
         if (in_array($modulo, self::MODULOS_CON_CACHE, true)) {
             self::limpiarCacheAnalitica();
+        }
+
+        // El selector del menú lista TODOS los refugios: solo cambia
+        // cuando se crea/actualiza/elimina uno.
+        if ($modulo === 'refugios') {
+            Shelter::limpiarCacheMenu();
+        }
+
+        // Ídem para el catálogo de insumos usado en los <select>.
+        if ($modulo === 'insumos') {
+            Supply::limpiarCacheMenu();
         }
 
         return $registro;

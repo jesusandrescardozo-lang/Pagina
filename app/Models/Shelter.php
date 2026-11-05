@@ -83,4 +83,39 @@ class Shelter extends Model
             default => ['text' => ucfirst($this->estado), 'class' => 'bg-glass'],
         };
     }
+
+    /**
+     * Duración de la caché de la lista de refugios (segundos).
+     * La usa el selector del menú en CADA página: con Neon cada consulta
+     * cuesta ~200 ms de ida y vuelta, así que no se puede consultar por request.
+     */
+    public const MENU_CACHE_TTL = 120;
+
+    public const MENU_CACHE_KEY = 'nav:shelters';
+
+    /**
+     * Lista de refugios para el selector del menú y el login.
+     *
+     * Se cachea en archivo: la misma lista se pedía en el layout, en el
+     * dashboard y en el login (2-3 consultas por página que solo servían
+     * para llenar un <select>). Se invalida explícitamente al crear,
+     * actualizar o eliminar un refugio.
+     */
+    public static function listaParaMenu()
+    {
+        return cache()->remember(
+            self::MENU_CACHE_KEY,
+            self::MENU_CACHE_TTL,
+            fn () => static::orderBy('codigo')->get()
+        );
+    }
+
+    /**
+     * Invalida la caché del menú de refugios. Llamar en cada escritura
+     * sobre Shelter (crear / actualizar / eliminar).
+     */
+    public static function limpiarCacheMenu(): void
+    {
+        cache()->forget(self::MENU_CACHE_KEY);
+    }
 }

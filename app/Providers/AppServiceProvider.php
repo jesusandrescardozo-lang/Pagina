@@ -21,6 +21,41 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // TEMPORAL: instrumentación de consultas para diagnosticar lentitud.
+        // Usa config() (no env()): con `artisan config:cache` env() devuelve null.
+        if (config('database.query_log', false)) {
+            $tPdo = microtime(true);
+            try {
+                $pdo = \Illuminate\Support\Facades\DB::connection()->getPdo();
+                @file_put_contents(
+                    storage_path('logs/queries.log'),
+                    sprintf(
+                        "[%s] BOOT getPDO: %.1f ms | pid=%d | opciones=%s | esPersistente=%s\n",
+                        date('H:i:s'),
+                        (microtime(true) - $tPdo) * 1000,
+                        getmypid(),
+                        json_encode(config('database.connections.pgsql.options')),
+                        json_encode(@$pdo->getAttribute(\PDO::ATTR_PERSISTENT))
+                    ),
+                    FILE_APPEND
+                );
+            } catch (\Throwable $e) {
+                @file_put_contents(
+                    storage_path('logs/queries.log'),
+                    sprintf("[%s] BOOT getPDO FALLÓ: %s\n", date('H:i:s'), $e->getMessage()),
+                    FILE_APPEND
+                );
+            }
+
+            \Illuminate\Support\Facades\DB::listen(function ($query) {
+                @file_put_contents(
+                    storage_path('logs/queries.log'),
+                    sprintf("[%s] %6.1f ms | %s | bindings=%s\n", date('H:i:s'), $query->time, $query->sql, json_encode($query->bindings)),
+                    FILE_APPEND
+                );
+            });
+        }
+
         // Render termina TLS en el balanceador: en produccion forzamos HTTPS
         // para que redirecciones, formularios y assets salgan siempre seguros.
         if (config('app.env') === 'production') {

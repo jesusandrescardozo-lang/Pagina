@@ -16,37 +16,42 @@ class InventoryMovementController extends Controller
 {
     public function index(Request $request)
     {
-        $query = InventoryMovement::with(['shelter', 'supply', 'batch', 'user']);
+        $datos = $this->cacheaPagina($request, function () use ($request) {
+            $query = InventoryMovement::with(['shelter', 'supply', 'batch', 'user']);
 
-        $shelterId = $request->has('shelter_id') ? $request->input('shelter_id') : session('shelter_id');
-        if ($shelterId) {
-            $query->where('shelter_id', $shelterId);
-        }
+            $shelterId = $request->has('shelter_id') ? $request->input('shelter_id') : session('shelter_id');
+            if ($shelterId) {
+                $query->where('shelter_id', $shelterId);
+            }
 
-        if ($request->filled('supply_id')) {
-            $query->where('supply_id', $request->supply_id);
-        }
+            if ($request->filled('supply_id')) {
+                $query->where('supply_id', $request->supply_id);
+            }
 
-        if ($request->filled('tipo')) {
-            $query->where('tipo', $request->tipo);
-        }
+            if ($request->filled('tipo')) {
+                $query->where('tipo', $request->tipo);
+            }
 
-        if ($request->filled('categoria')) {
-            $query->whereHas('supply', fn($q) => $q->where('categoria', $request->categoria));
-        }
+            if ($request->filled('categoria')) {
+                $query->whereHas('supply', fn($q) => $q->where('categoria', $request->categoria));
+            }
 
-        $movements = $query->latest('fecha_movimiento')->paginate(20)->withQueryString();
+            $movements = $query->latest('fecha_movimiento')->paginate(20)->withQueryString();
 
-        $shelters = Shelter::orderBy('codigo')->get();
-        $supplies = Supply::orderBy('nombre')->get();
+            // Listas para los <select>: cacheadas (una consulta en vez de dos).
+            $shelters = Shelter::listaParaMenu();
+            $supplies = Supply::listaParaMenu();
 
-        return view('movements.index', compact('movements', 'shelters', 'supplies'));
+            return compact('movements', 'shelters', 'supplies');
+        });
+
+        return view('movements.index', $datos);
     }
 
     public function create(Request $request)
     {
         $shelters = Shelter::where('estado', '!=', 'cerrado')->orderBy('codigo')->get();
-        $supplies = Supply::orderBy('categoria')->orderBy('nombre')->get();
+        $supplies = Supply::listaParaMenu();
 
         $selectedShelterId = $request->get('shelter_id');
         $selectedSupplyId = $request->get('supply_id');

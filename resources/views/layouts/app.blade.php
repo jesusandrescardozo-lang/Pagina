@@ -15,6 +15,12 @@
     </script>
 
     <!-- CSS Dependencies -->
+    <!-- preconnect: el navegador abre el canal TLS a estos CDNs mientras
+         parsea el HTML, en vez de esperar a que llegue el <link> (ahorra
+         ~100-200 ms en conexiones lejanas como la nuestra a Neon). -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1408,7 +1414,7 @@
                     <select name="shelter_id" onchange="document.getElementById('topbarShelterForm').submit()" title="Seleccionar contexto operativo">
                         <option value="">🌐 Red Centralizada (Todos los Refugios)</option>
                         <optgroup label="── Centros / Albergues Humanitarios ──">
-                            @foreach(\App\Models\Shelter::orderBy('codigo')->get() as $navShelter)
+                            @foreach(\App\Models\Shelter::listaParaMenu() as $navShelter)
                                 <option value="{{ $navShelter->id }}" {{ session('shelter_id') == $navShelter->id ? 'selected' : '' }}>
                                     [{{ $navShelter->codigo }}] {{ $navShelter->nombre }} — {{ $navShelter->municipio }}
                                 </option>

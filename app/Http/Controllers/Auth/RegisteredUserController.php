@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
                 ->with('error', 'El registro de cuentas está deshabilitado. Contacte al administrador de la red.');
         }
 
-        $shelters = Shelter::orderBy('codigo')->get();
+        $shelters = Shelter::listaParaMenu();
         return view('auth.login', compact('shelters'));
     }
 

@@ -22,36 +22,54 @@ class SupplyController extends Controller
 
     public function index(Request $request)
     {
-        $query = Supply::with('inventories.shelter');
+        // Los datos de la página se cachean 60 s y se invalidan solos en
+        // cada escritura (versión de caché): ahorra ~5 consultas de ida y
+        // vuelta a Neon en cada visita al listado.
+        $datos = $this->cacheaPagina($request, function () use ($request) {
+            $query = Supply::with('inventories.shelter');
 
-        if ($request->filled('categoria')) {
-            $query->where('categoria', $request->categoria);
-        }
+            if ($request->filled('categoria')) {
+                $query->where('categoria', $request->categoria);
+            }
 
-        if ($request->filled('clasificacion_abc')) {
-            $query->where('clasificacion_abc', $request->clasificacion_abc);
-        }
+            if ($request->filled('clasificacion_abc')) {
+                $query->where('clasificacion_abc', $request->clasificacion_abc);
+            }
 
-        if ($request->filled('q')) {
-            $term = '%' . $request->q . '%';
-            $query->where(function($q) use ($term) {
-                $q->where('nombre', 'like', $term)
-                  ->orWhere('codigo', 'like', $term)
-                  ->orWhere('subcategoria', 'like', $term);
-            });
-        }
+            if ($request->filled('q')) {
+                $term = '%' . $request->q . '%';
+                $query->where(function($q) use ($term) {
+                    $q->where('nombre', 'like', $term)
+                      ->orWhere('codigo', 'like', $term)
+                      ->orWhere('subcategoria', 'like', $term);
+                });
+            }
 
-        $supplies = $query->orderBy('categoria')->orderBy('nombre')->paginate(15)->withQueryString();
+            $supplies = $query->orderBy('categoria')->orderBy('nombre')->paginate(15)->withQueryString();
 
-        $resumenCategorias = [
-            'alimentos' => Supply::where('categoria', 'alimento')->count(),
-            'medicos' => Supply::where('categoria', 'medico')->count(),
-            'clase_a' => Supply::where('clasificacion_abc', 'A')->count(),
-            'clase_b' => Supply::where('clasificacion_abc', 'B')->count(),
-            'clase_c' => Supply::where('clasificacion_abc', 'C')->count(),
-        ];
+            // UNA sola consulta con FILTER (Postgres) en vez de 5 count()
+            // separados: con Neon cada consulta extra son ~200 ms de ida y vuelta.
+            $resumen = Supply::selectRaw("
+                    count(*) filter (where categoria = 'alimento')              as alimentos,
+                    count(*) filter (where categoria = 'medico')                as medicos,
+                    count(*) filter (where clasificacion_abc = 'A')             as clase_a,
+                    count(*) filter (where clasificacion_abc = 'B')             as clase_b,
+                    count(*) filter (where clasificacion_abc = 'C')             as clase_c
+                ")
+                ->first();
 
-        return view('supplies.index', compact('supplies', 'resumenCategorias'));
+            $resumenCategorias = [
+                'alimentos' => (int) ($resumen->alimentos ?? 0),
+                'medicos'   => (int) ($resumen->medicos ?? 0),
+                'clase_a'   => (int) ($resumen->clase_a ?? 0),
+                'clase_b'   => (int) ($resumen->clase_b ?? 0),
+                'clase_c'   => (int) ($resumen->clase_c ?? 0),
+            ];
+
+            return compact('supplies', 'resumenCategorias');
+        });
+
+        return view('supplies.index', $datos);
     }
 
     public function create()
@@ -68,7 +86,8 @@ class SupplyController extends Controller
         $supply = Supply::create($validated);
 
         // Crear registro de inventario en cada refugio
-        $shelters = Shelter::all();
+        // (lista cacheada del menú, se invalida al escribir en refugios)
+        $shelters = Shelter::listaParaMenu();
         foreach ($shelters as $shelter) {
             ShelterInventory::create([
                 'shelter_id' => $shelter->id,
@@ -88,7 +107,10 @@ class SupplyController extends Controller
 
     public function show(Supply $supply)
     {
-        $supply->load(['inventories.shelter', 'inventories.activeBatchesFefo']);
+        // 'supply' es imprescindible: los accessors consumo_diario_estimado /
+        // dias_autonomia / nivel_alerta (que usa la vista en CADA fila) lo
+        // consultan si no está cargado (N+1 sobre supplies).
+        $supply->load(['inventories.shelter', 'inventories.supply', 'inventories.activeBatchesFefo']);
 
         // Demanda anual agregada estimada
         $consumoDiarioTotal = 0.0;

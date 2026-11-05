@@ -32,6 +32,19 @@ class ShelterInventory extends Model
         return $this->belongsTo(Shelter::class, 'shelter_id');
     }
 
+    /**
+     * Al cargar (o cambiar) una relación se invalida el cálculo memoizado:
+     * si 'shelter'/'supply' llegan después, el valor cacheado sería viejo.
+     */
+    public function setRelation($relation, $value)
+    {
+        if ($relation === 'shelter' || $relation === 'supply') {
+            $this->consumoDiarioCache = null;
+        }
+
+        return parent::setRelation($relation, $value);
+    }
+
     public function supply()
     {
         return $this->belongsTo(Supply::class, 'supply_id');
@@ -49,8 +62,21 @@ class ShelterInventory extends Model
             ->orderByRaw('CASE WHEN fecha_vencimiento IS NULL THEN 1 ELSE 0 END, fecha_vencimiento ASC');
     }
 
+    /**
+     * Caché en memoria del cálculo para la petición actual.
+     *
+     * La vista llama consumo_diario_estimado, dias_autonomia y nivel_alerta
+     * en la misma fila, y nivel_alerta -> dias_autonomia -> consumo_diario_estimado
+     * anida los tres: sin memoizar se recalcula hasta 4 veces por insumo.
+     */
+    private ?float $consumoDiarioCache = null;
+
     public function getConsumoDiarioEstimadoAttribute(): float
     {
+        if ($this->consumoDiarioCache !== null) {
+            return $this->consumoDiarioCache;
+        }
+
         // Usa las relaciones ya cargadas cuando existen (eager loading) para
         // evitar una consulta por inventario (problema N+1 con base remota).
         $poblacion = $this->relationLoaded('shelter')
@@ -61,7 +87,7 @@ class ShelterInventory extends Model
             ? (float) ($this->supply?->consumo_diario_referencia ?? 1.0)
             : (float) (Supply::where('supplies.id', $this->supply_id)->value('consumo_diario_referencia') ?? 1.0);
 
-        return round($poblacion * $tasa, 2);
+        return $this->consumoDiarioCache = round($poblacion * $tasa, 2);
     }
 
     public function getDiasAutonomiaAttribute(): float

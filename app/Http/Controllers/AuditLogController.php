@@ -10,28 +10,36 @@ class AuditLogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = AuditLog::with('user');
+        // TTL corto (15 s) a propósito: la bitácora recibe un registro nuevo
+        // en CADA acción, incluidos login/logout, que no incrementan la
+        // versión de caché. Con 15 s se ve el registro casi en tiempo real
+        // y aun así se ahorran las 3 consultas de ida y vuelta a Neon.
+        $datos = $this->cacheaPagina($request, function () use ($request) {
+            $query = AuditLog::with('user');
 
-        if ($request->filled('modulo')) {
-            $query->where('modulo', $request->input('modulo'));
-        }
+            if ($request->filled('modulo')) {
+                $query->where('modulo', $request->input('modulo'));
+            }
 
-        if ($request->filled('accion')) {
-            $query->where('accion', $request->input('accion'));
-        }
+            if ($request->filled('accion')) {
+                $query->where('accion', $request->input('accion'));
+            }
 
-        if ($request->filled('fecha_desde')) {
-            $query->whereDate('created_at', '>=', $request->input('fecha_desde'));
-        }
+            if ($request->filled('fecha_desde')) {
+                $query->whereDate('created_at', '>=', $request->input('fecha_desde'));
+            }
 
-        if ($request->filled('fecha_hasta')) {
-            $query->whereDate('created_at', '<=', $request->input('fecha_hasta'));
-        }
+            if ($request->filled('fecha_hasta')) {
+                $query->whereDate('created_at', '<=', $request->input('fecha_hasta'));
+            }
 
-        $logs = $query->latest('created_at')->paginate(20);
-        $modulos = AuditLog::select('modulo')->distinct()->pluck('modulo');
+            $logs = $query->latest('created_at')->paginate(20);
+            $modulos = AuditLog::select('modulo')->distinct()->pluck('modulo');
 
-        return view('audit.index', compact('logs', 'modulos'));
+            return compact('logs', 'modulos');
+        }, 15);
+
+        return view('audit.index', $datos);
     }
 
     public function export(Request $request)

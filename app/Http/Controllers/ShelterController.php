@@ -14,24 +14,28 @@ class ShelterController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Shelter::with(['inventories.supply']);
+        $datos = $this->cacheaPagina($request, function () use ($request) {
+            $query = Shelter::with(['inventories.supply']);
 
-        if ($request->filled('estado')) {
-            $query->where('estado', $request->estado);
-        }
+            if ($request->filled('estado')) {
+                $query->where('estado', $request->estado);
+            }
 
-        if ($request->filled('q')) {
-            $term = '%' . $request->q . '%';
-            $query->where(function($q) use ($term) {
-                $q->where('nombre', 'like', $term)
-                  ->orWhere('codigo', 'like', $term)
-                  ->orWhere('municipio', 'like', $term);
-            });
-        }
+            if ($request->filled('q')) {
+                $term = '%' . $request->q . '%';
+                $query->where(function($q) use ($term) {
+                    $q->where('nombre', 'like', $term)
+                      ->orWhere('codigo', 'like', $term)
+                      ->orWhere('municipio', 'like', $term);
+                });
+            }
 
-        $shelters = $query->orderBy('nombre')->paginate(12)->withQueryString();
+            $shelters = $query->orderBy('nombre')->paginate(12)->withQueryString();
 
-        return view('shelters.index', compact('shelters'));
+            return compact('shelters');
+        });
+
+        return view('shelters.index', $datos);
     }
 
     public function create()
@@ -51,7 +55,8 @@ class ShelterController extends Controller
         $shelter = Shelter::create($validated);
 
         // Inicializar registros de inventario para todos los insumos existentes
-        $supplies = Supply::all();
+        // (lista cacheada: una consulta en vez de una por petición de escritura)
+        $supplies = Supply::listaParaMenu();
         foreach ($supplies as $supply) {
             ShelterInventory::create([
                 'shelter_id' => $shelter->id,
@@ -69,28 +74,47 @@ class ShelterController extends Controller
             ->with('success', "Refugio '{$shelter->nombre}' creado exitosamente.");
     }
 
-    public function show(Shelter $shelter)
+    public function show(Request $request, Shelter $shelter)
     {
-        $shelter->load([
-            'inventories.supply',
-            'inventories.activeBatchesFefo',
-            'movements.supply',
-            'movements.user',
-            'outgoingTransfers.refugioDestino',
-            'incomingTransfers.refugioOrigen'
-        ]);
+        // Caché de datos (60 s, invalidada por versión en cada escritura).
+        // Sin esto la página hacía 9 consultas de ~366 ms = 3,5 s CADA vez,
+        // incluso en visitas repetidas.
+        $datos = $this->cacheaPagina($request, function () use ($shelter) {
+            $shelter->load([
+                'inventories.supply',
+                // 'inventories.shelter' NO: el refugio ya viene del route binding.
+                // Asignarlo a mano (ver abajo) ahorra 1 consulta de ida y vuelta
+                // a Neon (~460 ms) que devolvía exactamente la misma fila.
+                'inventories.activeBatchesFefo',
+                // movements/outgoing/incoming NO se cargan aquí: la vista solo usa
+                // los 10 movimientos recientes, que se cargan con eager loading
+                // justo debajo. Cargarlos enteros eran 5 consultas de ida y vuelta
+                // a Neon (~1.750 ms) sin que ninguna vista las consumiera.
+            ]);
 
-        $inventariosAlimentos = $shelter->inventories->filter(fn($i) => $i->supply && $i->supply->categoria === 'alimento');
-        $inventariosMedicos = $shelter->inventories->filter(fn($i) => $i->supply && $i->supply->categoria === 'medico');
+            // Cada inventario pertenece AL refugio que ya está en memoria: se le
+            // asigna sin consultar. Los accessors consumo_diario_estimado /
+            // dias_autonomia / nivel_alerta (que la vista llama en CADA fila)
+            // necesitan relationLoaded('shelter') para no hacer N+1.
+            foreach ($shelter->inventories as $inv) {
+                $inv->setRelation('shelter', $shelter);
+            }
 
-        $movimientosRecientes = $shelter->movements()->latest('fecha_movimiento')->take(10)->get();
+            $inventariosAlimentos = $shelter->inventories->filter(fn($i) => $i->supply && $i->supply->categoria === 'alimento');
+            $inventariosMedicos = $shelter->inventories->filter(fn($i) => $i->supply && $i->supply->categoria === 'medico');
 
-        return view('shelters.show', compact(
-            'shelter',
-            'inventariosAlimentos',
-            'inventariosMedicos',
-            'movimientosRecientes'
-        ));
+            // 'supply' debe venir eager-load-eado: la vista accede $m->supply->nombre
+            // en cada fila. Sin él era N+1 (10 consultas de ~350 ms = 3.500 ms).
+            $movimientosRecientes = $shelter->movements()
+                ->with('supply')
+                ->latest('fecha_movimiento')
+                ->take(10)
+                ->get();
+
+            return compact('shelter', 'inventariosAlimentos', 'inventariosMedicos', 'movimientosRecientes');
+        });
+
+        return view('shelters.show', $datos);
     }
 
     public function edit(Shelter $shelter)

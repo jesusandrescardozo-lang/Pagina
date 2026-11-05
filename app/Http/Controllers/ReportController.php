@@ -21,8 +21,10 @@ class ReportController extends Controller
 
     public function index()
     {
-        $shelters = Shelter::orderBy('codigo')->get();
-        $supplies = Supply::orderBy('nombre')->get();
+        // Listas cacheadas: dos consultas de menos por visita (~400 ms con Neon).
+        $shelters = Shelter::listaParaMenu();
+        $supplies = Supply::listaParaMenu();
+
         return view('reports.index', compact('shelters', 'supplies'));
     }
 
@@ -32,7 +34,9 @@ class ReportController extends Controller
             'shelter_id' => 'nullable|exists:shelters,id',
         ]);
 
-        $query = Shelter::with(['inventories.supply', 'inventories.activeBatchesFefo']);
+        // 'inventories.shelter' evita el N+1 de los accessors
+        // consumo_diario_estimado / dias_autonomia (una consulta por insumo).
+        $query = Shelter::with(['inventories.supply', 'inventories.shelter', 'inventories.activeBatchesFefo']);
 
         if ($request->filled('shelter_id')) {
             $query->where('id', $request->shelter_id);
@@ -91,7 +95,7 @@ class ReportController extends Controller
     public function analisisOperaciones(Request $request)
     {
         $abcData = $this->inventoryService->calcularClasificacionAbc();
-        $supplies = Supply::with('inventories')->get();
+        $supplies = Supply::with('inventories.shelter')->get();
         $sugerencias = $this->inventoryService->sugerirTransferenciasRebalanceo();
 
         $pdf = Pdf::loadView('pdf.analisis_operaciones', [

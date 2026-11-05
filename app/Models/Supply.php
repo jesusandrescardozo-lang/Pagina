@@ -82,4 +82,31 @@ class Supply extends Model
             default => ['text' => 'Clase ' . $this->clasificacion_abc, 'class' => 'bg-glass', 'desc' => ''],
         };
     }
+
+    /**
+     * Duración de la caché de la lista de insumos para selects (segundos).
+     * Mismo motivo que Shelter::MENU_CACHE_TTL: con Neon cada consulta
+     * extra son ~200 ms y esta lista se pide en varios formularios.
+     */
+    public const MENU_CACHE_TTL = 120;
+
+    public const MENU_CACHE_KEY = 'nav:supplies';
+
+    /**
+     * Catálogo de insumos para los <select> de filtros y formularios.
+     * Se invalida en AuditService cuando se registra un cambio de insumo.
+     */
+    public static function listaParaMenu()
+    {
+        return cache()->remember(
+            self::MENU_CACHE_KEY,
+            self::MENU_CACHE_TTL,
+            fn () => static::orderBy('categoria')->orderBy('nombre')->get()
+        );
+    }
+
+    public static function limpiarCacheMenu(): void
+    {
+        cache()->forget(self::MENU_CACHE_KEY);
+    }
 }

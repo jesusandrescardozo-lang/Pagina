@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Shelter;
-use App\Models\Supply;
 use App\Models\ShelterInventory;
+use App\Models\Supply;
 
 class InventoryOptimizationService
 {
@@ -211,6 +211,87 @@ class InventoryOptimizationService
     }
 
     /**
+     * Snapshot compartido de refugios + inventarios + insumos.
+     *
+     * Antes, CADA cálculo (matriz de autonomía, ABC, rebalanceo) y el
+     * dashboard cargaban por su cuenta los mismos datos: 13 consultas de
+     * ida y vuelta (≈2,6 s con Neon) solo para leer las mismas tablas.
+     * Aquí se cargan UNA vez (3 consultas) y todos comparten el resultado.
+     *
+     * Vive en el contenedor de la aplicación: Laravel construye un
+     * contenedor nuevo en CADA petición, así que el snapshot nunca cruza
+     * peticiones (nunca sirve datos viejos entre requests).
+     *
+     * El orden de los inventarios NO es indiferente: los algoritmos son
+     * codiciosos y las sumas son en coma flotante, así que el orden en que
+     * se recorren cambia las asignaciones. Se respeta el orden físico de la
+     * tabla, que es exactamente el que devolvían las consultas originales
+     * (verificado: 20/20 insumos y 6/6 refugios con idéntico orden).
+     *
+     * @return array{shelters: \Illuminate\Support\Collection, supplies: \Illuminate\Support\Collection, inventarios_por_insumo: array<int, array>}
+     */
+    private function snapshot(): array
+    {
+        if (! app()->bound('io.snapshot')) {
+            // withTrashed: el ABC contabiliza el stock de refugios dados de
+            // baja (con población 0), igual que hacía antes el eager
+            // "inventories.shelter" (que devolvía shelter = null).
+            $shelters = Shelter::withTrashed()->get();
+            $supplies = Supply::all();
+            $inventarios = ShelterInventory::query()->get();
+
+            $sheltersPorId = $shelters->keyBy('id');
+            $suppliesPorId = $supplies->keyBy('id');
+
+            $inventariosPorInsumo = [];
+            $inventariosPorRefugio = [];
+
+            foreach ($inventarios as $inv) {
+                $shelter = $sheltersPorId->get($inv->shelter_id);
+
+                // Refugio padre en memoria: evita una consulta por inventario
+                // (N+1). Con refugio dado de baja el eager anterior devolvía
+                // null y así lo dejamos (población 0 en el ABC).
+                $baja = $shelter === null || $shelter->trashed();
+                $inv->setRelation('shelter', $baja ? null : $shelter);
+                // El insumo también va en memoria: los accessors
+                // consumo_diario_estimado / dias_autonomia lo necesitan.
+                $inv->setRelation('supply', $suppliesPorId->get($inv->supply_id));
+
+                $inventariosPorInsumo[$inv->supply_id][] = $inv;
+                $inventariosPorRefugio[$inv->shelter_id][] = $inv;
+            }
+
+            // Cada refugio queda con sus inventarios ya cargados (mismo orden
+            // que devolvía el eager "inventories" original).
+            foreach ($shelters as $shelter) {
+                $shelter->setRelation('inventories', collect($inventariosPorRefugio[$shelter->id] ?? []));
+            }
+
+            app()->instance('io.snapshot', [
+                'shelters' => $shelters,
+                'supplies' => $supplies,
+                'inventarios_por_insumo' => $inventariosPorInsumo,
+            ]);
+        }
+
+        return app('io.snapshot');
+    }
+
+    /**
+     * Refugios sin dar de baja, con inventarios e insumos cargados y
+     * ordenados por código (lo que pide el dashboard). Reutiliza el
+     * snapshot: cero consultas extra cuando ya se cargó.
+     */
+    public function refugiosOperativos()
+    {
+        return $this->snapshot()['shelters']
+            ->reject(fn ($s) => $s->trashed())
+            ->sortBy('codigo')
+            ->values();
+    }
+
+    /**
      * ANÁLISIS ABC DE INVENTARIOS (Pareto)
      * Clasifica los insumos según valor total de consumo anual o criticidad.
      */
@@ -225,7 +306,8 @@ class InventoryOptimizationService
 
     private function calcularAbc(?int $shelterId = null): array
     {
-        $supplies = Supply::with('inventories.shelter')->get();
+        $snapshot = $this->snapshot();
+        $supplies = $snapshot['supplies'];
         if ($supplies->isEmpty()) {
             return ['items' => [], 'resumen' => ['A' => 0, 'B' => 0, 'C' => 0]];
         }
@@ -237,7 +319,8 @@ class InventoryOptimizationService
             $consumoTotalDiario = 0.0;
             $stockActualTotal = 0.0;
 
-            foreach ($s->inventories as $inv) {
+            // Mismos inventarios que antes devolvía Supply::with('inventories.shelter')
+            foreach ($snapshot['inventarios_por_insumo'][$s->id] ?? [] as $inv) {
                 if ($shelterId !== null && $inv->shelter_id !== $shelterId) {
                     continue;
                 }
@@ -312,11 +395,13 @@ class InventoryOptimizationService
 
     private function calcularMatrizAutonomia(?int $shelterId = null): array
     {
-        $query = Shelter::with(['inventories.supply'])->where('estado', '!=', 'cerrado');
-        if ($shelterId !== null) {
-            $query->where('id', $shelterId);
-        }
-        $shelters = $query->get();
+        // Mismos refugios que antes devolvía
+        // Shelter::with(['inventories.supply'])->where('estado', '!=', 'cerrado')
+        $shelters = $this->snapshot()['shelters']
+            ->reject(fn ($s) => $s->trashed() || $s->estado === 'cerrado')
+            ->filter(fn ($s) => $shelterId === null || (int) $s->id === $shelterId)
+            ->values();
+
         $resultado = [];
         $alertasCriticas = [];
         $alertasPrecaucion = [];
@@ -408,15 +493,23 @@ class InventoryOptimizationService
 
     private function calcularSugerenciasRebalanceo(?int $shelterId = null): array
     {
-        $supplies = Supply::all();
+        $snapshot = $this->snapshot();
+        $supplies = $snapshot['supplies'];
         $sugerencias = [];
 
-        // Una sola consulta para todos los inventarios (antes era una por insumo).
-        $inventariosPorSuministro = ShelterInventory::with(['shelter', 'supply'])
-            ->whereIn('supply_id', $supplies->pluck('id'))
-            ->whereHas('shelter', fn($q) => $q->where('estado', 'activo'))
-            ->get()
-            ->groupBy('supply_id');
+        // Mismos inventarios que antes devolvía la consulta
+        // ShelterInventory::with(['shelter','supply'])->whereHas('shelter', activo)
+        $inventariosPorSuministro = collect();
+        foreach ($snapshot['inventarios_por_insumo'] as $supplyId => $inventarios) {
+            $activos = array_values(array_filter(
+                $inventarios,
+                fn ($inv) => $inv->shelter !== null && $inv->shelter->estado === 'activo'
+            ));
+
+            if ($activos !== []) {
+                $inventariosPorSuministro->put($supplyId, collect($activos));
+            }
+        }
 
         foreach ($supplies as $supply) {
             $inventarios = $inventariosPorSuministro->get($supply->id, collect());
