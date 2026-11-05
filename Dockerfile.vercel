@@ -60,6 +60,15 @@ RUN mkdir -p \
 # motivo del fallo. Se activa solo durante este paso y se quita después.
 # Si un comando falla se imprime el código y se continúa: Laravel regenera
 # estas cachés en tiempo de ejecución, así el despliegue no se bloquea.
+# Limpieza crítica: buildah en Vercel NO aplica el .dockerignore del contexto,
+# así que pueden entrar al image el .env local y bootstrap/cache/*.php
+# (services.php/packages.php generados en Windows con los paquetes DEV).
+# Eso hacía fallar el arranque con:
+#   Class "NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider" not found
+# Borramos el manifiesto para que Laravel lo regenere desde installed.json
+# (solo paquetes de producción) y nos quedamos con el .env del entorno.
+RUN rm -f bootstrap/cache/*.php .env
+
 RUN printf 'display_errors=On\ndisplay_startup_errors=On\nlog_errors=On\nerror_reporting=-1\n' \
         > "$PHP_INI_DIR/conf.d/zz-build-debug.ini" \
     && echo "=== php -v ===" && php -v \
