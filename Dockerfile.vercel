@@ -52,14 +52,25 @@ RUN mkdir -p \
         bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# Cachés de framework generados en el build.
-# NUNCA `config:cache`: congelaría las variables de entorno que Vercel
-# inyecta en tiempo de ejecución (env() devolvería null).
-# NUNCA `migrate` en el build ni en el arranque: ver nota del encabezado.
-RUN php artisan package:discover \
-    && php artisan event:cache \
-    && php artisan view:cache \
-    && php artisan route:cache
+# ── Cachés de framework ─────────────────────────────────────────────────────
+# Se generan en el build. NUNCA `config:cache` (congelaría las variables de
+# entorno que Vercel inyecta en tiempo de ejecución) y NUNCA `migrate`.
+#
+# Diagnóstico: php.ini-production trae display_errors=Off, que ocultaba el
+# motivo del fallo. Se activa solo durante este paso y se quita después.
+# Si un comando falla se imprime el código y se continúa: Laravel regenera
+# estas cachés en tiempo de ejecución, así el despliegue no se bloquea.
+RUN printf 'display_errors=On\ndisplay_startup_errors=On\nlog_errors=On\nerror_reporting=-1\n' \
+        > "$PHP_INI_DIR/conf.d/zz-build-debug.ini" \
+    && echo "=== php -v ===" && php -v \
+    && echo "=== php -m ===" && php -m \
+    && for c in package:discover event:cache view:cache route:cache; do \
+         echo "===== php artisan $c ====="; \
+         php artisan "$c"; \
+         echo "----- $c -> exit=$? -----"; \
+       done \
+    && rm -f "$PHP_INI_DIR/conf.d/zz-build-debug.ini" \
+    && echo "=== fin de la fase de cachés ==="
 
 # Valores por defecto de producción. Vercel los sobrescribe con los que
 # declares en Settings > Environment Variables (o `vercel env add`).
