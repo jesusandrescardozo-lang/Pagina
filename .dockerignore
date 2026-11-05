@@ -32,4 +32,3 @@ docs/
 *.md
 server.php
 docker-start.sh
-Dockerfile
